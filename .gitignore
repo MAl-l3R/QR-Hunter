@@ -1,0 +1,44 @@
+# Default Android Studio Stuff
+*.iml
+.gradle
+/.gradle/
+/local.properties
+/.idea/
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+
+# Suggested git ignores as per the GitHub standard
+
+# Log/OS Files
+*.log
+
+# Android Studio generated files and folders
+.externalNativeBuild/
+.cxx/
+*.apk
+output.json
+
+# IntelliJ
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
