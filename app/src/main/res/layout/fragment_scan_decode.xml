@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_background"
+    android:paddingTop="40dp">
+
+
+    <ImageView
+        android:id="@+id/QR_image"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:cropToPadding="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/QR_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="QR Name"
+        android:textColor="@color/white"
+        android:textSize="26dp"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/QR_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingTop="10dp"
+        android:paddingBottom="7dp"/>
+
+    <TextView
+        android:id="@+id/QR_points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="QR Points"
+        android:textColor="@color/white"
+        android:textSize="26dp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/QR_name"
+        android:paddingBottom="8dp" />
+
+
+    <Button
+        android:id="@+id/photo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Photo"
+        android:backgroundTint="@color/navbar_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/QR_points" />
+
+    <TextView
+        android:id="@+id/photo_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo_button"
+        android:paddingBottom="8dp" />
+
+    <Button
+        android:id="@+id/geolocation_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Geolocation"
+        android:backgroundTint="@color/navbar_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/photo_status" />
+
+    <TextView
+        android:id="@+id/geolocation_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/geolocation_button" />
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:backgroundTint="@color/navbar_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/geolocation_status" />
+</androidx.constraintlayout.widget.ConstraintLayout>
