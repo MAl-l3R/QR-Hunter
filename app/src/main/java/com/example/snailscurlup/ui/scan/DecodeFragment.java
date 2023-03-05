@@ -1,9 +1,14 @@
 package com.example.snailscurlup.ui.scan;
 
+import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.app.Activity.RESULT_OK;
+import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
@@ -12,22 +17,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.snailscurlup.R;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -35,8 +48,9 @@ public class DecodeFragment extends Fragment {
 
     View view;
     final int CameraRequestCode = 2;
-    TextView photoStatus;
+    TextView photoStatus, geolocationStatus;
     NamesOfQR names = new NamesOfQR();
+    FusedLocationProviderClient fusedLocationProviderClient;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +58,7 @@ public class DecodeFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_scan_decode, container, false);
         photoStatus = view.findViewById(R.id.photo_status);
+        geolocationStatus = view.findViewById(R.id.geolocation_status);
 
         // Receive the data from the QR code
         getParentFragmentManager().setFragmentResultListener("dataFromQR", this, new FragmentResultListener() {
@@ -90,13 +105,43 @@ public class DecodeFragment extends Fragment {
             }
         });
 
+
         // Geolocation Button
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
         Button addGeoButton = view.findViewById(R.id.geolocation_button);
         addGeoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: INSERT GEOLOCATION CODE
+                if (ContextCompat.checkSelfPermission(getActivity(), ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
 
+                    fusedLocationProviderClient.getLastLocation()
+                            .addOnSuccessListener(new OnSuccessListener<Location>() {
+                                @Override
+                                public void onSuccess(Location location) {
+
+                                    if (location != null) {
+
+                                        try {
+                                            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                                            List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                            Double latitude = addressList.get(0).getLatitude();
+                                            Double longitude = addressList.get(0).getLongitude();
+                                            String address = addressList.get(0).getAddressLine(0);
+
+                                            // TODO: UPLOAD LOCATION TO FIREBASE
+
+
+
+                                            geolocationStatus.setText("Added Successfully!");
+                                        } catch (IOException e) {
+                                            System.out.println("Exception occurred with location");
+                                        }
+                                    }
+                                }
+                            });
+                } else {
+                    Toast.makeText(getContext(), "You need to enable Location permission from Settings", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
