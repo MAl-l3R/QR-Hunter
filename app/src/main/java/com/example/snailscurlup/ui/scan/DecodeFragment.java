@@ -136,7 +136,7 @@ public class DecodeFragment extends Fragment {
 
 
 
-                                            geolocationStatus.setText(address);
+                                            geolocationStatus.setText("Added Successfully!");
                                         } catch (IOException e) {
                                             System.out.println("Exception occurred with location");
                                         }
