@@ -4,6 +4,8 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.app.Activity.RESULT_OK;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
+import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
@@ -30,6 +32,8 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.snailscurlup.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.Priority;
+import com.google.android.gms.tasks.CancellationTokenSource;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.squareup.picasso.Picasso;
 
@@ -113,9 +117,9 @@ public class DecodeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (ContextCompat.checkSelfPermission(getActivity(), ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
-
-                    fusedLocationProviderClient.getLastLocation()
-                            .addOnSuccessListener(new OnSuccessListener<Location>() {
+                    CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+                    fusedLocationProviderClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, cancellationTokenSource.getToken())
+                            .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                                 @Override
                                 public void onSuccess(Location location) {
 
@@ -132,7 +136,7 @@ public class DecodeFragment extends Fragment {
 
 
 
-                                            geolocationStatus.setText("Added Successfully!");
+                                            geolocationStatus.setText(address);
                                         } catch (IOException e) {
                                             System.out.println("Exception occurred with location");
                                         }
