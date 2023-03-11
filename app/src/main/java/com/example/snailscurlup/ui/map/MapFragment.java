@@ -128,7 +128,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        // TODO: Figure out a fix for this nonsense, map interactivity won't work until we do
+//        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
 //                .findFragmentById(R.id.map);
 //        mapFragment.getMapAsync(this);
     }
