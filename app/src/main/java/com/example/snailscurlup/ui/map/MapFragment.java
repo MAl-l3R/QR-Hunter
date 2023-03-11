@@ -8,6 +8,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.CancellationTokenSource;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -78,6 +80,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void fetchCurrentUserLocation() {
+        /**
+         * Fetches the coordinates of the user's device and stores them in
+         * longitude/latitude variables for later use.
+         * @params None
+         * @returns None
+         */
         // Get user location
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
 
@@ -93,8 +101,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                                 try {
                                     Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
                                     List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                    Double latitude = addressList.get(0).getLatitude();
-                                    Double longitude = addressList.get(0).getLongitude();
+                                    // Double latitude = addressList.get(0).getLatitude();
+                                    // Double longitude = addressList.get(0).getLongitude();
+                                    userLatitude = addressList.get(0).getLatitude();
+                                    userLongitude = addressList.get(0).getLongitude();
                                     String address = addressList.get(0).getAddressLine(0);
 
                                     // TODO: UPLOAD LOCATION TO FIREBASE
@@ -133,10 +143,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
+        /**
+         * Called when the Google Map is ready. Sets up the map for the user by
+         * populating it with markers to represent QR codes.
+         * @param googleMap: The GoogleMap object that represents the map
+         *                 widget. Used as a canvas for all the markers.
+         */
         qrmap = googleMap;
         // Get user position to center the map there
-        LatLng userPosition = new LatLng(this.userLongitude, this.userLatitude);
+        this.fetchCurrentUserLocation();  // Ensure location is up to date
+        LatLng userPosition = new LatLng(this.userLatitude, this.userLongitude);
+        // TODO: Load QR code geolocations from database and populate map with them
+        // TODO: Also remove this temp marker (based on John Scott Library)
+        LatLng temp = new LatLng(53.52181218838866, -113.52282471289865);
+        qrmap.addMarker(new MarkerOptions().position(temp).title("John Scott Library"));
+
+        // TODO: This doesn't appear to be working yet, not sure why. Investigate later?
         qrmap.moveCamera(CameraUpdateFactory.newLatLng(userPosition));
     }
 }
