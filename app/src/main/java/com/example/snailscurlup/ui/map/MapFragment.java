@@ -149,6 +149,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
          * @param googleMap: The GoogleMap object that represents the map
          *                 widget. Used as a canvas for all the markers.
          */
+        // TODO: Seems like markers/camera interactions are not quite working at the moment
+        // TODO: DEFINITELY INVESTIGATE LATER
         qrmap = googleMap;
         // Get user position to center the map there
         this.fetchCurrentUserLocation();  // Ensure location is up to date
@@ -158,7 +160,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         LatLng temp = new LatLng(53.52181218838866, -113.52282471289865);
         qrmap.addMarker(new MarkerOptions().position(temp).title("John Scott Library"));
 
-        // TODO: This doesn't appear to be working yet, not sure why. Investigate later?
         qrmap.moveCamera(CameraUpdateFactory.newLatLng(userPosition));
     }
 }
