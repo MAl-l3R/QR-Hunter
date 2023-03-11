@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_background"
+    tools:context=".ui.Startup.LoginFragment">
+
+
+    <!-- Startup Page -->
+    <RelativeLayout
+        android:id="@+id/startup_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/startup_page">
+
+
+
+        <TextView
+            android:id="@+id/app_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="-1dp"
+            android:fontFamily="@font/baloo_chettan"
+            android:gravity="center_horizontal|top"
+            android:text="@string/app_title"
+            android:textColor="@color/white"
+            android:textSize="64sp" />
+
+        <TextView
+            android:id="@+id/welcome_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="47dp"
+            android:layout_marginRight="0dp"
+            android:fontFamily="@font/baloo_chettan"
+            android:gravity="center_horizontal|top"
+            android:text="@string/welcome_to"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:lineHeight="22sp" />
+
+        <ImageView
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:id="@+id/profile_image_circle"
+            android:src="@drawable/default_user_profphoto"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/app_title"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+
+
+        <TextView
+            android:id="@+id/change_picutre_button"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_image_circle"
+
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="0dp"
+            android:fontFamily="@font/josefin_slab"
+
+            android:text="@string/changeprofile_photo_text"
+            android:textAlignment="center"
+
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:typeface="sans"
+            app:cornerRadius="30sp" />
+
+
+        <!--<com.example.catchqr.ui.profile.ProfileShapeView
+            android:id="@+id/profile_image"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"
+
+            app:borderColor="@color/profile_image_border"
+            app:borderWidth="4dp" /> -->
+
+<!--
+
+    <ImageButton
+        android:id="@+id/change_photo_button"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_below="@id/profile_photo"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/change_photo_button_background"
+        android:src="@drawable/change_photo_button_icon" /> -->
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/change_picutre_button"
+            android:layout_marginTop="0dp">
+
+            <TextView
+                android:id="@+id/username_field_text"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="40dp"
+
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/josefin_slab"
+                android:text="@string/username_fieldtext"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:typeface="sans"
+                app:cornerRadius="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/username_field"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/input_field_format"
+                android:drawablePadding="10dp"
+                android:fontFamily="@font/josefin_slab"
+                android:hint="@string/username_hint"
+                android:inputType="textVisiblePassword|textNoSuggestions"
+                android:textColorHint="@color/black"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/username_field_text"
+                app:layout_constraintTop_toBottomOf="@+id/username_field_text"
+                tools:ignore="TextContrastCheck,TouchTargetSizeCheck"
+                />
+
+            <Button
+                android:id="@+id/login_account_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+
+                android:backgroundTint="@color/startup_button_background"
+                android:fontFamily="@font/josefin_slab"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:text="@string/login_button_text"
+                android:textAppearance="@style/staruppagebutton_style"
+                app:cornerRadius="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/username_field"
+                app:layout_constraintVertical_bias="0.38" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!-- <Button
+             android:id="@+id/login_button"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/username_field"
+             android:layout_marginTop="32dp"
+             android:layout_marginStart="32dp"
+             android:layout_marginEnd="32dp"
+             android:backgroundTint="@color/login_button_background"
+             android:fontFamily="@font/josefin_sans_thin"
+             android:text="@string/login_button_text"
+             android:textAppearance="@style/login_button_style"
+             app:cornerRadius="30dp" /> -->
+
+
+    </RelativeLayout>
+</FrameLayout>

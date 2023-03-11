@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/base_background"
+tools:context=".ui.Startup.StartUpFragment">
+
+    <!-- Startup Page -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/startup_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/my_imageview"
+            android:layout_width="240dp"
+            android:layout_height="240dp"
+            android:layout_marginTop="60dp"
+            android:src="@drawable/user_startup_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_title"
+            android:contentDescription="Logo Visual for startup" />
+
+        <TextView
+            android:id="@+id/app_title"
+            android:layout_width="407dp"
+            android:layout_height="68dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:fontFamily="@font/baloo_chettan"
+            android:gravity="center_horizontal|top"
+            android:text="@string/app_title"
+            android:textColor="@color/white"
+            android:textSize="64sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/welcome_to" />
+
+        <Button
+            android:id="@+id/login_account_button"
+
+            android:layout_width="263dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="13dp"
+            android:backgroundTint="@color/startup_button_background"
+            android:fontFamily="@font/josefin_slab"
+            android:text="@string/login_button_text"
+            android:textAppearance="@style/staruppagebutton_style"
+            app:cornerRadius="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/create_account_button"
+            app:layout_constraintStart_toStartOf="@+id/create_account_button"
+            app:layout_constraintTop_toBottomOf="@+id/create_account_button"
+            app:layout_constraintVertical_bias="0.13999999" />
+
+        <TextView
+            android:id="@+id/welcome_to"
+            android:layout_width="411dp"
+            android:layout_height="22dp"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/baloo_chettan"
+            android:gravity="center_horizontal|top"
+            android:text="@string/welcome_to"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lineHeight="22sp" />
+
+        <Button
+            android:id="@+id/create_account_button"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="70dp"
+            android:backgroundTint="@color/startup_button_background"
+            android:fontFamily="@font/josefin_slab"
+            android:text="@string/createaccount_button_text"
+            android:textAppearance="@style/staruppagebutton_style"
+            app:cornerRadius="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/my_imageview" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

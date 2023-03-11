@@ -1,14 +1,19 @@
 package com.example.snailscurlup.ui.profile;
 
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.example.snailscurlup.NavigationHeaderListener;
 import com.example.snailscurlup.R;
+import com.example.snailscurlup.UserListListener;
+import com.example.snailscurlup.model.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +30,10 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private NavigationHeaderListener NavBarHeadListener; // get reference to main activity so that we can set  Haeder In bit
+    private UserListListener userListListener;
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -58,9 +67,39 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof UserListListener) {
+            userListListener = (UserListListener) context;
+            NavBarHeadListener = (NavigationHeaderListener) context;
+        } else {
+            throw new RuntimeException(context.toString() + " must implement UserListListener");
+        }
+    }
+
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        TextView info = view.findViewById(R.id.Infobox);
+        // retrieve active user
+        User activeUser = userListListener.getAllUsers().getActiveUser();
+
+
+        info.setText("Welcome"+activeUser.getUsername());
+
+
+
+        // Inflate the layout for this fragment
+
+
+
+
+
+
+
+        return view;
     }
 }

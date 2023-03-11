@@ -122,7 +122,7 @@ public class DecodeFragment extends Fragment {
                             .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                                 @Override
                                 public void onSuccess(Location location) {
-
+                                    boolean isvalid = false;
                                     if (location != null) {
 
                                         try {
@@ -139,8 +139,10 @@ public class DecodeFragment extends Fragment {
                                             geolocationStatus.setText("Added Successfully!");
                                         } catch (IOException e) {
                                             System.out.println("Exception occurred with location");
+                                            isvalid=false;
                                         }
                                     }
+
                                 }
                             });
                 } else {
