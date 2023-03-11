@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -45,6 +46,11 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     // For location
     implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    // For firebase
+    implementation platform('com.google.firebase:firebase-bom:31.2.0')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.6.0'
