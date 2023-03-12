@@ -2,15 +2,25 @@ package com.example.snailscurlup.ui.search;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 
 
 import com.example.snailscurlup.R;
+import com.example.snailscurlup.model.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,6 +39,10 @@ public class SearchFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private ArrayList<User> UserList;
+    private ArrayList<String> userName = new ArrayList<>();
+    private ArrayAdapter<User> userAdapter;
+    private User user;
     public SearchFragment() {
         // Required empty public constructor
     }
@@ -59,13 +73,40 @@ public class SearchFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+        UserList = new ArrayList<User>();
+        userAdapter = new UserAdapter(getActivity(),UserList);
+        // load the User file and put it in UserList here
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_search,container, false);
+        EditText inputField = view.findViewById(R.id.search_bar_input_text);
+        String input = inputField.getText().toString();
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Users");
+        reference.startAt(input).endAt(input+"\uf8ff").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot childSnapshot: snapshot.getChildren()) {
+                    String name = (childSnapshot.getValue(String.class));
+                    String email = childSnapshot.child("email").getValue(String.class);
+                    String phone = childSnapshot.child("PhoneNumber").getValue(String.class);
+                    String devceID = childSnapshot.child("deviceID").getValue(String.class);
+                    user = new User(name,email,phone,devceID);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        return view;
+
     }
 }
