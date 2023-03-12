@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -29,7 +30,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.CancellationTokenSource;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.util.List;
@@ -57,6 +64,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     MapView mapView;
     GoogleMap map;
+
+    FirebaseFirestore db;
 
     public MapFragment() {
         // Required empty public constructor
@@ -128,6 +137,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        db = FirebaseFirestore.getInstance();
     }
 
     // See this: https://stackoverflow.com/questions/16536414/how-to-use-mapview-in-android-using-google-map-v2
@@ -136,35 +146,60 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        this.fetchCurrentUserLocation();
-//        return inflater.inflate(R.layout.fragment_map, container, false);
         View v = inflater.inflate(R.layout.fragment_map, container, false);
-
         // Gets the MapView from the XML layout and creates it
         mapView = (MapView) v.findViewById(R.id.mappreview);
         mapView.onCreate(savedInstanceState);
-
-
         mapView.getMapAsync(this);
-
-
         return v;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        /**
+         * Callback method for when the map element is ready.
+         * This function populates the map with markers and other information.
+         * @param googleMap - The Google Map element to be populated
+         * @returns None
+         */
         map = googleMap;
+        // Try to set user location if allowed, skip it otherwise
         try {
             map.setMyLocationEnabled(true);
         } catch (SecurityException e) {
             Log.d("SECURITY", e.toString());
         }
-        LatLng sydney = new LatLng(-34, 151);
-        map.addMarker(new MarkerOptions()
-                .position(sydney)
-                .title("Marker in Sydney"));
+        // Get QR Code markers from database
+        // TODO: In the future, do this based on proximity (not ALL of them)
+        db.collection("QR")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                // Extract coordinates and name of each marker, plot them all
+                                GeoPoint coords = document.getGeoPoint("location");
+                                if (coords != null) {
+                                    // Only add markers with geopoints attached to them
+                                    String markerName = document.getString("name");
+                                    double lat = coords.getLatitude();
+                                    double lng = coords.getLongitude();
+                                    LatLng marker = new LatLng(lat, lng);
+                                    map.addMarker(new MarkerOptions().position(marker).title(markerName));
+                                }
+                                Log.d("FIREBASE", document.getId() + " => " + document.getData());
+                            }
+                        } else {
+                            Log.d("FIREBASE", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        // Move camera to North America roughly (fix this later maybe?)
         map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(43.1, -87.9)));
     }
+
+    // The following overrides are necessary or else the map can stop working sometimes.
 
     @Override
     public void onResume() {
