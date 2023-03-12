@@ -23,6 +23,7 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
@@ -50,12 +51,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private String mParam1;
     private String mParam2;
 
-    private GoogleMap qrmap;
-
     FusedLocationProviderClient fusedLocationProviderClient;
     // private ActivityMapsBinding binding;
-    double userLongitude = 0;  // Set initial values so that onMapReady() doesn't crash
-    double userLatitude = 0;
+    LatLng userPosition;
+
+    MapView mapView;
+    GoogleMap map;
 
     public MapFragment() {
         // Required empty public constructor
@@ -84,7 +85,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
          * Fetches the coordinates of the user's device and stores them in
          * longitude/latitude variables for later use.
          * @params None
-         * @returns None
+         * @returns Coordinates of the user
          */
         // Get user location
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
@@ -103,9 +104,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                                     List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
                                     // Double latitude = addressList.get(0).getLatitude();
                                     // Double longitude = addressList.get(0).getLongitude();
-                                    userLatitude = addressList.get(0).getLatitude();
-                                    userLongitude = addressList.get(0).getLongitude();
-                                    String address = addressList.get(0).getAddressLine(0);
+                                    double longi = addressList.get(0).getLongitude();
+                                    double lat = addressList.get(0).getLatitude();
+                                    // String address = addressList.get(0).getAddressLine(0);
 
                                     // TODO: UPLOAD LOCATION TO FIREBASE
 
@@ -127,44 +128,66 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        // TODO: Figure out a fix for this nonsense, map interactivity won't work until we do
-        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-                .findFragmentById(R.id.map);
-        if (mapFragment == null) {
-            Log.d("MAPFRAGMENTDEBUG", "SupportMagFragment is null! wtffff!!!!");
-        } else {
-            mapFragment.getMapAsync(this);
-        }
     }
+
+    // See this: https://stackoverflow.com/questions/16536414/how-to-use-mapview-in-android-using-google-map-v2
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        this.fetchCurrentUserLocation();
-        return inflater.inflate(R.layout.fragment_map, container, false);
+//        this.fetchCurrentUserLocation();
+//        return inflater.inflate(R.layout.fragment_map, container, false);
+        View v = inflater.inflate(R.layout.fragment_map, container, false);
+
+        // Gets the MapView from the XML layout and creates it
+        mapView = (MapView) v.findViewById(R.id.mappreview);
+        mapView.onCreate(savedInstanceState);
+
+
+        mapView.getMapAsync(this);
+
+
+        return v;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        /**
-         * Called when the Google Map is ready. Sets up the map for the user by
-         * populating it with markers to represent QR codes.
-         * @param googleMap: The GoogleMap object that represents the map
-         *                 widget. Used as a canvas for all the markers.
-         */
-        // TODO: Seems like markers/camera interactions are not quite working at the moment
-        // TODO: DEFINITELY INVESTIGATE LATER
-        qrmap = googleMap;
-        // Get user position to center the map there
-        this.fetchCurrentUserLocation();  // Ensure location is up to date
-        LatLng userPosition = new LatLng(this.userLatitude, this.userLongitude);
-        // TODO: Load QR code geolocations from database and populate map with them
-        // TODO: Also remove this temp marker (based on John Scott Library)
-        LatLng temp = new LatLng(53.52181218838866, -113.52282471289865);
-        qrmap.addMarker(new MarkerOptions().position(temp).title("John Scott Library"));
+        map = googleMap;
+        try {
+            map.setMyLocationEnabled(true);
+        } catch (SecurityException e) {
+            Log.d("SECURITY", e.toString());
+        }
+        LatLng sydney = new LatLng(-34, 151);
+        map.addMarker(new MarkerOptions()
+                .position(sydney)
+                .title("Marker in Sydney"));
+        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(43.1, -87.9)));
+    }
 
-        qrmap.moveCamera(CameraUpdateFactory.newLatLng(userPosition));
+    @Override
+    public void onResume() {
+        mapView.onResume();
+        super.onResume();
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
     }
 }

@@ -6,6 +6,7 @@ import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -78,12 +79,11 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new ScanFragment());
                     break;
                 case R.id.map:
-                    // binding.fragmentName.setText("Map");
-                    // replaceFragment(new MapFragment());
-                    // binding.bottomNavigationView.setSelectedItemId(R.id.profile);
-                    binding.bottomNavigationView.getChildAt(0).callOnClick();
-                    Intent switchToMapIntent = new Intent(this, com.example.snailscurlup.MapActivity.class);
-                    startActivity(switchToMapIntent);
+                    // Switch to Map activity
+//                    Intent switchToMapIntent = new Intent(this, com.example.snailscurlup.MapActivity.class);
+//                    startActivity(switchToMapIntent);
+                    binding.fragmentName.setText("Map");
+                    replaceFragment(new MapFragment());
                     break;
                 case R.id.leaderboard:
                     binding.fragmentName.setText("Leaderboard");
