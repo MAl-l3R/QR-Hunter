@@ -12,112 +12,20 @@
 
 
     <!-- Startup Page -->
-    <RelativeLayout
-        android:id="@+id/startup_page"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/startup_page">
-
-
-
-        <TextView
-            android:id="@+id/app_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="70dp"
-            android:layout_marginEnd="-1dp"
-            android:fontFamily="@font/baloo_chettan"
-            android:gravity="center_horizontal|top"
-            android:text="@string/app_title"
-            android:textColor="@color/white"
-            android:textSize="64sp" />
-
-        <TextView
-            android:id="@+id/welcome_to"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="47dp"
-            android:layout_marginRight="0dp"
-            android:fontFamily="@font/baloo_chettan"
-            android:gravity="center_horizontal|top"
-            android:text="@string/welcome_to"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            app:lineHeight="22sp" />
-
-        <ImageView
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:id="@+id/profile_image_circle"
-            android:src="@drawable/default_user_profphoto"
-            android:layout_marginTop="30dp"
-            android:layout_below="@+id/app_title"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true" />
-
-
-
-        <TextView
-            android:id="@+id/change_picutre_button"
-
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_image_circle"
-
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="0dp"
-            android:fontFamily="@font/josefin_slab"
-
-            android:text="@string/changeprofile_photo_text"
-            android:textAlignment="center"
-
-            android:textColor="@color/white"
-            android:textSize="25dp"
-            android:typeface="sans"
-            app:cornerRadius="30sp" />
-
-
-        <!--<com.example.catchqr.ui.profile.ProfileShapeView
-            android:id="@+id/profile_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"
-
-            app:borderColor="@color/profile_image_border"
-            app:borderWidth="4dp" /> -->
-
-<!--
-
-    <ImageButton
-        android:id="@+id/change_photo_button"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_below="@id/profile_photo"
-        android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/change_photo_button_background"
-        android:src="@drawable/change_photo_button_icon" /> -->
-
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/change_picutre_button"
-            android:layout_marginTop="0dp">
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/change_picutre_button"
+            app:layout_constraintVertical_bias="0.26999998">
 
             <TextView
                 android:id="@+id/username_field_text"
@@ -127,23 +35,24 @@
 
                 android:layout_marginStart="40dp"
 
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="16dp"
                 android:fontFamily="@font/josefin_slab"
                 android:text="@string/username_fieldtext"
                 android:textAlignment="center"
                 android:textColor="@color/white"
-                android:textSize="24sp"
+                android:textSize="30sp"
                 android:typeface="sans"
                 app:cornerRadius="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
             <EditText
                 android:id="@+id/username_field"
                 android:layout_width="0dp"
-                android:layout_height="38dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="10dp"
-                android:textColor="@color/black"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="50dp"
                 android:background="@drawable/input_field_format"
@@ -151,12 +60,12 @@
                 android:fontFamily="@font/josefin_slab"
                 android:hint="@string/username_hint"
                 android:inputType="textVisiblePassword|textNoSuggestions"
+                android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/username_field_text"
                 app:layout_constraintTop_toBottomOf="@+id/username_field_text"
-                tools:ignore="TextContrastCheck,TouchTargetSizeCheck"
-                />
+                tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
             <Button
                 android:id="@+id/login_account_button"
@@ -164,35 +73,78 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
 
+                android:layout_marginTop="80dp"
                 android:backgroundTint="@color/startup_button_background"
                 android:fontFamily="@font/josefin_slab"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
+                android:paddingLeft="70dp"
+                android:paddingRight="70dp"
                 android:text="@string/login_button_text"
                 android:textAppearance="@style/staruppagebutton_style"
-                app:cornerRadius="30dp"
+                android:textSize="50sp"
+                app:cornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/username_field"
-                app:layout_constraintVertical_bias="0.38" />
+                app:layout_constraintVertical_bias="0.22000003" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            android:id="@+id/app_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/baloo_chettan"
+            android:gravity="center_horizontal|top"
+            android:text="@string/app_title"
+            android:textColor="@color/white"
+            android:textSize="80sp"
+            app:layout_constraintTop_toBottomOf="@+id/welcome_to" />
 
-        <!-- <Button
-             android:id="@+id/login_button"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_below="@id/username_field"
-             android:layout_marginTop="32dp"
-             android:layout_marginStart="32dp"
-             android:layout_marginEnd="32dp"
-             android:backgroundTint="@color/login_button_background"
-             android:fontFamily="@font/josefin_sans_thin"
-             android:text="@string/login_button_text"
-             android:textAppearance="@style/login_button_style"
-             app:cornerRadius="30dp" /> -->
+        <TextView
+            android:id="@+id/welcome_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/baloo_chettan"
+            android:gravity="center_horizontal|top"
+            android:text="@string/welcome_to"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.01999998"
+            app:lineHeight="22sp" />
 
+        <TextView
+            android:id="@+id/change_picutre_button"
 
-    </RelativeLayout>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginTop="5dp"
+
+            android:fontFamily="@font/josefin_slab"
+            android:text="@string/changeprofile_photo_text"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:typeface="sans"
+            app:cornerRadius="30sp"
+            app:layout_constraintTop_toBottomOf="@+id/profile_image_circle"
+            tools:layout_editor_absoluteX="-16dp" />
+
+        <ImageView
+            android:id="@+id/profile_image_circle"
+            android:layout_width="0dp"
+            android:layout_height="225dp"
+            android:layout_marginTop="34dp"
+            android:adjustViewBounds="false"
+            android:scaleType="centerInside"
+            android:src="@drawable/default_user_profphoto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </FrameLayout>

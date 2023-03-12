@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -14,6 +17,8 @@ import com.example.snailscurlup.NavigationHeaderListener;
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
 import com.example.snailscurlup.model.User;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +38,10 @@ public class ProfileFragment extends Fragment {
 
     private NavigationHeaderListener NavBarHeadListener; // get reference to main activity so that we can set  Haeder In bit
     private UserListListener userListListener;
+
+    private FloatingActionButton profileFloaMenuicon;
+
+    private TextView userUsernameField,userTotalScoreField,userCodeScannedField;
 
 
     public ProfileFragment() {
@@ -83,12 +92,27 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        TextView info = view.findViewById(R.id.Infobox);
+
         // retrieve active user
         User activeUser = userListListener.getAllUsers().getActiveUser();
 
+        profileFloaMenuicon= view.findViewById(R.id.profile_floating_menuicon);
+        userUsernameField= view.findViewById(R.id.username_fieldprof);
+        userTotalScoreField = view.findViewById(R.id.totalscore_fieldprof);
+        userCodeScannedField= view.findViewById(R.id.codesscanned_fieldprof);
 
-        info.setText("Welcome"+activeUser.getUsername());
+        profileFloaMenuicon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomSheetDialog();
+            }
+        });
+
+
+
+
+
+        userUsernameField.setText(activeUser.getUsername());
 
 
 
@@ -101,5 +125,49 @@ public class ProfileFragment extends Fragment {
 
 
         return view;
+    }
+
+    /*m https://www.section.io/engineering-education/bottom-sheet-dialogs-using-android-studio/ */
+
+    private void showBottomSheetDialog() {
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
+        bottomSheetDialog.setContentView(R.layout.popup_menu_profile);
+
+
+        LinearLayout share = bottomSheetDialog.findViewById(R.id.shareLinearLayout);
+        LinearLayout upload = bottomSheetDialog.findViewById(R.id.uploadLinearLayout);
+        LinearLayout download = bottomSheetDialog.findViewById(R.id.download);
+
+
+
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Share is Clicked", Toast.LENGTH_LONG).show();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Upload is Clicked", Toast.LENGTH_LONG).show();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Download is Clicked", Toast.LENGTH_LONG).show();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+
+
+        bottomSheetDialog.show();
     }
 }

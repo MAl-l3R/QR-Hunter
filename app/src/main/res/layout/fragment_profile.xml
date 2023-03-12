@@ -1,20 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_background"
-    tools:context=".ui.profile.ProfileFragment">
+    tools:context=".ui.Startup.LoginFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:id="@+id/Infobox"
-        android:layout_height="wrap_content"
-        android:text="Profile Fragment"
-        android:textColor="@color/white"
-        android:textSize="26dp"
-        android:layout_gravity="center"/>
 
+
+
+    <!-- Startup Page -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/profile_floating_menuicon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:contentDescription="menu icon"
+            android:src="@drawable/float_menu_icon"
+            app:backgroundTint="@color/navbar_background"
+            app:borderWidth="0dp"
+            app:fabCustomSize="60dp"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:maxImageSize="32dp" />
+
+        <ImageView
+            android:id="@+id/profile_image_circle"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="18dp"
+            android:src="@drawable/default_user_profphoto"
+            app:layout_constraintBottom_toBottomOf="@+id/user_info_section"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/user_info_section"
+            app:layout_constraintVertical_bias="0.32999998" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/user_info_section"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/profile_image_circle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <TextView
+                android:id="@+id/username_textprof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/josefin_slab"
+                android:gravity="start|center_vertical"
+                android:text="@string/username_fieldtext"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/username_fieldprof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center_vertical"
+                android:text="@string/user_profile_fieldtext"
+                android:textColor="@color/bluefieldtext"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="@+id/username_textprof"
+                app:layout_constraintTop_toBottomOf="@+id/username_textprof" />
+
+            <TextView
+                android:id="@+id/totalscore_textprof"
+                android:layout_width="185dp"
+                android:layout_height="32dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/josefin_slab"
+                android:gravity="start|center_horizontal|center_vertical"
+                android:text="@string/totalscore_fieldtext"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="@+id/username_textprof"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/username_textprof"
+                app:layout_constraintTop_toBottomOf="@+id/username_fieldprof" />
+
+            <TextView
+                android:id="@+id/totalscore_fieldprof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center_vertical"
+                android:text="@string/totalscore_fieldprof"
+                android:textColor="@color/bluefieldtext"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="@+id/totalscore_textprof"
+                app:layout_constraintTop_toBottomOf="@+id/totalscore_textprof" />
+
+
+            <TextView
+                android:id="@+id/codesscanned_textprof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/josefin_slab"
+                android:gravity="start|center_vertical"
+                android:text="@string/codesscanned_fieldtext"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                app:layout_constraintEnd_toEndOf="@+id/totalscore_textprof"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/username_textprof"
+                app:layout_constraintTop_toBottomOf="@+id/totalscore_fieldprof" />
+
+            <TextView
+                android:id="@+id/codesscanned_fieldprof"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:gravity="start|center_vertical"
+                android:text="@string/codesscanned_fieldprof"
+                android:textAlignment="center"
+                android:textColor="@color/bluefieldtext"
+                android:textSize="30sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/codesscanned_textprof"
+                app:layout_constraintTop_toBottomOf="@+id/codesscanned_textprof"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/my_qr_codes"
+            android:layout_width="155dp"
+            android:layout_height="34dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:fontFamily="@font/josefin_slab"
+            android:gravity="bottom|center_horizontal"
+            android:text="My QR Codes"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="@+id/user_info_section"
+            app:layout_constraintEnd_toEndOf="@+id/profile_image_circle"
+            app:layout_constraintStart_toStartOf="@+id/profile_image_circle"
+            app:layout_constraintTop_toBottomOf="@+id/profile_image_circle"
+            app:layout_constraintVertical_bias="1.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

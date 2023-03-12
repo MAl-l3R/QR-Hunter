@@ -11,86 +11,75 @@
 
 
     <!-- Startup Page -->
-    <RelativeLayout
-        android:id="@+id/startup_page"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/startup_page">
-
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/welcome_to"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="0dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/baloo_chettan"
             android:gravity="center_horizontal|top"
             android:text="@string/welcome_to"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             app:lineHeight="22sp" />
 
         <TextView
             android:id="@+id/app_title"
             android:layout_width="match_parent"
-            android:layout_height="79dp"
-            android:layout_below="@+id/welcome_to"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/baloo_chettan"
             android:gravity="center_horizontal|top"
             android:text="@string/app_title"
             android:textColor="@color/white"
-            android:textSize="64sp" />
+            android:textSize="64sp"
+            app:layout_constraintTop_toBottomOf="@+id/welcome_to" />
 
         <ImageView
             android:id="@+id/profile_image_circle"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
-            android:layout_below="@+id/app_title"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/default_user_profphoto" />
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:adjustViewBounds="false"
+            android:scaleType="centerInside"
+            android:src="@drawable/default_user_profphoto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/app_title" />
 
         <TextView
             android:id="@+id/change_picutre_button"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_image_circle"
 
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
+            android:layout_marginTop="5dp"
 
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="0dp"
             android:fontFamily="@font/josefin_slab"
-
             android:text="@string/changeprofile_photo_text"
             android:textAlignment="center"
-
             android:textColor="@color/white"
-            android:textSize="25dp"
+            android:textSize="30dp"
             android:typeface="sans"
-            app:cornerRadius="30sp" />
-
-
+            app:cornerRadius="30sp"
+            app:layout_constraintTop_toBottomOf="@+id/profile_image_circle"
+            tools:layout_editor_absoluteX="-16dp" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/change_picutre_button"
-            android:layout_marginTop="0dp">
+            android:layout_height="0dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/change_picutre_button"
+            app:layout_constraintVertical_bias="0.0">
 
             <TextView
                 android:id="@+id/username_field_text"
@@ -113,7 +102,7 @@
             <EditText
                 android:id="@+id/username_field"
                 android:layout_width="0dp"
-                android:layout_height="38dp"
+                android:layout_height="40dp"
 
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
@@ -123,8 +112,8 @@
                 android:fontFamily="@font/josefin_slab"
                 android:hint="@string/username_hint"
                 android:inputType="textVisiblePassword|textNoSuggestions"
-                android:textColorHint="@color/black"
                 android:textColor="@color/black"
+                android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.25"
                 app:layout_constraintStart_toStartOf="@+id/username_field_text"
@@ -151,8 +140,7 @@
             <EditText
                 android:id="@+id/Email_field"
                 android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:textColor="@color/black"
+                android:layout_height="40sp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/input_field_format"
@@ -160,6 +148,7 @@
                 android:fontFamily="@font/josefin_slab"
                 android:hint="@string/username_hint"
                 android:inputType="textVisiblePassword|textNoSuggestions|textEmailAddress"
+                android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="@+id/username_field"
                 app:layout_constraintStart_toStartOf="@+id/email_field_text"
@@ -187,8 +176,7 @@
             <EditText
                 android:id="@+id/phonenumber_field"
                 android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:textColor="@color/black"
+                android:layout_height="40dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/input_field_format"
@@ -196,6 +184,7 @@
                 android:fontFamily="@font/josefin_slab"
                 android:hint="@string/username_hint"
                 android:inputType="textVisiblePassword|textNoSuggestions|textEmailAddress|phone"
+                android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 app:layout_constraintEnd_toEndOf="@+id/Email_field"
                 app:layout_constraintStart_toStartOf="@+id/phonenumber_field_text"
@@ -211,34 +200,20 @@
                 android:backgroundTint="@color/startup_button_background"
                 android:fontFamily="@font/josefin_slab"
                 android:paddingLeft="50dp"
+                android:paddingTop="15dp"
                 android:paddingRight="50dp"
+                android:paddingBottom="15dp"
                 android:text="@string/createaccount_button_text"
                 android:textAlignment="center"
                 android:textAppearance="@style/staruppagebutton_style"
-                android:textSize="30sp"
+                android:textSize="30dp"
                 app:cornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/phonenumber_field"
-                app:layout_constraintVertical_bias="0.52" />
+                app:layout_constraintVertical_bias="0.53999996" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <!-- <Button
-             android:id="@+id/login_button"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:layout_below="@id/username_field"
-             android:layout_marginTop="32dp"
-             android:layout_marginStart="32dp"
-             android:layout_marginEnd="32dp"
-             android:backgroundTint="@color/login_button_background"
-             android:fontFamily="@font/josefin_sans_thin"
-             android:text="@string/login_button_text"
-             android:textAppearance="@style/login_button_style"
-             app:cornerRadius="30dp" /> -->
-
-
-    </RelativeLayout>
 </FrameLayout>

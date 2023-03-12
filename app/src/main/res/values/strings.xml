@@ -14,4 +14,26 @@
     <string name="username_fieldtext">Username:</string>
     <string name="email_fieldtext">Email</string>
     <string name="phonenumber_fieldtext">Phone Number:</string>
+    <string name="user_profile_fieldtext">*********</string>
+    <string name="username_totalscore_fieldtext">Total Score:</string>
+
+    <string name="totalscore_fieldtext">Total Score:</string>
+    <string name="totalscore_fieldprof">*******</string>
+    <string name="codesscanned_fieldtext">Codes Scanned:</string>
+    <string name="codesscanned_fieldprof">********</string>
+    <string name="logo_visual_for_startup">Logo Visual for startup</string>
+
+
+
+    <string name="login_title">QR Hunter Login</string>
+    <string name="login_username">Username</string>
+    <string name="login_password">Password</string>
+    <string name="login_button">LOGIN</string>
+
+
+
+    <string name="password_hint">Password</string>
+
+    <string name="reset_password_link_text">Forgot password?</string>
+
 </resources>
