@@ -4,7 +4,9 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -77,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new ScanFragment());
                     break;
                 case R.id.map:
+                    // Switch to Map activity
+//                    Intent switchToMapIntent = new Intent(this, com.example.snailscurlup.MapActivity.class);
+//                    startActivity(switchToMapIntent);
                     binding.fragmentName.setText("Map");
                     replaceFragment(new MapFragment());
                     break;
