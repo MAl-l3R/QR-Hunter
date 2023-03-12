@@ -5,6 +5,7 @@ import static android.Manifest.permission.CAMERA;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 import static android.view.View.GONE;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -102,6 +103,9 @@ public class MainActivity extends AppCompatActivity implements UserListListener,
                     replaceFragment(new ScanFragment());
                     break;
                 case R.id.map:
+                    // Switch to Map activity
+//                    Intent switchToMapIntent = new Intent(this, com.example.snailscurlup.MapActivity.class);
+//                    startActivity(switchToMapIntent);
                     binding.fragmentName.setText("Map");
                     replaceFragment(new MapFragment());
                     break;
