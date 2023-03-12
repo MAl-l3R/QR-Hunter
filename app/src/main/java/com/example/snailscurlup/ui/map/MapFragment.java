@@ -129,9 +129,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         // TODO: Figure out a fix for this nonsense, map interactivity won't work until we do
-//        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager()
+                .findFragmentById(R.id.map);
+        if (mapFragment == null) {
+            Log.d("MAPFRAGMENTDEBUG", "SupportMagFragment is null! wtffff!!!!");
+        } else {
+            mapFragment.getMapAsync(this);
+        }
     }
 
     @Override
