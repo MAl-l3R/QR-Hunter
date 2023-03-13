@@ -75,8 +75,8 @@ public class DecodeFragment extends Fragment {
                 String hash = getHash256(data);
 
                 // Get the seed value using the hash value
-                BigInteger bigSeed = new BigInteger(hash, 16);  // BigInteger because hash value is very big
-                long seed = bigSeed.longValue();
+                // Using BigInteger because hash value is very big
+                BigInteger seed = new BigInteger(hash, 16);
 
                 // Get and set image using seed value
                 ImageView imageView = view.findViewById(R.id.QR_image);
@@ -86,7 +86,7 @@ public class DecodeFragment extends Fragment {
                         .into(imageView);
 
                 // Get and set name using seed value
-                Random random = new Random(seed);
+                Random random = new Random(seed.longValue());
                 int adjIndex = random.nextInt(names.adjectives.length);
                 String name = names.adjectives[adjIndex];
                 TextView nameView = view.findViewById(R.id.QR_name);
