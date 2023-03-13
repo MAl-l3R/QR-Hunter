@@ -8,6 +8,15 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * User
+ *
+ * Represents an account to be used with the application.
+ * Stores QR codes and user information.
+ *
+ * @author AyanB123
+ */
+
 public class User implements Serializable {
     private String username;
     private String email;
@@ -78,15 +87,28 @@ public class User implements Serializable {
     }
 
     // toString method to display user information
+
+    /**
+     * Displays a serialized version of a user's information.
+     * @return A string that contains all of the user's information.
+     */
     @Override
     public String toString() {
         return "Username: " + username + ", Email: " + email + ", Phone Number: " + phoneNumber + ", Profile Photo Path: " + profilePhotoPath;
     }
 
+    /**
+     * Returns a list of a user's scanned QR codes.
+     * @return The list of the user's scanned QR codes.
+     */
     public ArrayList<QrCode> getScannedQrCodes() {
         return scannedQrCodes;
     }
 
+    /**
+     * Adds a QR code to the user's library of scanned QR codes.
+     * @param scannedQrCodes - A QrCode object to be added to library.
+     */
    public void addScannedQrCodes(QrCode scannedQrCodes) {
         this.scannedQrCodes.add(scannedQrCodes);
    }

@@ -26,6 +26,16 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /* TOdO: implement listener so asynchonous operation  work */
+
+/**
+ * Database
+ *
+ * Represents a connection to the Firebase database that the app needs to run.
+ * Intended to abstract away certain database operations and make it easier to
+ * integrate database operations with the rest of the app.
+ *
+ * @author Ayan123
+ */
 public class Database {
 
     private static Database instance;
@@ -38,6 +48,10 @@ public class Database {
         usersRef = db.collection("users");
     }
 
+    /**
+     * Returns the instance of the database (which is global).
+     * @return An instance of the database.
+     */
     public static Database getInstance() {
         if (instance == null) {
             instance = new Database();
@@ -45,6 +59,10 @@ public class Database {
         return instance;
     }
 
+    /**
+     * Uploads user info to the database. Stores user information in Firebase.
+     * @param user - An object containing all of the user information.
+     */
     public void addUser(User user) {
         HashMap<String, Object> userdata = new HashMap<>();
         userdata.put("email", user.getEmail());
@@ -74,6 +92,10 @@ public class Database {
 
     }
 
+    /**
+     * Deletes a user's data from the database.
+     * @param user - Object referencing the user to be deleted
+     */
     public void removeUser(User user) {
         usersRef
                 .document(user.getUsername())
@@ -98,6 +120,13 @@ public class Database {
     }
 
     /* refeernce link https://medium.com/firebase-developers/why-are-firebase-apis-asynchronous-callbacks-promises-tasks-e037a6654a93 */
+
+    /**
+     * Used to check if an account with a certain username has already been registered.
+     * Warns user if the username is already taken, and disallows account creation.
+     * @param username - The username (String) to check if already registered.
+     * @return Whether or not the username is available (False) or taken (True)
+     */
     public boolean isUsernameTaken(String username) {
         boolean isTaken = false;
         Task task = usersRef.document(username).get();
@@ -114,8 +143,11 @@ public class Database {
     }
 
 
-
-
+    /**
+     * Fetches the User object associated with a certain username from the database.
+     * @param username - The username whose data is to be retrieved
+     * @return - a User object containing all info tied to the username
+     */
     public User getUserByUsername(String username) {
         final User[] user = {null};
 
@@ -173,6 +205,11 @@ public class Database {
                 ); */
 
 
+    /**
+     * Updates a user's information in the database.
+     * @param user - The User object containing the information that will
+     *             overwrite the previous information.
+     */
     public void updateUser(User user) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("email", user.getEmail());
@@ -230,6 +267,10 @@ public class Database {
 
     }
 
+    /**
+     * Sets which user/account is currently active within the app.
+     * @param user - The user who is supposed to be currently active
+     */
     public void setActiveUser(User user) {
         HashMap<String, Object> data = new HashMap<>();
         data.put("username", user.getUsername());
@@ -255,6 +296,10 @@ public class Database {
                 );
     }
 
+    /**
+     * Fetches the currently active user within the instance of the app.
+     * @return The User object for the active user
+     */
     public User getActiveUser() {
         final User[] activeUser = {null};
         usersRef.document("active")
@@ -286,7 +331,10 @@ public class Database {
         return activeUser[0];
         }
 
-
+    /**
+     * Fetches a list of all users currently stored in the database.
+      * @return a List object containing all User objects in the DB.
+     */
     public List<User> getAllUsers() {
         List<User> userList = new ArrayList<>(); // create empty list to add users to
 
@@ -316,6 +364,9 @@ public class Database {
         return userList;
     }
 
+    /**
+     * Deletes the active user from the database.
+     */
     public void removeActiveUser() {
         usersRef.document("active")
                 .delete()
