@@ -85,7 +85,7 @@ public class MainActivityTest{
     public void canLogin() throws Exception {
 
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
-        /*TODO: The login process goes weird might because user can only see part of the button?*/
+        /*TODO: The login process goes weird might because user can only see part of the button? Since if I manually "helping" the click it will pass*/
         //login process
         solo.clickOnView(solo.getView(R.id.login_account_button));
         solo.enterText((EditText) solo.getView(R.id.username_field), "user1234");
