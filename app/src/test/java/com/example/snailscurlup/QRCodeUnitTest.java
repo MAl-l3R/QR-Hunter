@@ -51,4 +51,30 @@ public class QRCodeUnitTest {
         String url = qr.getURL();
         assertTrue(url != null);
     }
+
+    @Test
+    public void testQRHash() {
+        /**
+         * Tests whether the QR code gets a hash when its generated
+         * each time creating a QrCode object it will gets a hash from method getHash256()
+         * */
+        QrCode qr = mockQRCode();
+        String hash = qr.getHash256("123456");
+        assertTrue(hash != null);
+
+
+
+    }
+
+    @Test
+    public void testQRGeoPoint() {
+        /**
+         * Tests whether the Qr code gets a geolocation when its generated
+         * this function is not implemented yet
+         * */
+
+    }
 }
+
+
+
