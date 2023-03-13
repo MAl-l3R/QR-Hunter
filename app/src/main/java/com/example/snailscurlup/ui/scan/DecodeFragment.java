@@ -3,6 +3,7 @@ package com.example.snailscurlup.ui.scan;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.app.Activity.RESULT_OK;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
 
 import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
 
@@ -43,8 +44,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class DecodeFragment extends Fragment{
 
@@ -107,14 +110,22 @@ public class DecodeFragment extends Fragment{
                 newQRCode = new QrCode(data);
 
 
-                // Get and set imageb
-                ImageView imageView = view.findViewById(R.id.QR_image);
+                // Get the seed value using the hash value
+                // Using BigInteger because hash value is very big
+                // BigInteger seed = new BigInteger(hash, 16);
 
+                // Get and set image using seed value
+                ImageView imageView = view.findViewById(R.id.QR_image);
+                // String URL = "https://picsum.photos/seed/" + String.valueOf(seed) + "/270";
                 Picasso.get()
                         .load(newQRCode.getURL())
                         .into(imageView);
 
 
+                // Get and set name using seed value
+                // Random random = new Random(seed.longValue());
+                // int adjIndex = random.nextInt(names.adjectives.length);
+                // String name = names.adjectives[adjIndex];
                 TextView nameView = view.findViewById(R.id.QR_name);
                 nameView.setText(newQRCode.getName());
 
@@ -131,7 +142,7 @@ public class DecodeFragment extends Fragment{
         addPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent cameraIntent = new Intent(ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CameraRequestCode);
             }
         });
@@ -151,6 +162,24 @@ public class DecodeFragment extends Fragment{
                                 public void onSuccess(Location location) {
                                     setGeoLocation(location);
 
+                                    if (location != null) {
+
+                                        try {
+                                            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                                            List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                            double latitude = addressList.get(0).getLatitude();
+                                            double longitude = addressList.get(0).getLongitude();
+                                            String address = addressList.get(0).getAddressLine(0);
+
+                                            // TODO: UPLOAD LOCATION TO FIREBASE
+
+
+
+                                            geolocationStatus.setText("Added Successfully!");
+                                        } catch (IOException e) {
+                                            System.out.println("Exception occurred with location");
+                                        }
+                                    }
                                 }
                             });
                 } else {
