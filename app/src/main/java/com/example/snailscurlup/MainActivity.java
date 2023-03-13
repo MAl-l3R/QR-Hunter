@@ -3,10 +3,12 @@ package com.example.snailscurlup;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.view.View.GONE;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -17,7 +19,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.snailscurlup.controllers.AllUsers;
 import com.example.snailscurlup.databinding.ActivityMainBinding;
+import com.example.snailscurlup.model.User;
+import com.example.snailscurlup.ui.Startup.StartUpFragment;
 import com.example.snailscurlup.ui.leaderboard.LeaderboardFragment;
 import com.example.snailscurlup.ui.map.MapFragment;
 import com.example.snailscurlup.ui.profile.ProfileFragment;
@@ -28,12 +33,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationHeaderListener,UserListListener{
 
     ActivityMainBinding binding;
     ActivityResultLauncher<String[]> PermissionResultLauncher;
     public boolean CameraPermission = false;
     public boolean LocationPermission = false;
+
+    private User activeUser;
+    private AllUsers userList;
+    private TextView header;
+
+
+
+
+
 
 
     @Override
@@ -41,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         PermissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
+
+
             @Override
             public void onActivityResult(Map<String, Boolean> result) {
 
@@ -62,7 +78,22 @@ public class MainActivity extends AppCompatActivity {
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        replaceFragment(new ProfileFragment());
+
+        userList = AllUsers.getInstance(MainActivity.this);
+        // set active user
+        activeUser = null;
+
+
+
+
+        visiblityNavigation(false,"");
+        if  (!userList.hasActiveUser()){
+            replaceFragment(new StartUpFragment());
+        } else{
+            replaceFragment(new ProfileFragment());
+
+        }
+
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -95,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -126,4 +158,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void visiblityNavigation(boolean visibility, String headerText) {
+
+        if (!visibility) {
+            binding.bottomNavigationView.setVisibility(GONE);
+            binding.fragmentName.setVisibility(GONE);
+
+        } else {
+            binding.bottomNavigationView.setVisibility(View.VISIBLE);
+            binding.fragmentName.setVisibility(View.VISIBLE);
+            binding.fragmentName.setText(headerText);
+
+            }
+
+    }
+
+    @Override
+    public User getActiveUser() {
+        return userList.getActiveUser();
+    }
+
+    @Override
+    public AllUsers getAllUsers() {
+        return  userList.getUsers();
+    }
+
 }
+
+

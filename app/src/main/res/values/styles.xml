@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+
+
+
+
+
+    <!-- Create BUtton text style-->
+    <style name="staruppagebutton_style">
+
+        <item name="android:textSize">
+            40sp
+        </item>
+
+        <item name="android:textColor">
+            #FFFFFF
+        </item>
+
+
+
+    </style>
+
+
+
+
+</resources>

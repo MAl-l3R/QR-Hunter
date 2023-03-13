@@ -7,6 +7,7 @@ import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
 
 import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Address;
@@ -15,6 +16,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -30,7 +32,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.snailscurlup.NavigationHeaderListener;
 import com.example.snailscurlup.R;
+import com.example.snailscurlup.UserListListener;
+import com.example.snailscurlup.controllers.AllUsers;
+import com.example.snailscurlup.model.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.CancellationTokenSource;
@@ -39,22 +45,51 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 
-public class DecodeFragment extends Fragment {
+public class DecodeFragment extends Fragment{
 
     View view;
     final int CameraRequestCode = 2;
     TextView photoStatus, geolocationStatus;
     NamesOfQR names = new NamesOfQR();
     FusedLocationProviderClient fusedLocationProviderClient;
+
+    private NavigationHeaderListener NavBarHeadListener; // get reference to main activity so that we can set  Haeder In bit
+    private UserListListener userListListener; // get reference to main activity so that we can set  Haeder In bit
+
+    private String data;
+
+    private User activeUser;
+
+    private AllUsers allUsers;
+    private QrCode newQRCode;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof UserListListener) {
+            userListListener = (UserListListener) context;
+            NavBarHeadListener = (NavigationHeaderListener) context;
+        } else {
+            throw new RuntimeException(context + " must implement UserListListener, or NavBarHeadlIstner");
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        activeUser = userListListener.getAllUsers().getActiveUser();
+
+
+    }
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPause();
+        activeUser = userListListener.getAllUsers().getActiveUser();
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,31 +106,33 @@ public class DecodeFragment extends Fragment {
                 // Retrieve data from QR code
                 String data = result.getString("scanData");
 
-                // Get data's hash value using SHA-256
-                String hash = getHash256(data);
+                // get object for new Qr code
+                newQRCode = new QrCode(data);
+
 
                 // Get the seed value using the hash value
                 // Using BigInteger because hash value is very big
-                BigInteger seed = new BigInteger(hash, 16);
+                // BigInteger seed = new BigInteger(hash, 16);
 
                 // Get and set image using seed value
                 ImageView imageView = view.findViewById(R.id.QR_image);
-                String URL = "https://picsum.photos/seed/" + String.valueOf(seed) + "/270";
+                // String URL = "https://picsum.photos/seed/" + String.valueOf(seed) + "/270";
                 Picasso.get()
-                        .load(URL)
+                        .load(newQRCode.getURL())
                         .into(imageView);
 
+
                 // Get and set name using seed value
-                Random random = new Random(seed.longValue());
-                int adjIndex = random.nextInt(names.adjectives.length);
-                String name = names.adjectives[adjIndex];
+                // Random random = new Random(seed.longValue());
+                // int adjIndex = random.nextInt(names.adjectives.length);
+                // String name = names.adjectives[adjIndex];
                 TextView nameView = view.findViewById(R.id.QR_name);
-                nameView.setText(name);
+                nameView.setText(newQRCode.getName());
 
                 // Get and set points
-                int pointsInt = calculateScore(hash);
+
                 TextView pointsView = view.findViewById(R.id.QR_points);
-                String points = String.valueOf(pointsInt) + " points";
+                String points = String.valueOf(newQRCode.getPointsInt()) + " points";
                 pointsView.setText(points);
             }
         });
@@ -123,6 +160,7 @@ public class DecodeFragment extends Fragment {
                             .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                                 @Override
                                 public void onSuccess(Location location) {
+                                    setGeoLocation(location);
 
                                     if (location != null) {
 
@@ -157,6 +195,10 @@ public class DecodeFragment extends Fragment {
             public void onClick(View view) {
                 // TODO: INSERT FIREBASE CODE
 
+                // retrieve active user
+                // retrieve active user
+                activeUser =  userListListener.getAllUsers().getActiveUser();
+                userListListener.getAllUsers().getActiveUser().addScannedQrCodes(newQRCode);
 
                 // Go back to scan fragment
                 Fragment fragment = new ScanFragment();
@@ -184,56 +226,38 @@ public class DecodeFragment extends Fragment {
         }
     }
 
-    public String getHash256(@NonNull String data) {
-        String hash256;
-        try {
-            // From https://www.baeldung.com/sha-256-hashing-java
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = md.digest(data.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hashHex = new StringBuilder(2 * hashBytes.length);
-            for (int i = 0; i < hashBytes.length; i++) {
-                String hex = Integer.toHexString(0xff & hashBytes[i]);
-                if(hex.length() == 1) {
-                    hashHex.append('0');
-                }
-                hashHex.append(hex);
-            }
-            hash256 = hashHex.toString();
-        }
-        catch (NoSuchAlgorithmException e) {
-            System.err.println("Use SHA-256 message digest algorithm");
-            hash256 = Integer.toHexString(data.hashCode());
-        }
-        return hash256;
+
+
+    public QrCode getQrCode(String data){
+        QrCode QrCode = new QrCode(data);
+        return QrCode;
     }
 
-    public int calculateScore(@NonNull String hex) {
-        int score = 0;
-        Map<Integer, Integer> digitCount = new HashMap<>();
+    public void setGeoLocation(Location currlocation){
+        boolean isvalid = false;
+        if (currlocation!= null) {
 
-        for (int i = 0; i < hex.length(); i++) {
-            String hexValue = String.valueOf(hex.charAt(i));
-            int digit = Integer.parseInt(hexValue, 16);
-            // If this is a new digit, add it to the map with a count of 1
-            if (!digitCount.containsKey(digit)) {
-                digitCount.put(digit, 1);
-            }
-            // Otherwise, increment the count for this digit
-            else {
-                digitCount.put(digit, digitCount.get(digit) + 1);
-            }
-        }
+            try {
+                Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                List<Address> addressList = geocoder.getFromLocation(currlocation.getLatitude(), currlocation.getLongitude(),1);
+                newQRCode.setscanadresslist(addressList);
 
-        for (int i = 0; i < digitCount.size(); i++) {
-            int digit = (int) digitCount.keySet().toArray()[i];
-            int count = digitCount.get(digit);
 
-            if (count >= 2) {
-                int repeatScore = (int) Math.pow(2, count - 1);
-                score += repeatScore;
+                // TODO: UPLOAD LOCATION TO FIREBASE
+
+
+
+                geolocationStatus.setText("Added Successfully!");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } {
+                System.out.println("Exception occurred with location");
+                isvalid=false;
             }
         }
-        return score;
     }
+
+
+
 }
 
