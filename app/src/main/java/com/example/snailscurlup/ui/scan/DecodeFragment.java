@@ -74,19 +74,20 @@ public class DecodeFragment extends Fragment {
                 // Get data's hash value using SHA-256
                 String hash = getHash256(data);
 
-                // Get and set image
+                // Get the seed value using the hash value
+                BigInteger bigSeed = new BigInteger(hash, 16);  // BigInteger because hash value is very big
+                long seed = bigSeed.longValue();
+
+                // Get and set image using seed value
                 ImageView imageView = view.findViewById(R.id.QR_image);
-                // since hash value can be very large, we need to use BigInteger instead of int
-                BigInteger seed = new BigInteger(hash, 16);
                 String URL = "https://picsum.photos/seed/" + String.valueOf(seed) + "/270";
                 Picasso.get()
                         .load(URL)
                         .into(imageView);
 
-                // Get and set name
-                long seed2 = Long.parseLong(hash.substring(0, 15), 16);
-                Random rand = new Random(seed2);
-                int adjIndex = rand.nextInt(names.adjectives.length);
+                // Get and set name using seed value
+                Random random = new Random(seed);
+                int adjIndex = random.nextInt(names.adjectives.length);
                 String name = names.adjectives[adjIndex];
                 TextView nameView = view.findViewById(R.id.QR_name);
                 nameView.setText(name);
@@ -128,8 +129,8 @@ public class DecodeFragment extends Fragment {
                                         try {
                                             Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
                                             List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                                            Double latitude = addressList.get(0).getLatitude();
-                                            Double longitude = addressList.get(0).getLongitude();
+                                            double latitude = addressList.get(0).getLatitude();
+                                            double longitude = addressList.get(0).getLongitude();
                                             String address = addressList.get(0).getAddressLine(0);
 
                                             // TODO: UPLOAD LOCATION TO FIREBASE
