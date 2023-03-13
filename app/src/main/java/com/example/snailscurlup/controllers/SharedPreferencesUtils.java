@@ -128,7 +128,7 @@ public class SharedPreferencesUtils {
         editor.apply();
     }
 
-    /*public static void addQRCode(Context context, String userID, QrCode qrCode) {
+    public static void addQRCode(Context context, String userID, QrCode qrCode) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String qrKey = "qr_" + qrCode.getHash();
@@ -141,6 +141,6 @@ public class SharedPreferencesUtils {
             editor.putFloat(qrKey + "_longitude",(float)qrCode.getgeoPoint().getLongitude());
         }
         editor.putString(qrKey + "_user_id", userID);
-        editor.apply(); */
+        editor.apply();
     }
-}*/
+}

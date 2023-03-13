@@ -174,5 +174,9 @@ public class QrCode {
     public String getScannedAddress(){
         return this.scannedadresslist.get(0).getAddressLine(0);
     }
+
+    public String getData() {
+        return this.data;
+    }
 }
 
