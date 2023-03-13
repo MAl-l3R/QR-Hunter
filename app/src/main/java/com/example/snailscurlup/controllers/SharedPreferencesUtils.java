@@ -126,4 +126,6 @@ public class SharedPreferencesUtils {
         editor.remove(ACTIVE_USER_KEY);
         editor.apply();
     }
+
+
 }

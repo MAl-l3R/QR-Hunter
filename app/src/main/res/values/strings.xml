@@ -23,8 +23,6 @@
     <string name="codesscanned_fieldprof">********</string>
     <string name="logo_visual_for_startup">Logo Visual for startup</string>
 
-
-
     <string name="login_title">QR Hunter Login</string>
     <string name="login_username">Username</string>
     <string name="login_password">Password</string>
@@ -35,5 +33,9 @@
     <string name="password_hint">Password</string>
 
     <string name="reset_password_link_text">Forgot password?</string>
+    <string name="qrcode_name">Name of QR:</string>
+    <string name="qrcode_score">Score:</string>
+    <string name="qrcode_namefield">[name]</string>
+    <string name="qrcode_scorefield">[score]</string>
 
 </resources>

@@ -2,7 +2,7 @@ package com.example.snailscurlup.ui.scan;
 
 import android.graphics.Bitmap;
 
-public class QRCodeInstance
+public class QrCodeInstance{
     private String location;
     private Bitmap photo;
 

@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements UserListListener, NavigationHeaderListener {
+public class MainActivity extends AppCompatActivity implements NavigationHeaderListener,UserListListener{
 
     ActivityMainBinding binding;
     ActivityResultLauncher<String[]> PermissionResultLauncher;
@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements UserListListener,
     private User activeUser;
     private AllUsers userList;
     private TextView header;
+
+
+
+
 
 
 
@@ -80,11 +84,14 @@ public class MainActivity extends AppCompatActivity implements UserListListener,
         activeUser = null;
 
 
+
+
         visiblityNavigation(false,"");
-        if  (userList.hasActiveUser()){
-            replaceFragment(new ProfileFragment());
-        }else{
+        if  (!userList.hasActiveUser()){
             replaceFragment(new StartUpFragment());
+        } else{
+            replaceFragment(new ProfileFragment());
+
         }
 
 
@@ -162,8 +169,7 @@ public class MainActivity extends AppCompatActivity implements UserListListener,
             binding.fragmentName.setVisibility(View.VISIBLE);
             binding.fragmentName.setText(headerText);
 
-
-        }
+            }
 
     }
 
@@ -176,4 +182,7 @@ public class MainActivity extends AppCompatActivity implements UserListListener,
     public AllUsers getAllUsers() {
         return  userList.getUsers();
     }
+
 }
+
+

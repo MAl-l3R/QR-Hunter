@@ -27,6 +27,7 @@ public class ScanFragment extends Fragment {
 
     private CodeScanner scanner;
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

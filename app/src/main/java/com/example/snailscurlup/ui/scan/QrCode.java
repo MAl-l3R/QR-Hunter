@@ -1,19 +1,24 @@
 package com.example.snailscurlup.ui.scan;
 
 import android.location.Address;
-import android.widget.TextView;
+import android.location.Geocoder;
+import android.location.Location;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 
-import com.example.snailscurlup.R;
 import com.google.firebase.firestore.GeoPoint;
+import com.google.zxing.qrcode.encoder.QRCode;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
@@ -28,18 +33,20 @@ public class QrCode {
     private String name;
     private int pointsInt;
 
-    private List<Double> longLat;
+    private List<Address> scannedadresslist;
+
 
     private GeoPoint geoPoint;
 
-    public QrCode(String data,Double latitude,Double longitude) {
+    public QrCode(String data) {
         this.data = data;
         setHash(data);
         setURL();
         setName();
         setPointsInt();
-        setgeoPoint(latitude,longitude);
+        this.scannedadresslist = null;
 
+        //setgeoPoint(latitude,longitude);
 
     }
 
@@ -81,7 +88,7 @@ public class QrCode {
 
     // Getter and Setter for pointsInt
     public int getPointsInt() {
-        return pointsInt;
+        return this.pointsInt;
     }
     public void setPointsInt() {
         // Get and set points
@@ -139,6 +146,7 @@ public class QrCode {
             }
         }
 
+
         for (int i = 0; i < digitCount.size(); i++) {
             int digit = (int) digitCount.keySet().toArray()[i];
             int count = digitCount.get(digit);
@@ -149,6 +157,22 @@ public class QrCode {
             }
         }
         return score;
+    }
+
+    public void  setscanadresslist(List<Address> listAdress){
+            this.scannedadresslist = listAdress;
+
+
+    }
+    public List<Double> getScannedCoordinates(){
+        List<Double> coordinates = new ArrayList<>();
+        coordinates.add(this.scannedadresslist.get(0).getLatitude());
+        coordinates.add(this.scannedadresslist.get(0).getLongitude());
+        return coordinates;
+
+    }
+    public String getScannedAddress(){
+        return this.scannedadresslist.get(0).getAddressLine(0);
     }
 }
 

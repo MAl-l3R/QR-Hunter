@@ -1,7 +1,12 @@
 package com.example.snailscurlup.model;
 
 
+import com.example.snailscurlup.ui.scan.QrCode;
+import com.example.snailscurlup.ui.scan.QrCodeInstance;
+
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class User implements Serializable {
     private String username;
@@ -11,6 +16,8 @@ public class User implements Serializable {
 
     private String device_id;
 
+    private ArrayList<QrCode> scannedQrCodes;
+
     // Default Constructor
     public User() {
         this.username = null;
@@ -18,6 +25,7 @@ public class User implements Serializable {
         this.phoneNumber = null;
         this.profilePhotoPath = null;
         this.device_id = null;
+        this.scannedQrCodes = new ArrayList<>();
     }
 
     // Overloaded Constructor
@@ -27,6 +35,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.profilePhotoPath = profilePhotoPath;
         this.device_id = device_id;
+        this.scannedQrCodes = new ArrayList<>();
     }
 
     // Getters and Setters
@@ -73,6 +82,15 @@ public class User implements Serializable {
     public String toString() {
         return "Username: " + username + ", Email: " + email + ", Phone Number: " + phoneNumber + ", Profile Photo Path: " + profilePhotoPath;
     }
+
+    public ArrayList<QrCode> getScannedQrCodes() {
+        return scannedQrCodes;
+    }
+
+   public void addScannedQrCodes(QrCode scannedQrCodes) {
+        this.scannedQrCodes.add(scannedQrCodes);
+   }
+
 }
 
 
