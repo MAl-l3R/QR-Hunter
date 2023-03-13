@@ -24,13 +24,17 @@ public class CreateAccountTest {
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class, true, true);
 
+    /**
+     * Sets up the Solo object for the intent tests at beginning of execution.
+     * @throws Exception
+     */
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
     }
 
     /**
-     * Gets the Activity
+     * Fetches the current activity.
      * @throws Exception
      */
     @Test
@@ -40,13 +44,11 @@ public class CreateAccountTest {
 
     /**
      * Checks if the application can create an account from the initial screen.
+     * Synthesizes random user credentials for testing purposes.
+     * @throws AssertionError - For when test fails
      */
     @Test
     public void checkCreateAccount(){
-        /**
-         * Tests to see if the user can create an account.
-         * Synthesizes random user credentials and creates a new account.
-         */
         // Assertion for current activity being the main one
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
@@ -77,5 +79,14 @@ public class CreateAccountTest {
         // Test to see if username is recognized
         String welcomeMsg = dummyUsername;
         assertTrue(solo.waitForText(welcomeMsg, 1, 3000));
+    }
+
+    /**
+     * Cleans up all intent testing objects after execution completes.
+     * @throws Exception
+     */
+    @After
+    public void tearDown() throws Exception {
+        solo.finishOpenedActivities();
     }
 }
