@@ -3,6 +3,7 @@ package com.example.snailscurlup.ui.scan;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.app.Activity.RESULT_OK;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
+import static android.provider.MediaStore.ACTION_IMAGE_CAPTURE;
 
 import static com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY;
 
@@ -32,7 +33,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.snailscurlup.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.CancellationTokenSource;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.squareup.picasso.Picasso;
@@ -104,7 +104,7 @@ public class DecodeFragment extends Fragment {
         addPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                Intent cameraIntent = new Intent(ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CameraRequestCode);
             }
         });
