@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.snailscurlup.model.User;
+import com.example.snailscurlup.ui.scan.QrCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,5 +128,19 @@ public class SharedPreferencesUtils {
         editor.apply();
     }
 
-
-}
+    /*public static void addQRCode(Context context, String userID, QrCode qrCode) {
+        SharedPreferences sharedPreferences = getSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        String qrKey = "qr_" + qrCode.getHash();
+        editor.putString(qrKey + "_data", qrCode.getData());
+        editor.putString(qrKey + "_url", qrCode.getURL());
+        editor.putString(qrKey + "_name", qrCode.getName());
+        editor.putInt(qrKey + "_points", qrCode.getPointsInt());
+        if(qrCode.getgeoPoint() != null){
+            editor.putFloat(qrKey + "_latitude",(float)qrCode.getgeoPoint().getLatitude());
+            editor.putFloat(qrKey + "_longitude",(float)qrCode.getgeoPoint().getLongitude());
+        }
+        editor.putString(qrKey + "_user_id", userID);
+        editor.apply(); */
+    }
+}*/

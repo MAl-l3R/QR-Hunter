@@ -1,6 +1,7 @@
 package com.example.snailscurlup.ui.Startup;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -153,5 +154,11 @@ public class LoginFragment extends Fragment {
 
         return view;
 
+    }
+    // checked sjread pref if device is already been signed intp
+    private boolean hasDeviceID() {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String deviceID = sharedPreferences.getString("deviceID", null);
+        return deviceID != null;
     }
 }
