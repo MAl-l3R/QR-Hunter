@@ -11,14 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.snailscurlup.R;
+import com.example.snailscurlup.model.User;
 
 import java.util.ArrayList;
 
-public class UserAdapter extends ArrayAdapter<MockUser> {
+public class UserAdapter extends ArrayAdapter<User> {
 
-    private ArrayList<MockUser> userList;
+    private ArrayList<User> userList;
     private Context context;
-    public UserAdapter(Context context, ArrayList<MockUser> users){
+    public UserAdapter(Context context, ArrayList<User> users){
         super(context,0, users);
         this.context = context;
         this.userList = users;
@@ -34,14 +35,15 @@ public class UserAdapter extends ArrayAdapter<MockUser> {
             view = LayoutInflater.from(context).inflate(R.layout.search_user_bar, parent,false);
         }
 
-        MockUser user = userList.get(position);
+       User user = userList.get(position);
 
         TextView userName = view.findViewById((R.id.username));
         TextView totalScore = view.findViewById(R.id.totalScore);
         TextView totalQR = view.findViewById(R.id.totalQR);
 
-        userName.setText(user.getName());
-        totalScore.setText(user.getTotalScore());
+        userName.setText("Name: "+user.getUsername());
+        totalScore.setText("Total Score:"+user.getTotalScore());
+        totalQR.setText("Number of QR: "+Integer.toString(user.getScannedQrCodes().size()));
 
 
 

@@ -2,33 +2,22 @@ package com.example.snailscurlup.ui.search;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.TextView;
 
 
 import com.example.snailscurlup.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.snailscurlup.ui.scan.QrCode;
+import com.google.firebase.firestore.AggregateQuery;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
+import com.example.snailscurlup.model.User;
 
 import java.util.ArrayList;
 
@@ -57,11 +46,10 @@ public class SearchFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ArrayList<MockUser> userList;
-    private ArrayAdapter<MockUser> userAdapter;
+    private ArrayList<User> userList;
+    private ArrayAdapter<User> userAdapter;
 
     private ListView listView;
-    private MockUser mockUser;
 
     private ImageButton searchButton;
 
@@ -96,7 +84,7 @@ public class SearchFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        userList = new ArrayList<MockUser>();
+        userList = new ArrayList<User>();
         userAdapter = new UserAdapter(getActivity(),userList);
 
         // load the User file and put it in UserList here
@@ -117,6 +105,7 @@ public class SearchFragment extends Fragment {
                 public void onEvent( QuerySnapshot queryDocumentSnapshots,
                         FirebaseFirestoreException error) {
                     userList.clear();
+
                     for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                     {
 
@@ -124,7 +113,18 @@ public class SearchFragment extends Fragment {
                         String email = (String) doc.getData().get("Email");
                         String phone = (String)doc.getData().get("PhoneNumber");
                         String totalScore = doc.getData().get("Total Score").toString();
-                        MockUser user1 = new MockUser(name,email,phone,totalScore);
+                        CollectionReference collection = db.collection("Users").document(doc.getId()).collection("QRList");
+                        User user1 = new User(name,email,phone,totalScore);
+                        collection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                            @Override
+                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                for (QueryDocumentSnapshot dc: value){
+                                    String qr = dc.getId();
+                                    QrCode code = new QrCode(qr);
+                                    user1.addScannedQrCodes(code);
+                                }
+                            }
+                        });
                         userList.add(user1);
 
                     }

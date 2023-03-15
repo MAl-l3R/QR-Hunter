@@ -25,7 +25,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="12dp"
             android:text="User Name"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:gravity="top"
             />
         <TextView
@@ -35,7 +35,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="5dp"
-            android:text="total Score"
+            android:text="total Score:"
             android:textSize="15dp"
             android:gravity="top"
             android:fontFamily= "monospace"
