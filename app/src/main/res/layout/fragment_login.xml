@@ -36,7 +36,6 @@
                 android:layout_marginStart="40dp"
 
                 android:layout_marginTop="16dp"
-                android:fontFamily="@font/josefin_slab"
                 android:text="@string/username_fieldtext"
                 android:textAlignment="center"
                 android:textColor="@color/white"
@@ -57,7 +56,6 @@
                 android:layout_marginEnd="50dp"
                 android:background="@drawable/input_field_format"
                 android:drawablePadding="10dp"
-                android:fontFamily="@font/josefin_slab"
                 android:hint="@string/username_hint"
                 android:inputType="textVisiblePassword|textNoSuggestions"
                 android:textColor="@color/black"
@@ -75,7 +73,6 @@
 
                 android:layout_marginTop="80dp"
                 android:backgroundTint="@color/startup_button_background"
-                android:fontFamily="@font/josefin_slab"
                 android:paddingLeft="70dp"
                 android:paddingRight="70dp"
                 android:text="@string/login_button_text"
@@ -94,7 +91,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/baloo_chettan"
             android:gravity="center_horizontal|top"
             android:text="@string/app_title"
             android:textColor="@color/white"
@@ -106,7 +102,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/baloo_chettan"
             android:gravity="center_horizontal|top"
             android:text="@string/welcome_to"
             android:textColor="@color/white"
@@ -124,7 +119,6 @@
 
             android:layout_marginTop="5dp"
 
-            android:fontFamily="@font/josefin_slab"
             android:text="@string/changeprofile_photo_text"
             android:textAlignment="center"
             android:textColor="@color/white"
