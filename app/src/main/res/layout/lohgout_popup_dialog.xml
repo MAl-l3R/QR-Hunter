@@ -7,7 +7,7 @@
     android:layout_height="400dp"
     android:layout_marginStart="20dp"
     android:layout_marginEnd="20dp"
-    android:background="@color/navbar_background">
+    android:background="@color/secondary_color">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -35,7 +35,6 @@
                 android:id="@+id/logoutprompt_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/josefin_slab"
                 android:text="Are you sure you want to log out?:"
                 android:textColor="@color/white"
                 android:textSize="16sp" />

@@ -3,11 +3,8 @@ package com.example.snailscurlup;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
-import static android.view.View.GONE;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -22,7 +19,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.snailscurlup.controllers.AllUsers;
 import com.example.snailscurlup.databinding.ActivityMainBinding;
 import com.example.snailscurlup.model.User;
-import com.example.snailscurlup.ui.Startup.StartUpFragment;
 import com.example.snailscurlup.ui.leaderboard.LeaderboardFragment;
 import com.example.snailscurlup.ui.map.MapFragment;
 import com.example.snailscurlup.ui.profile.ProfileFragment;
@@ -33,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity implements NavigationHeaderListener,UserListListener{
+public class MainActivity extends AppCompatActivity implements UserListListener{
 
     ActivityMainBinding binding;
     ActivityResultLauncher<String[]> PermissionResultLauncher;
@@ -43,12 +39,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHeaderL
     private User activeUser;
     private AllUsers userList;
     private TextView header;
-
-
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,22 +68,11 @@ public class MainActivity extends AppCompatActivity implements NavigationHeaderL
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        replaceFragment(new ProfileFragment());
 
         userList = AllUsers.getInstance(MainActivity.this);
         // set active user
         activeUser = null;
-
-
-
-
-        visiblityNavigation(false,"");
-        if  (!userList.hasActiveUser()){
-            replaceFragment(new StartUpFragment());
-        } else{
-            replaceFragment(new ProfileFragment());
-
-        }
-
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {
@@ -110,9 +89,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHeaderL
                     replaceFragment(new ScanFragment());
                     break;
                 case R.id.map:
-                    // Switch to Map activity
-//                    Intent switchToMapIntent = new Intent(this, com.example.snailscurlup.MapActivity.class);
-//                    startActivity(switchToMapIntent);
                     binding.fragmentName.setText("Map");
                     replaceFragment(new MapFragment());
                     break;
@@ -154,22 +130,6 @@ public class MainActivity extends AppCompatActivity implements NavigationHeaderL
             PermissionResultLauncher.launch(permissionRequests.toArray(new String[0]));
 
         }
-
-
-    }
-
-    public void visiblityNavigation(boolean visibility, String headerText) {
-
-        if (!visibility) {
-            binding.bottomNavigationView.setVisibility(GONE);
-            binding.fragmentName.setVisibility(GONE);
-
-        } else {
-            binding.bottomNavigationView.setVisibility(View.VISIBLE);
-            binding.fragmentName.setVisibility(View.VISIBLE);
-            binding.fragmentName.setText(headerText);
-
-            }
 
     }
 

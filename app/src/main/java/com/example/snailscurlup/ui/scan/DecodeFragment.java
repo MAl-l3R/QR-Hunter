@@ -32,7 +32,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.snailscurlup.NavigationHeaderListener;
+
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
 import com.example.snailscurlup.controllers.AllUsers;
@@ -57,7 +57,7 @@ public class DecodeFragment extends Fragment{
     NamesOfQR names = new NamesOfQR();
     FusedLocationProviderClient fusedLocationProviderClient;
 
-    private NavigationHeaderListener NavBarHeadListener; // get reference to main activity so that we can set  Haeder In bit
+//    private NavigationHeaderListener NavBarHeadListener; // get reference to main activity so that we can set  Haeder In bit
     private UserListListener userListListener; // get reference to main activity so that we can set  Haeder In bit
 
     private String data;
@@ -72,7 +72,7 @@ public class DecodeFragment extends Fragment{
         super.onAttach(context);
         if (context instanceof UserListListener) {
             userListListener = (UserListListener) context;
-            NavBarHeadListener = (NavigationHeaderListener) context;
+//            NavBarHeadListener = (NavigationHeaderListener) context;
         } else {
             throw new RuntimeException(context + " must implement UserListListener, or NavBarHeadlIstner");
         }

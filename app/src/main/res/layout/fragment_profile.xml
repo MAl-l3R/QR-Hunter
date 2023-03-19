@@ -6,8 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/base_background"
-    tools:context=".ui.Startup.LoginFragment">
+    android:background="@color/primary_color">
 
 
 
@@ -27,7 +26,7 @@
             android:layout_marginBottom="16dp"
             android:contentDescription="menu icon"
             android:src="@drawable/float_menu_icon"
-            app:backgroundTint="@color/navbar_background"
+            app:backgroundTint="@color/secondary_color"
             app:borderWidth="0dp"
             app:fabCustomSize="60dp"
 
@@ -65,9 +64,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:fontFamily="@font/josefin_slab"
                 android:gravity="start|center_vertical"
-                android:text="@string/username_fieldtext"
+                android:text="@string/username_field_text"
                 android:textColor="@color/white"
                 android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +92,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/josefin_slab"
                 android:gravity="start|center_horizontal|center_vertical"
                 android:text="@string/totalscore_fieldtext"
                 android:textColor="@color/white"
@@ -126,7 +123,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="12dp"
-                android:fontFamily="@font/josefin_slab"
                 android:gravity="start|center_vertical"
                 android:text="@string/codesscanned_fieldtext"
                 android:textColor="@color/white"
@@ -159,7 +155,6 @@
             android:layout_height="34dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:fontFamily="@font/josefin_slab"
             android:gravity="bottom|center_horizontal"
             android:text="My QR Codes"
             android:textColor="@color/white"

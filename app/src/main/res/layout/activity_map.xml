@@ -35,7 +35,7 @@
         android:textAlignment="center"
         android:textSize="35dp"
         android:textColor="@color/white"
-        android:background="@color/navbar_background"
+        android:background="@color/secondary_color"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
