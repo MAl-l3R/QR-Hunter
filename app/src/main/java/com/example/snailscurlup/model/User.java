@@ -24,6 +24,7 @@ public class User implements Serializable {
     private String profilePhotoPath;
 
     private String device_id;
+    private String totalScore;
 
     private ArrayList<QrCode> scannedQrCodes;
 
@@ -37,6 +38,17 @@ public class User implements Serializable {
         this.scannedQrCodes = new ArrayList<>();
     }
 
+    public User(String username, String email, String phoneNumber,String totalScore) {
+        this.username = username;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.totalScore = totalScore;
+        this.profilePhotoPath = null;
+        this.device_id = null;
+        this.scannedQrCodes = new ArrayList<>();
+    }
+
+
     // Overloaded Constructor
     public User(String username, String email, String phoneNumber, String profilePhotoPath, String device_id) {
         this.username = username;
@@ -45,6 +57,10 @@ public class User implements Serializable {
         this.profilePhotoPath = profilePhotoPath;
         this.device_id = device_id;
         this.scannedQrCodes = new ArrayList<>();
+    }
+
+    public String getTotalScore() {
+        return totalScore;
     }
 
     // Getters and Setters
