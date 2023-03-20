@@ -72,9 +72,8 @@ public class DecodeFragment extends Fragment{
         super.onAttach(context);
         if (context instanceof UserListListener) {
             userListListener = (UserListListener) context;
-//            NavBarHeadListener = (NavigationHeaderListener) context;
         } else {
-            throw new RuntimeException(context + " must implement UserListListener, or NavBarHeadlIstner");
+            throw new RuntimeException(context + " must implement UserListListener");
         }
     }
     @Override

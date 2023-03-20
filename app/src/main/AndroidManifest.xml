@@ -33,6 +33,11 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
         </activity>
         <activity
+            android:name=".ui.startup.LoginActivity"
+            android:exported="false"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="false"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
