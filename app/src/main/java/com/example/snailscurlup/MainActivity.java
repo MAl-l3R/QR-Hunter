@@ -4,6 +4,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.CAMERA;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -24,6 +25,8 @@ import com.example.snailscurlup.ui.map.MapFragment;
 import com.example.snailscurlup.ui.profile.ProfileFragment;
 import com.example.snailscurlup.ui.scan.ScanFragment;
 import com.example.snailscurlup.ui.search.SearchFragment;
+import com.example.snailscurlup.ui.startup.LoginActivity;
+import com.example.snailscurlup.ui.startup.StartUpActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,9 +47,17 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        userList = AllUsers.getInstance(MainActivity.this);
+
+        // Set active user
+        activeUser = userList.getActiveUser();
+
+        // If no one is logged in, then go to startup page
+        if(activeUser == null) {
+            startActivity(new Intent(MainActivity.this, StartUpActivity.class));
+        }
+
         PermissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
-
-
             @Override
             public void onActivityResult(Map<String, Boolean> result) {
 
@@ -69,10 +80,6 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new ProfileFragment());
-
-        userList = AllUsers.getInstance(MainActivity.this);
-        // set active user
-        activeUser = null;
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
             switch (item.getItemId()) {

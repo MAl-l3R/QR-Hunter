@@ -24,8 +24,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     // get reference to main activity so that we can set  Header In bit
     private UserListListener userListListener;
 
-    View view;
-
     private static final String KEY_USERNAME = "username";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PHONE = "phone";
