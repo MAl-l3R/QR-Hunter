@@ -42,7 +42,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -93,6 +92,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         } else {
             Toast.makeText(getContext(), "You need to enable Location permission from Settings", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        db = FirebaseFirestore.getInstance();
     }
 
     // See this: https://stackoverflow.com/questions/16536414/how-to-use-mapview-in-android-using-google-map-v2

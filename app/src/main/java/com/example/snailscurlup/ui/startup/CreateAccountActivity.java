@@ -1,6 +1,7 @@
 package com.example.snailscurlup.ui.startup;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
 import android.util.Patterns;
@@ -15,32 +16,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.snailscurlup.MainActivity;
 import com.example.snailscurlup.R;
-import com.example.snailscurlup.UserListListener;
-import com.example.snailscurlup.model.User;
 
 
 public class CreateAccountActivity extends AppCompatActivity {
-
-    // get reference to main activity so that we can set  Header In bit
-    private UserListListener userListListener;
-
     private static final String KEY_USERNAME = "username";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PHONE = "phone";
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
     private String device_id, savedUsername, savedEmail, savedPhone;
     private EditText usernameField, emailField, phoneField;
-
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        if (context instanceof UserListListener) {
-//            userListListener = (UserListListener) context;
-//            NavBarHeadListener = (NavigationHeaderListener) context;
-//        } else {
-//            throw new RuntimeException(context + " must implement UserListListener");
-//        }
-//    }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -55,6 +42,13 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_create_account);
+
+        sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        if (sharedPreferences.getString("isLoggedIn", "false").equals("true")) {
+            initializeApp();
+        }
 
         Button createAccountButton = findViewById(R.id.create_account_button);
         usernameField = findViewById(R.id.username_field);
@@ -101,26 +95,31 @@ public class CreateAccountActivity extends AppCompatActivity {
                     // Check if phone number has been entered
                     phoneField.setError("Phone number is invalid");
 
-                } else if (userListListener.getAllUsers().isUsernameTaken(username)) {
-                    // Check if username is taken
-                    usernameField.setError("Username already taken");
-
                 } else {
                     device_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
-                    // use Interface get access all user to add user, then set active user to that user
-                    userListListener.getAllUsers().addUser(username, email, phone,"", device_id);
-                    User newUser = userListListener.getAllUsers().getUserByUsername(username);
-                    userListListener.getAllUsers().setActiveUser(newUser);
+                    // Save new user info
+                    editor.putString("newAccount", "true");
+                    editor.putString("isLoggedIn", "true");
+                    editor.putString("newUsername", username);
+                    editor.putString("newEmail", email);
+                    editor.putString("newPhone", phone);
+                    editor.putString("newDeviceID", device_id);
+                    editor.commit();
 
                     Toast.makeText(CreateAccountActivity.this, "Account created successfully", Toast.LENGTH_SHORT).show();
 
                     // Go to the main app screen
-                    Intent myIntent = new Intent(CreateAccountActivity.this, MainActivity.class);
-                    CreateAccountActivity.this.startActivity(myIntent);
+                    initializeApp();
 
                 }
             }
         });
+    }
+
+    // Go to the main app screen
+    private void initializeApp() {
+        startActivity(new Intent(CreateAccountActivity.this, MainActivity.class));
+        finish();
     }
 }

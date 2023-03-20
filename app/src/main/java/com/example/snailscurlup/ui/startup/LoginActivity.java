@@ -15,12 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.snailscurlup.MainActivity;
 import com.example.snailscurlup.R;
-import com.example.snailscurlup.UserListListener;
-import com.example.snailscurlup.model.User;
+import com.example.snailscurlup.model.AllUsers;
 
 public class LoginActivity extends AppCompatActivity {
-    private UserListListener userListListener;
-
     Button loginButton;
     EditText usernameField;
 
@@ -28,16 +25,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private String savedUsername;
 
+    private AllUsers allUsers;
 
-//    @Override
-//    public void onAttach(@NonNull Context context) {
-//        super.onAttach(context);
-//        if (context instanceof UserListListener) {
-//            userListListener = (UserListListener) context;
-//        } else {
-//            throw new RuntimeException(context + " must implement UserListListener, or NavBarHeadlIstner");
-//        }
-//    }
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -50,6 +41,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
+
+        sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
+        if (sharedPreferences.getString("isLoggedIn", "false").equals("true")) {
+            initializeApp();
+        }
+
+        allUsers = (AllUsers) getApplicationContext();
 
         loginButton = findViewById(R.id.login_button);
         usernameField = findViewById(R.id.username_field);
@@ -75,29 +75,40 @@ public class LoginActivity extends AppCompatActivity {
                     usernameField.setError("Please enter a username");
                 }
 
-                if (userListListener.getAllUsers().isUserValid(username)) {
+                if (isUsernameValid(username)) {
 
-                    User loggedInUser = userListListener.getAllUsers().getUserByUsername(username);
-                    userListListener.getAllUsers().setActiveUser(loggedInUser);
+                    // Save login info
+                    editor.putString("newAccount", "false");
+                    editor.putString("isLoggedIn", "true");
+                    editor.putString("oldUsername", username);
+                    editor.commit();
 
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
 
                     // Go to the main app screen
-                    Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                    LoginActivity.this.startActivity(myIntent);
+                    initializeApp();
 
                 } else {
-                    Toast.makeText(LoginActivity.this, "Invalid username", Toast.LENGTH_SHORT).show();
+                    usernameField.setError("Invalid username");
                 }
             }
         });
 
     }
 
-    // checked shared pref if device is already been signed into
-    private boolean hasDeviceID() {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String deviceID = sharedPreferences.getString("deviceID", null);
-        return deviceID != null;
+    // Check if username exists in database
+    private boolean isUsernameValid(String username) {
+        for (int i = 0; i < allUsers.getAllUsers().size(); i++) {
+            if (allUsers.getAllUsers().get(i).getUsername() != null && allUsers.getAllUsers().get(i).getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Go to the main app screen
+    private void initializeApp() {
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        finish();
     }
 }
