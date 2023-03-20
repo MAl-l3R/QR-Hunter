@@ -33,6 +33,17 @@ public class CreateAccountActivity extends AppCompatActivity {
     private String device_id, savedUsername, savedEmail, savedPhone;
     private EditText usernameField, emailField, phoneField;
 
+//    @Override
+//    public void onAttach(@NonNull Context context) {
+//        super.onAttach(context);
+//        if (context instanceof UserListListener) {
+//            userListListener = (UserListListener) context;
+//            NavBarHeadListener = (NavigationHeaderListener) context;
+//        } else {
+//            throw new RuntimeException(context + " must implement UserListListener");
+//        }
+//    }
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -83,15 +94,19 @@ public class CreateAccountActivity extends AppCompatActivity {
                 if (username.isEmpty()) {
                     // Check if username has been entered
                     usernameField.setError("Username is invalid");
+
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     // Check if email has been entered
                     emailField.setError("Email is invalid");
+
                 } else if (!Patterns.PHONE.matcher(phone).matches()) {
                     // Check if phone number has been entered
                     phoneField.setError("Phone number is invalid");
+
                 } else if (userListListener.getAllUsers().isUsernameTaken(username)) {
                     // Check if username is taken
                     usernameField.setError("Username already taken");
+
                 } else {
                     device_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
