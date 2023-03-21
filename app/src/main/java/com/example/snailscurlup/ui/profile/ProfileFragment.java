@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -161,19 +162,9 @@ public class ProfileFragment extends Fragment   {
         final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(getContext());
         bottomSheetDialog.setContentView(R.layout.popup_menu_profile);
 
-
-        LinearLayout share = bottomSheetDialog.findViewById(R.id.shareLinearLayout);
-        LinearLayout logoutBtn = bottomSheetDialog.findViewById(R.id.logout_button);
-        LinearLayout download = bottomSheetDialog.findViewById(R.id.download);
-
-
-        share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getContext(), "Share is Clicked", Toast.LENGTH_LONG).show();
-                bottomSheetDialog.dismiss();
-            }
-        });
+        Button logoutBtn = bottomSheetDialog.findViewById(R.id.logout_button);
+        Button editProfBtn = bottomSheetDialog.findViewById(R.id.edit_profile_button);
+        Button manageAccBtn = bottomSheetDialog.findViewById(R.id.manage_account_button);
 
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,14 +182,23 @@ public class ProfileFragment extends Fragment   {
                 editor.putString("currentUsername", null);
                 editor.commit();
 
+                // Go back to startup screen
                 startActivity(new Intent(getActivity(), StartUpActivity.class));
             }
         });
 
-        download.setOnClickListener(new View.OnClickListener() {
+        editProfBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getContext(), "Download is Clicked", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Edit Profile is Clicked", Toast.LENGTH_LONG).show();
+                bottomSheetDialog.dismiss();
+            }
+        });
+
+        manageAccBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getContext(), "Manage Account is Clicked", Toast.LENGTH_LONG).show();
                 bottomSheetDialog.dismiss();
             }
         });
