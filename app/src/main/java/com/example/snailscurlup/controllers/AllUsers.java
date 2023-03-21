@@ -10,22 +10,23 @@ import com.example.snailscurlup.model.User;
 import com.example.snailscurlup.ui.scan.QrCode;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class AllUsersController {
+public class AllUsers {
     private final List<User> users;
     private User activeUser;
-    private static AllUsersController instance;
+    private static AllUsers instance;
     private final SharedPreferences sharedPreferences;
     private final Context context;
     FirebaseFirestore db;
 
 
     // constructor
-    private AllUsersController(Context context) {
+    private AllUsers(Context context) {
         this.context = context.getApplicationContext();
         db = FirebaseFirestore.getInstance();
 
@@ -38,9 +39,9 @@ public class AllUsersController {
     }
 
     // singleton ensure 1 instance
-    public static AllUsersController getInstance(Context context) {
+    public static AllUsers getInstance(Context context) {
         if (instance == null) {
-            instance = new AllUsersController(context);
+            instance = new AllUsers(context);
         }
         return instance;
     }
@@ -137,12 +138,8 @@ public class AllUsersController {
     }
 
     // Getter for all users
-    public AllUsersController getUsers() {
+    public AllUsers getUsers() {
         return this;
-    }
-
-    public List<User> getAllUsers() {
-        return users;
     }
 
     // et the active user

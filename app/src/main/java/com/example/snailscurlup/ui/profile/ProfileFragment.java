@@ -19,17 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
-import com.example.snailscurlup.controllers.AllUsersController;
+import com.example.snailscurlup.controllers.AllUsers;
 import com.example.snailscurlup.model.User;
 import com.example.snailscurlup.ui.scan.QrGalleryAdapter;
 import com.example.snailscurlup.ui.startup.StartUpActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-
-
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +39,7 @@ public class ProfileFragment extends Fragment   {
     // TODO: Rename and change types of parameters
 
     private UserListListener userListListener;
-    private AllUsersController allUsersController;
+    private AllUsers allUsers;
 
     private User activeUser;
 

@@ -18,9 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.snailscurlup.controllers.AllUsersController;
+import com.example.snailscurlup.controllers.AllUsers;
 import com.example.snailscurlup.databinding.ActivityMainBinding;
-import com.example.snailscurlup.model.AllUsers;
 import com.example.snailscurlup.model.User;
 import com.example.snailscurlup.ui.leaderboard.LeaderboardFragment;
 import com.example.snailscurlup.ui.map.MapFragment;
@@ -44,20 +43,14 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
     private SharedPreferences.Editor editor;
 
     private User activeUser;
-    private AllUsersController userList;
+    private AllUsers userList;
     private TextView header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get all users
-        userList = AllUsersController.getInstance(MainActivity.this);
-        List<User> users = userList.getAllUsers();
-        // Set all users in the global users list
-        AllUsers allUsers = (AllUsers) getApplicationContext();
-        allUsers.setAllUsers(users);
-
+        userList = AllUsers.getInstance(MainActivity.this);
         sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -67,26 +60,26 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
 
         } else if ((sharedPreferences.getString("isLoggedIn", "false").equals("true") && sharedPreferences.getString("newAccount", "false").equals("true")) || sharedPreferences.getString("newAccount", "false").equals("true")) {
             // Create new user
-            String username = sharedPreferences.getString("newUsername","");
-            String email = sharedPreferences.getString("newEmail","");
-            String phone = sharedPreferences.getString("newPhone","");
-            String device_id = sharedPreferences.getString("newDeviceID","");
+            String username = sharedPreferences.getString("newUsername",null);
+            String email = sharedPreferences.getString("newEmail",null);
+            String phone = sharedPreferences.getString("newPhone",null);
+            String device_id = sharedPreferences.getString("newDeviceID",null);
 
-            userList.addUser(username, email, phone,"", device_id);
-            User newUser = userList.getUserByUsername(username);
+            userList.getUsers().addUser(username, email, phone,"", device_id);
+            User newUser = userList.getUsers().getUserByUsername(username);
 
             // Set active user
-            userList.setActiveUser(newUser);
-            activeUser = userList.getActiveUser();
+            userList.getUsers().setActiveUser(newUser);
+            activeUser = userList.getUsers().getActiveUser();
 
         } else {
             // Log in user
-            String username = sharedPreferences.getString("oldUsername","");
-            User loggedInUser = userList.getUserByUsername(username);
+            String username = sharedPreferences.getString("oldUsername",null);
+            User loggedInUser = userList.getUsers().getUserByUsername(username);
 
             // Set active user
-            userList.setActiveUser(loggedInUser);
-            activeUser = userList.getActiveUser();
+            userList.getUsers().setActiveUser(loggedInUser);
+            activeUser = userList.getUsers().getActiveUser();
         }
 
         PermissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
@@ -183,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
     }
 
     @Override
-    public AllUsersController getAllUsers() {
+    public AllUsers getAllUsers() {
         return  userList.getUsers();
     }
 

@@ -34,7 +34,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
-import com.example.snailscurlup.controllers.AllUsersController;
+import com.example.snailscurlup.controllers.AllUsers;
 import com.example.snailscurlup.model.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -61,7 +61,7 @@ public class DecodeFragment extends Fragment{
 
     private User activeUser;
 
-    private AllUsersController allUsersController;
+    private AllUsers allUsers;
     private QrCode newQRCode;
 
     @Override
