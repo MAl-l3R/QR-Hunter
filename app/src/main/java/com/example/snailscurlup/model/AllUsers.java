@@ -22,6 +22,7 @@ public class AllUsers extends Application{
     FirebaseFirestore db;
     Query allUsers;
     User activeUser;
+    User wantedUser;
 
     // Get all users from firebase
     public void init() {
@@ -74,4 +75,16 @@ public class AllUsers extends Application{
         return usernamesList;
     }
 
+    public void userWanted(String username) {
+        for(int i = 0; i < usersList.size(); i++) {
+            if (usersList.get(i).getUsername() != null && usersList.get(i).getUsername().equals(username)) {
+                wantedUser = usersList.get(i);
+                break;
+            }
+        }
+    }
+
+    public User getWantedUser() {
+        return wantedUser;
+    }
 }
