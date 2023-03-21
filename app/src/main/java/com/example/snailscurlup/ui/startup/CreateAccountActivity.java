@@ -101,7 +101,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     // Save new user info
                     editor.putString("newAccount", "true");
                     editor.putString("isLoggedIn", "true");
-                    editor.putString("newUsername", username);
+                    editor.putString("currentUsername", username);
                     editor.putString("newEmail", email);
                     editor.putString("newPhone", phone);
                     editor.putString("newDeviceID", device_id);

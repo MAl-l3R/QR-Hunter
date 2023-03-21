@@ -61,30 +61,75 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
         if (sharedPreferences.getString("isLoggedIn", "false").equals("false")) {
             // Go log in or sign up if not logged in
             launchStartUp();
-
-        } else if ((sharedPreferences.getString("isLoggedIn", "false").equals("true") && sharedPreferences.getString("newAccount", "false").equals("true")) || sharedPreferences.getString("newAccount", "false").equals("true")) {
-            // Create new user
-            String username = sharedPreferences.getString("newUsername",null);
+        } else {
+            String username = sharedPreferences.getString("currentUsername",null);
             String email = sharedPreferences.getString("newEmail",null);
             String phone = sharedPreferences.getString("newPhone",null);
             String device_id = sharedPreferences.getString("newDeviceID",null);
 
-            userList.getUsers().addUser(username, email, phone,"", device_id);
-            User newUser = userList.getUsers().getUserByUsername(username);
+            if(username != null && email != null && phone != null) {
+                // Create new user
+                userList.getUsers().addUser(username, email, phone,"", device_id);
+            }
+
+            activeUser = userList.getUsers().getUserByUsername(username);
 
             // Set active user
-            allUsers.setActiveUser(newUser);
-            activeUser = allUsers.getActiveUser();
+            userList.getUsers().setActiveUser(activeUser);
+            allUsers.setActiveUser(activeUser);
+            System.out.println("XXXXXXXXXXXXXXXXXX");
+            System.out.println(activeUser);
+            System.out.println("XXXXXXXXXXXXXXXXXX");
+            activeUser = userList.getUsers().getActiveUser();
 
-        } else {
-            // Log in user
-            String username = sharedPreferences.getString("oldUsername",null);
-            User loggedInUser = userList.getUsers().getUserByUsername(username);
-
-            // Set active user
-            allUsers.setActiveUser(loggedInUser);
-            activeUser = allUsers.getActiveUser();
+            System.out.println("XXXXXXXXXXXXXXXXXX");
+            System.out.println(sharedPreferences.getString("newAccount", "false"));
+            System.out.println(username+" "+email);
+            System.out.println(activeUser);
+            System.out.println(activeUser);
+            System.out.println(userList.hasActiveUser());
+            System.out.println("XXXXXXXXXXXXXXXXXX");
         }
+
+//        } else if ((sharedPreferences.getString("isLoggedIn", "false").equals("true") && sharedPreferences.getString("newAccount", "false").equals("true")) || sharedPreferences.getString("newAccount", "false").equals("true")) {
+//            // Create new user
+//            String username = sharedPreferences.getString("newUsername",null);
+//            String email = sharedPreferences.getString("newEmail",null);
+//            String phone = sharedPreferences.getString("newPhone",null);
+//            String device_id = sharedPreferences.getString("newDeviceID",null);
+//
+//            userList.getUsers().addUser(username, email, phone,"", device_id);
+//            User newUser = userList.getUsers().getUserByUsername(username);
+//
+//            // Set active user
+//            userList.getUsers().setActiveUser(newUser);
+//            allUsers.setActiveUser(newUser);
+//            activeUser = allUsers.getActiveUser();
+//
+//            System.out.println("XXXXXXXXXXXXXXXXXX");
+//            System.out.println(sharedPreferences.getString("newAccount", "false"));
+//            System.out.println(username+" "+email);
+//            System.out.println(newUser);
+//            System.out.println(activeUser);
+//            System.out.println(userList.hasActiveUser());
+//            System.out.println("XXXXXXXXXXXXXXXXXX");
+//
+//        } else {
+//            // Log in user
+//            String username = sharedPreferences.getString("oldUsername",null);
+//            User loggedInUser = allUsers.getUser(username);
+//
+//            // Set active user
+//            userList.getUsers().setActiveUser(loggedInUser);
+//            allUsers.setActiveUser(loggedInUser);
+//            activeUser = allUsers.getActiveUser();
+//
+//            System.out.println("XXXXXXXXXXXXXXXXXX");
+//            System.out.println(sharedPreferences.getString("newAccount", "false"));
+//            System.out.println("XXXXXXXXXXXXXXXXXX");
+//            System.out.println(userList.hasActiveUser());
+//            System.out.println("XXXXXXXXXXXXXXXXXX");
+//        }
 
         PermissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
             @Override

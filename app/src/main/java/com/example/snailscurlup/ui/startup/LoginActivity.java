@@ -88,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
                     // Save login info
                     editor.putString("newAccount", "false");
                     editor.putString("isLoggedIn", "true");
-                    editor.putString("oldUsername", username);
+                    editor.putString("currentUsername", username);
                     editor.commit();
 
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
