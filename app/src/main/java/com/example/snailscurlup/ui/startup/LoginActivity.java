@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.snailscurlup.MainActivity;
 import com.example.snailscurlup.R;
+import com.example.snailscurlup.model.AllUsers;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -24,8 +25,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoginActivity extends AppCompatActivity {
     Button loginButton;
@@ -37,8 +36,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private FirebaseFirestore db;
-    private List<String> allUsernames;
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -52,26 +49,15 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
-        allUsernames = new ArrayList<String>();
-
-        // Get all usernames from firebase
-        db = FirebaseFirestore.getInstance();
-        Query allUsers = db.collection("Users");
-        allUsers.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                for (QueryDocumentSnapshot doc : value) {
-                    allUsernames.add(doc.getId());
-                }
-            }
-        });
+        AllUsers allUsers = (AllUsers) getApplicationContext();
+        allUsers.init();
 
         sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        if (sharedPreferences.getString("isLoggedIn", "false").equals("true")) {
-            initializeApp();
-        }
+//        if (sharedPreferences.getString("isLoggedIn", "false").equals("true")) {
+//            initializeApp();
+//        }
 
         loginButton = findViewById(R.id.login_button);
         usernameField = findViewById(R.id.username_field);
@@ -97,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                     usernameField.setError("Please enter a username");
                 }
 
-                if (allUsernames.contains(username)) {
+                if (allUsers.getUsernamesList().contains(username)) {
 
                     // Save login info
                     editor.putString("newAccount", "false");

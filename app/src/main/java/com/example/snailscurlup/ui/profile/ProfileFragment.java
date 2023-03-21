@@ -19,66 +19,39 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
-import com.example.snailscurlup.controllers.AllUsers;
+import com.example.snailscurlup.model.AllUsers;
 import com.example.snailscurlup.model.User;
 import com.example.snailscurlup.ui.scan.QrGalleryAdapter;
 import com.example.snailscurlup.ui.startup.StartUpActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileFragment extends Fragment   {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-    // TODO: Rename and change types of parameters
-
+//    private AllUsersController allUsersController;
     private UserListListener userListListener;
-    private AllUsers allUsers;
-
-    private User activeUser;
-
-
+    AllUsers allUsers;
+    User activeUser;
 
     private FloatingActionButton profileFloaMenuicon;
-
     private TextView userUsernameField, userTotalScoreField, userCodeScannedField;
 
 
     public ProfileFragment() {
-        // Required empty public constructor
+        // Initialize global variable allUsers
     }
 
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        activeUser = this.allUsers.getActiveUser();
+//    }
+//
+//    @Override
+//    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+//        super.onPause();
+//        activeUser = this.allUsers.getActiveUser();
+//    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        activeUser = userListListener.getAllUsers().getActiveUser();
-
-
-    }
-    @Override
-    public void onPrepareOptionsMenu(@NonNull Menu menu) {
-        super.onPause();
-        activeUser = userListListener.getAllUsers().getActiveUser();
-    }
-
-
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static ProfileFragment newInstance(String param1, String param2) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -110,15 +83,19 @@ public class ProfileFragment extends Fragment   {
 
         RecyclerView QRGallery = view.findViewById(R.id.QRGalleryRecyclerView);
 
+        allUsers = (AllUsers) getActivity().getApplicationContext();
+        allUsers.init();
+
         // retrieve active user
-        activeUser = userListListener.getAllUsers().getActiveUser();
-
-
+        if (allUsers.getActiveUser() != null) {
+            activeUser = allUsers.getActiveUser();
+        } else {
+            activeUser = new User();
+        }
 
         QrGalleryAdapter qrGalleryAdapter = new QrGalleryAdapter(this.getContext(), activeUser.getScannedQrCodes());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
-
 
         QRGallery.setLayoutManager(linearLayoutManager);
         QRGallery.setAdapter(qrGalleryAdapter);
@@ -135,9 +112,6 @@ public class ProfileFragment extends Fragment   {
                 showBottomSheetDialog();
             }
         });
-
-
-        // Inflate the layo
 
 
         return view;

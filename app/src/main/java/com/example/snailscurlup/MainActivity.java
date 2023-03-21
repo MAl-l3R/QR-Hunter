@@ -18,8 +18,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.snailscurlup.controllers.AllUsers;
+import com.example.snailscurlup.controllers.AllUsersController;
 import com.example.snailscurlup.databinding.ActivityMainBinding;
+import com.example.snailscurlup.model.AllUsers;
 import com.example.snailscurlup.model.User;
 import com.example.snailscurlup.ui.leaderboard.LeaderboardFragment;
 import com.example.snailscurlup.ui.map.MapFragment;
@@ -43,14 +44,17 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
     private SharedPreferences.Editor editor;
 
     private User activeUser;
-    private AllUsers userList;
+    private AllUsersController userList;
     private TextView header;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        userList = AllUsers.getInstance(MainActivity.this);
+        AllUsers allUsers = (AllUsers) getApplicationContext();
+        allUsers.init();
+
+        userList = AllUsersController.getInstance(MainActivity.this);
         sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -69,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
             User newUser = userList.getUsers().getUserByUsername(username);
 
             // Set active user
-            userList.getUsers().setActiveUser(newUser);
-            activeUser = userList.getUsers().getActiveUser();
+            allUsers.setActiveUser(newUser);
+            activeUser = allUsers.getActiveUser();
 
         } else {
             // Log in user
@@ -78,8 +82,8 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
             User loggedInUser = userList.getUsers().getUserByUsername(username);
 
             // Set active user
-            userList.getUsers().setActiveUser(loggedInUser);
-            activeUser = userList.getUsers().getActiveUser();
+            allUsers.setActiveUser(loggedInUser);
+            activeUser = allUsers.getActiveUser();
         }
 
         PermissionResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), new ActivityResultCallback<Map<String, Boolean>>() {
@@ -176,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
     }
 
     @Override
-    public AllUsers getAllUsers() {
+    public AllUsersController getAllUsers() {
         return  userList.getUsers();
     }
 
