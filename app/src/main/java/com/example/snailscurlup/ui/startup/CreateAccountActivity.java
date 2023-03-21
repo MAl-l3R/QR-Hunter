@@ -46,10 +46,6 @@ public class CreateAccountActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-//        if (sharedPreferences.getString("isLoggedIn", "false").equals("true")) {
-//            initializeApp();
-//        }
-
         Button createAccountButton = findViewById(R.id.create_account_button);
         usernameField = findViewById(R.id.username_field);
         emailField = findViewById(R.id.Email_field);

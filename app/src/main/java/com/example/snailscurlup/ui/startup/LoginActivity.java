@@ -55,10 +55,6 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-//        if (sharedPreferences.getString("isLoggedIn", "false").equals("true")) {
-//            initializeApp();
-//        }
-
         loginButton = findViewById(R.id.login_button);
         usernameField = findViewById(R.id.username_field);
 

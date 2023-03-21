@@ -19,39 +19,73 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
-import com.example.snailscurlup.model.AllUsers;
+import com.example.snailscurlup.controllers.AllUsersController;
 import com.example.snailscurlup.model.User;
 import com.example.snailscurlup.ui.scan.QrGalleryAdapter;
 import com.example.snailscurlup.ui.startup.StartUpActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+
+
+
+import java.util.List;
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link ProfileFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class ProfileFragment extends Fragment   {
-    //    private AllUsersController allUsersController;
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    // TODO: Rename and change types of parameters
+
+
+
     private UserListListener userListListener;
-    AllUsers allUsers;
-    User activeUser;
+    private AllUsersController allUsersController;
+
+    private User activeUser;
+
+
 
     private FloatingActionButton profileFloaMenuicon;
+
     private TextView userUsernameField, userTotalScoreField, userCodeScannedField;
 
 
     public ProfileFragment() {
-        // Initialize global variable allUsers
+        // Required empty public constructor
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        activeUser = this.allUsers.getActiveUser();
-//    }
-//
-//    @Override
-//    public void onPrepareOptionsMenu(@NonNull Menu menu) {
-//        super.onPause();
-//        activeUser = this.allUsers.getActiveUser();
-//    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        activeUser = userListListener.getAllUsers().getActiveUser();
+
+
+    }
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPause();
+        activeUser = userListListener.getAllUsers().getActiveUser();
+    }
+
+
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment ProfileFragment.
+     */
+    // TODO: Rename and change types and number of parameters
     public static ProfileFragment newInstance(String param1, String param2) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
@@ -83,19 +117,19 @@ public class ProfileFragment extends Fragment   {
 
         RecyclerView QRGallery = view.findViewById(R.id.QRGalleryRecyclerView);
 
-        allUsers = (AllUsers) getActivity().getApplicationContext();
-        allUsers.init();
-
         // retrieve active user
-        if (allUsers.getActiveUser() != null) {
-            activeUser = allUsers.getActiveUser();
+        if (userListListener.getAllUsers().getActiveUser() != null) {
+            activeUser = userListListener.getAllUsers().getActiveUser();
         } else {
-            activeUser = new User();
+            activeUser = new User () ;
         }
+
+
 
         QrGalleryAdapter qrGalleryAdapter = new QrGalleryAdapter(this.getContext(), activeUser.getScannedQrCodes());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
+
 
         QRGallery.setLayoutManager(linearLayoutManager);
         QRGallery.setAdapter(qrGalleryAdapter);
@@ -112,6 +146,9 @@ public class ProfileFragment extends Fragment   {
                 showBottomSheetDialog();
             }
         });
+
+
+        // Inflate the layo
 
 
         return view;
@@ -147,8 +184,11 @@ public class ProfileFragment extends Fragment   {
 
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);;
                 SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                // Sign out
                 editor.putString("newAccount", "false");
                 editor.putString("isLoggedIn", "false");
+                editor.putString("currentUsername", null);
                 editor.commit();
 
                 startActivity(new Intent(getActivity(), StartUpActivity.class));

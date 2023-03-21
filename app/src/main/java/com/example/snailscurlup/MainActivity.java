@@ -70,14 +70,15 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
                 String phone = sharedPreferences.getString("newPhone",null);
                 String device_id = sharedPreferences.getString("newDeviceID",null);
                 userList.getUsers().addUser(username, email, phone,"", device_id);
+                // Set new account status to false now
                 editor.putString("newAccount", "false");
                 editor.commit();
+                // Get active user
                 activeUser = userList.getUsers().getUserByUsername(username);
             } else {
-                // Get user info if old account
+                // Get active user info if old account
                 allUsers.userWanted(username);
             }
-
             // Had to do it this way bcz of stupid asynchronous threads
             if (activeUser == null) {
                 activeUser = allUsers.getWantedUser();

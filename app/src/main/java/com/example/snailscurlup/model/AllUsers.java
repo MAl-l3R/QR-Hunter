@@ -16,7 +16,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AllUsers extends Application{
+// This class just holds the users list and active user as a global variable so that
+// other activities can access it. Also, it is always up-to-date with firebase.
+public class AllUsers extends Application {
     List<User> usersList = new ArrayList<User>();
     List<String> usernamesList = new ArrayList<String>();
     FirebaseFirestore db;
@@ -75,6 +77,7 @@ public class AllUsers extends Application{
         return usernamesList;
     }
 
+    // The following two functions are used to get a user by username
     public void userWanted(String username) {
         for(int i = 0; i < usersList.size(); i++) {
             if (usersList.get(i).getUsername() != null && usersList.get(i).getUsername().equals(username)) {
@@ -83,7 +86,6 @@ public class AllUsers extends Application{
             }
         }
     }
-
     public User getWantedUser() {
         return wantedUser;
     }
