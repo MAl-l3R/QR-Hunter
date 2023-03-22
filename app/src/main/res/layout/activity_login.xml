@@ -76,7 +76,7 @@
         android:paddingTop="10dp"
         android:backgroundTint="@color/secondary_color"
         android:fontFamily="casual"
-        android:textAppearance="@style/startup_page_button_style"
+        android:textAppearance="@style/button_text_style"
         android:textSize="34sp"
         android:layout_marginHorizontal="50dp"
         android:text="@string/login_button_text"
