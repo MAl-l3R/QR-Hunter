@@ -123,6 +123,7 @@ public class ProfileFragment extends Fragment   {
         allUsers = (AllUsers) getActivity().getApplicationContext();
         allUsers.init();
 
+        // Only wait if active user is null at the moment
         if (allUsers.getActiveUser() == null) {
             // Wait for thread to finish
             // allUsers list is initializing...
