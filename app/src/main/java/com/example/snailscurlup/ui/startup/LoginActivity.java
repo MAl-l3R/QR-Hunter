@@ -25,6 +25,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
     Button loginButton;
@@ -51,6 +52,13 @@ public class LoginActivity extends AppCompatActivity {
 
         AllUsers allUsers = (AllUsers) getApplicationContext();
         allUsers.init();
+        // Wait for thread to finish
+        // allUsers list is initializing...
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();

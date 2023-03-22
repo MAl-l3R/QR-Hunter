@@ -32,6 +32,7 @@ import com.example.snailscurlup.ui.startup.StartUpActivity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements UserListListener{
 
@@ -53,6 +54,13 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
 
         AllUsers allUsers = (AllUsers) getApplicationContext();
         allUsers.init();
+        // Wait for thread to finish
+        // allUsers list is initializing...
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         userList = AllUsersController.getInstance(MainActivity.this);
         sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);

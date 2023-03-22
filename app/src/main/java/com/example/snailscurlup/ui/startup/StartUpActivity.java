@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.snailscurlup.MainActivity;
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.model.AllUsers;
+import com.example.snailscurlup.model.User;
+
+import java.util.concurrent.TimeUnit;
 
 public class StartUpActivity extends AppCompatActivity {
     Button createAccountButton;
@@ -25,11 +28,26 @@ public class StartUpActivity extends AppCompatActivity {
 
         AllUsers allUsers = (AllUsers) getApplicationContext();
         allUsers.init();
+        // Wait for thread to finish
+        // allUsers list is initializing...
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
         sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
+        if (sharedPreferences.getString("currentUsername", null) != null) {
+            allUsers.userWanted(sharedPreferences.getString("currentUsername", null));
+        }
+
         if (sharedPreferences.getString("isLoggedIn", "false").equals("true")) {
+            // Set active user
+            User activeUser = allUsers.getWantedUser();
+            allUsers.setActiveUser(activeUser);
+            // Go to the main app screen
             Intent myIntent = new Intent(StartUpActivity.this, MainActivity.class);
             StartUpActivity.this.startActivity(myIntent);
         }

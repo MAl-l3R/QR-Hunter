@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
 import com.example.snailscurlup.controllers.AllUsersController;
+import com.example.snailscurlup.model.AllUsers;
 import com.example.snailscurlup.model.User;
 import com.example.snailscurlup.ui.scan.QrGalleryAdapter;
 import com.example.snailscurlup.ui.startup.StartUpActivity;
@@ -31,6 +32,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,8 +50,8 @@ public class ProfileFragment extends Fragment   {
 
     private UserListListener userListListener;
     private AllUsersController allUsersController;
-
-    private User activeUser;
+    AllUsers allUsers;
+    User activeUser;
 
 
 
@@ -118,14 +120,25 @@ public class ProfileFragment extends Fragment   {
 
         RecyclerView QRGallery = view.findViewById(R.id.QRGalleryRecyclerView);
 
-        // retrieve active user
-        if (userListListener.getAllUsers().getActiveUser() != null) {
-            activeUser = userListListener.getAllUsers().getActiveUser();
-        } else {
-            activeUser = new User () ;
+        allUsers = (AllUsers) getActivity().getApplicationContext();
+        allUsers.init();
+
+        if (allUsers.getActiveUser() == null) {
+            // Wait for thread to finish
+            // allUsers list is initializing...
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         }
 
-
+        // retrieve active user
+        if (allUsers.getActiveUser() != null) {
+            activeUser = allUsers.getActiveUser();
+        } else {
+            activeUser = new User();
+        }
 
         QrGalleryAdapter qrGalleryAdapter = new QrGalleryAdapter(this.getContext(), activeUser.getScannedQrCodes());
 
