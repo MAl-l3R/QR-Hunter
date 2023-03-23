@@ -25,7 +25,7 @@ public class QRCodesManager {
         return instance;
     }
 
-    public QrCodeInstance getQRCodeInstance(String data, Double latitude, Double longitude, boolean imageLocation) {
+    public QRCodeInstance getQRCodeInstance(String data, Double latitude, Double longitude, boolean imageLocation) {
         String newQrCodeHash = getHash256(data);
         // check if qr code with the same hash already exists
         QrCode qrCode = null;
@@ -42,7 +42,7 @@ public class QRCodesManager {
         }
 
         // create qr code instance object and assign it to the qr code object
-        QrCodeInstance qrCodeInstance = new  QrCodeInstance(data, latitude, longitude, imageLocation);
+        QRCodeInstance qrCodeInstance = new  QRCodeInstance(data, latitude, longitude, imageLocation);
         qrCode.addQRCodeInstance(qrCodeInstance);
 
         return qrCodeInstance;

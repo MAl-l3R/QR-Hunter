@@ -17,29 +17,29 @@ import java.util.ArrayList;
 
 
 
-public class QrGalleryAdapter extends RecyclerView.Adapter<QrGalleryAdapter.Viewholder>{
+public class QRGalleryAdapter extends RecyclerView.Adapter<QRGalleryAdapter.Viewholder>{
 
     private final Context context;
-    private final ArrayList<QrCode> QRCodeArrayList;
+    private final ArrayList<QRCode> QRCodeArrayList;
 
     // Constructor
-    public QrGalleryAdapter(Context context, ArrayList<QrCode> QRCodeArrayList) {
+    public QRGalleryAdapter(Context context, ArrayList<QRCode> QRCodeArrayList) {
         this.context = context;
         this.QRCodeArrayList= QRCodeArrayList;
     }
 
     @NonNull
     @Override
-    public QrGalleryAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public QRGalleryAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // to inflate the layout for each item of recycler view.
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.qrcode_gallery_card, parent, false);
         return new Viewholder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull QrGalleryAdapter.Viewholder holder, int position) {
+    public void onBindViewHolder(@NonNull QRGalleryAdapter.Viewholder holder, int position) {
         // to set data to textview and imageview of each card layout
-        QrCode singleqrcode = QRCodeArrayList.get(position);
+        QRCode singleqrcode = QRCodeArrayList.get(position);
         holder.QRCodeName.setText(singleqrcode.getName());
         holder.QRCodeScore.setText(String.valueOf(singleqrcode.getPointsInt()));
         Picasso.get().load(singleqrcode.getURL()).into(holder.QrCodeVisual);

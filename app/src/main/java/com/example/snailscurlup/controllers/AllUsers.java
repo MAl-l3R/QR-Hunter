@@ -7,15 +7,17 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.example.snailscurlup.model.User;
-import com.example.snailscurlup.ui.scan.QrCode;
+import com.example.snailscurlup.ui.scan.QRCode;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Represents
+ */
 public class AllUsers {
     private final List<User> users;
     private User activeUser;
@@ -163,7 +165,7 @@ public class AllUsers {
         activeUser = null;
         SharedPreferencesUtils.clearActiveUser(context);
     }
-    public void addQRCode(QrCode qrCode) {
+    public void addQRCode(QRCode qrCode) {
         String userID = activeUser.getUsername(); // get user ID
         SharedPreferencesUtils.addQRCode(context, userID, qrCode); // store QR code with user ID in shared preferences
     }

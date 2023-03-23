@@ -20,14 +20,9 @@ import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
 import com.example.snailscurlup.controllers.AllUsers;
 import com.example.snailscurlup.model.User;
-import com.example.snailscurlup.ui.scan.QrGalleryAdapter;
+import com.example.snailscurlup.ui.scan.QRGalleryAdapter;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-
-
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -122,7 +117,7 @@ public class ProfileFragment extends Fragment   {
 
 
 
-        QrGalleryAdapter qrGalleryAdapter = new QrGalleryAdapter(this.getContext(), activeUser.getScannedQrCodes());
+        QRGalleryAdapter qrGalleryAdapter = new QRGalleryAdapter(this.getContext(), activeUser.getScannedQrCodes());
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
 

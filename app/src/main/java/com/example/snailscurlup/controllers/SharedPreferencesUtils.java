@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.snailscurlup.model.User;
-import com.example.snailscurlup.ui.scan.QrCode;
+import com.example.snailscurlup.ui.scan.QRCode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +128,7 @@ public class SharedPreferencesUtils {
         editor.apply();
     }
 
-    public static void addQRCode(Context context, String userID, QrCode qrCode) {
+    public static void addQRCode(Context context, String userID, QRCode qrCode) {
         SharedPreferences sharedPreferences = getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String qrKey = "qr_" + qrCode.getHash();
