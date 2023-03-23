@@ -15,7 +15,7 @@ public class QRCodeUnitTest {
     private QRCode mockQRCode() {
         // Create a fake QR code using some dummy data
         final String dummyData = "123456";
-        QRCode newQR = new QRCode(dummyData, 0.0, 0.0);
+        QRCode newQR = new QRCode(dummyData);
         return newQR;
     }
 
