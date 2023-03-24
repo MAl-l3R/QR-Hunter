@@ -14,7 +14,6 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -32,10 +31,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.snailscurlup.NavigationHeaderListener;
+
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
-import com.example.snailscurlup.controllers.AllUsers;
+import com.example.snailscurlup.controllers.AllUsersController;
 import com.example.snailscurlup.model.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -44,10 +43,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 public class DecodeFragment extends Fragment{
 
@@ -57,14 +54,14 @@ public class DecodeFragment extends Fragment{
     NamesOfQR names = new NamesOfQR();
     FusedLocationProviderClient fusedLocationProviderClient;
 
-    private NavigationHeaderListener NavBarHeadListener; // get reference to main activity so that we can set  Haeder In bit
+//    private NavigationHeaderListener NavBarHeadListener; // get reference to main activity so that we can set  Haeder In bit
     private UserListListener userListListener; // get reference to main activity so that we can set  Haeder In bit
 
     private String data;
 
     private User activeUser;
 
-    private AllUsers allUsers;
+    private AllUsersController allUsersController;
     private QrCode newQRCode;
 
     @Override
@@ -72,9 +69,8 @@ public class DecodeFragment extends Fragment{
         super.onAttach(context);
         if (context instanceof UserListListener) {
             userListListener = (UserListListener) context;
-            NavBarHeadListener = (NavigationHeaderListener) context;
         } else {
-            throw new RuntimeException(context + " must implement UserListListener, or NavBarHeadlIstner");
+            throw new RuntimeException(context + " must implement UserListListener");
         }
     }
     @Override

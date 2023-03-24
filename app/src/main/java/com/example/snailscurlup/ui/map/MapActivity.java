@@ -1,4 +1,4 @@
-package com.example.snailscurlup;
+package com.example.snailscurlup.ui.map;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.snailscurlup.R;
 import com.example.snailscurlup.ui.leaderboard.LeaderboardFragment;
 import com.example.snailscurlup.ui.profile.ProfileFragment;
 import com.example.snailscurlup.ui.scan.ScanFragment;

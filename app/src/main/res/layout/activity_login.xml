@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/primary_color">
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="260dp"
+        android:layout_height="260dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/app_logo"
+        android:layout_margin="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/welcome_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome back ,"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:fontFamily="casual"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_logo" />
+
+    <TextView
+        android:id="@+id/username_field_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/username_field_text"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:fontFamily="casual"
+        app:cornerRadius="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcome_back" />
+
+    <EditText
+        android:id="@+id/username_field"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/white"
+        android:drawablePadding="10dp"
+        android:hint="@string/username_hint"
+        android:textSize="20sp"
+        android:fontFamily="casual"
+        android:inputType="textVisiblePassword|textNoSuggestions"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.25"
+        app:layout_constraintStart_toStartOf="@+id/username_field_text"
+        app:layout_constraintTop_toBottomOf="@+id/username_field_text"
+        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+
+    <Button
+        android:id="@+id/login_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:paddingTop="10dp"
+        android:backgroundTint="@color/secondary_color"
+        android:fontFamily="casual"
+        android:textAppearance="@style/button_text_style"
+        android:textSize="34sp"
+        android:layout_marginHorizontal="50dp"
+        android:text="@string/login_button_text"
+        android:textAlignment="center"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username_field" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
