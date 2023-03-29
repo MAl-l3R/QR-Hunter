@@ -1,4 +1,4 @@
-package com.example.snailscurlup.ui.scan;
+ackage com.example.snailscurlup.ui.scan;
 
 
 /*
