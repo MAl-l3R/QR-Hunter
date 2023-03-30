@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@drawable/round_menu_profile"
+    android:orientation="vertical"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <TextView
+        android:id="@+id/Sortby_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:fontFamily="casual"
+        android:paddingTop="10dp"
+        android:text="Sort By..."
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:paddingStart="5dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/sort_scoredesc_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondary_color"
+        android:text="Score, Descending"
+        android:gravity="left|center_vertical"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textAppearance="@style/button_text_style"
+        android:fontFamily="casual"
+        android:paddingTop="10dp" />
+
+    <Button
+        android:id="@+id/sort_scoreasc_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondary_color"
+        android:text="Score, Ascending"
+        android:gravity="left|center_vertical"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textAppearance="@style/button_text_style"
+        android:fontFamily="casual"
+        android:paddingTop="10dp" />
+
+    <Button
+        android:id="@+id/sort_datenewestfirst_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondary_color"
+        android:text="Date, Newest First"
+        android:gravity="left|center_vertical"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textAppearance="@style/button_text_style"
+        android:fontFamily="casual"
+        android:paddingTop="10dp" />
+
+    <Button
+        android:id="@+id/sort_dateoldestfirst_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondary_color"
+        android:text="Date, Oldest First"
+        android:gravity="left|center_vertical"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textAppearance="@style/button_text_style"
+        android:fontFamily="casual"
+        android:paddingTop="10dp" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:orientation="vertical" />
+
+</LinearLayout>
+
+
+    <!-- https://www.section.io/engineering-education/bottom-sheet-dialogs-using-android-studio/ -->
