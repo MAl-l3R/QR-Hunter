@@ -3,44 +3,57 @@
 
 <LinearLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:background="@color/secondary_color"
-tools:context=".ui.leaderboard.LeaderboardFragment">
-
-<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:orientation="horizontal">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/primary_color"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="10dp"
+    tools:context=".ui.leaderboard.LeaderboardFragment">
 
-    <Button
-        android:id="@+id/buttonUserList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:backgroundTint="@color/secondary_color"
-        android:text="Cumulative"
-        android:textColor="@color/gray_400"></Button>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-    <Button
-        android:id="@+id/buttonQRList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:backgroundTint="@color/secondary_color"
-        android:text="Top QR"
-        android:textColor="@color/gray_400"></Button>
+        <Button
+            android:id="@+id/buttonUserList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/secondary_color"
+            android:text="Cumulative"
+            android:textColor="@color/white"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/buttonQRList"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" ></Button>
+
+        <Button
+            android:id="@+id/buttonQRList"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:backgroundTint="@color/secondary_color"
+            android:text="Top QR"
+            android:textColor="@color/white"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonUserList"
+            app:layout_constraintTop_toTopOf="parent"></Button>
 
 
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 <ListView
     android:id="@+id/leader_list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:dividerHeight="10dp">
 </ListView>
 
 </LinearLayout>
