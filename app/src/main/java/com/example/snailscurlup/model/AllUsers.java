@@ -4,7 +4,8 @@ import android.app.Application;
 
 import androidx.annotation.Nullable;
 
-import com.example.snailscurlup.ui.scan.QrCode;
+import com.example.snailscurlup.ui.scan.QRCode;
+//import com.example.snailscurlup.ui.scan.QrCode;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -48,7 +49,7 @@ public class AllUsers extends Application {
                         public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                             for (QueryDocumentSnapshot dc: value){
                                 String qr = dc.getId();
-                                QrCode code = new QrCode(qr);
+                                QRCode code = new QRCode(qr);
                                 user.addScannedQrCodes(code);
                             }
                         }

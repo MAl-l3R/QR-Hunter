@@ -23,7 +23,7 @@ import com.example.snailscurlup.UserListListener;
 import com.example.snailscurlup.controllers.AllUsersController;
 import com.example.snailscurlup.model.AllUsers;
 import com.example.snailscurlup.model.User;
-import com.example.snailscurlup.ui.scan.QrGalleryAdapter;
+import com.example.snailscurlup.ui.scan.QRGalleryAdapter;
 import com.example.snailscurlup.ui.startup.StartUpActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

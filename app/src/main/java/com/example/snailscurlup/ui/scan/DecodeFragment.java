@@ -62,7 +62,7 @@ public class DecodeFragment extends Fragment{
     private User activeUser;
 
     private AllUsersController allUsersController;
-    private QrCode newQRCode;
+    private QRCode newQRCode;
 
     @Override
     public void onAttach(@NonNull Context context) {
