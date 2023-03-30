@@ -38,5 +38,8 @@
     <string name="qrcode_score">Score:</string>
     <string name="qrcode_namefield">[name]</string>
     <string name="qrcode_scorefield">[score]</string>
+    <string name="qrcode_timestamp">Time Stamp:</string>
+    <string name="qrcode_timestampfield">[timestamp]</string>
+
 
 </resources>
