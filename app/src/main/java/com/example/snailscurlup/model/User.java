@@ -1,11 +1,22 @@
 package com.example.snailscurlup.model;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.example.snailscurlup.ui.scan.QRCodeInstanceNew;
 import com.example.snailscurlup.ui.scan.QrCode;
 import com.example.snailscurlup.ui.scan.QrCodeInstance;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -26,7 +37,12 @@ public class User implements Serializable {
     private String device_id;
     private String totalScore;
 
+
+
     private ArrayList<QrCode> scannedQrCodes;
+
+    // impmeent for new abstract Qrcode
+    private ArrayList<QRCodeInstanceNew> scannedInstanceQrCodes;
 
     // Default Constructor
     public User() {
@@ -36,9 +52,10 @@ public class User implements Serializable {
         this.profilePhotoPath = null;
         this.device_id = null;
         this.scannedQrCodes = new ArrayList<>();
+        this.scannedInstanceQrCodes = new ArrayList<>();
     }
 
-    public User(String username, String email, String phoneNumber,String totalScore) {
+    public User(String username, String email, String phoneNumber, String totalScore) {
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -46,6 +63,8 @@ public class User implements Serializable {
         this.profilePhotoPath = null;
         this.device_id = null;
         this.scannedQrCodes = new ArrayList<>();
+        this.scannedInstanceQrCodes = new ArrayList<>();
+
     }
 
 
@@ -95,9 +114,11 @@ public class User implements Serializable {
     public void setProfilePhotoPath(String profilePhotoPath) {
         this.profilePhotoPath = profilePhotoPath;
     }
+
     public String getDevice_id() {
         return device_id;
     }
+
     public void setDevice_id(String device_id) {
         this.device_id = device_id;
     }
@@ -106,6 +127,7 @@ public class User implements Serializable {
 
     /**
      * Displays a serialized version of a user's information.
+     *
      * @return A string that contains all of the user's information.
      */
     @Override
@@ -115,6 +137,7 @@ public class User implements Serializable {
 
     /**
      * Returns a list of a user's scanned QR codes.
+     *
      * @return The list of the user's scanned QR codes.
      */
     public ArrayList<QrCode> getScannedQrCodes() {
@@ -123,11 +146,53 @@ public class User implements Serializable {
 
     /**
      * Adds a QR code to the user's library of scanned QR codes.
+     *
      * @param scannedQrCodes - A QrCode object to be added to library.
      */
-   public void addScannedQrCodes(QrCode scannedQrCodes) {
+    public void addScannedQrCodes(QrCode scannedQrCodes) {
         this.scannedQrCodes.add(scannedQrCodes);
-   }
+    }
+
+
+    /***************** NEW CODE  for new Instance Qr*******************/
+
+    public void addScannedInstanceQrCodes(QRCodeInstanceNew scannedInstanceQrCodes) {
+        this.scannedInstanceQrCodes.add(scannedInstanceQrCodes);
+    }
+
+    public ArrayList<QRCodeInstanceNew> getScannedInstanceQrCodes() {
+        return scannedInstanceQrCodes;
+    }
+
+    public Boolean checkIfInstanceQrCodeExists(String NewQrCodeHash) {
+        for (QRCodeInstanceNew qrCodeInstance : scannedInstanceQrCodes) {
+            if (qrCodeInstance.AbstractQRHash().equals(NewQrCodeHash)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Integer numberScannedQRCodeInstances() {
+        int count = 0;
+        for (QRCodeInstanceNew qrCodeInstance : scannedInstanceQrCodes) {
+            count++;
+        }
+
+        return count;
+    }
+
+    public Integer totalPointsEarned() {
+        int totalPoints = 0;
+        for (QRCodeInstanceNew qrCodeInstance : scannedInstanceQrCodes) {
+
+            totalPoints += qrCodeInstance.getPointsInt();
+
+        }
+        return totalPoints;
+    }
+
+
 
 }
 
