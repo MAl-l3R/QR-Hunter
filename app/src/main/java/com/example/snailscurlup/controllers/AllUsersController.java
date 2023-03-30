@@ -15,20 +15,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.List;
 
-/**
- * Represents
- */
-public class AllUsers {
+public class AllUsersController {
     private final List<User> users;
     private User activeUser;
-    private static AllUsers instance;
+    private static AllUsersController instance;
     private final SharedPreferences sharedPreferences;
     private final Context context;
     FirebaseFirestore db;
 
 
     // constructor
-    private AllUsers(Context context) {
+    private AllUsersController(Context context) {
         this.context = context.getApplicationContext();
         db = FirebaseFirestore.getInstance();
 
@@ -41,9 +38,9 @@ public class AllUsers {
     }
 
     // singleton ensure 1 instance
-    public static AllUsers getInstance(Context context) {
+    public static AllUsersController getInstance(Context context) {
         if (instance == null) {
-            instance = new AllUsers(context);
+            instance = new AllUsersController(context);
         }
         return instance;
     }
@@ -140,7 +137,7 @@ public class AllUsers {
     }
 
     // Getter for all users
-    public AllUsers getUsers() {
+    public AllUsersController getUsers() {
         return this;
     }
 
@@ -160,7 +157,7 @@ public class AllUsers {
         return activeUser != null;
     }
 
-    // emove the active user
+    // remove the active user
     public void removeActiveUser() {
         activeUser = null;
         SharedPreferencesUtils.clearActiveUser(context);

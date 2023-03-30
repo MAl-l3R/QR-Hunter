@@ -105,10 +105,17 @@ public class SharedPreferencesUtils {
     }
 
     public static void setActiveUser(Context context, User user) {
-        SharedPreferences sharedPreferences = getSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(ACTIVE_USER_KEY, user.getUsername());
-        editor.apply();
+        if (user != null) {
+            SharedPreferences sharedPreferences = getSharedPreferences(context);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(ACTIVE_USER_KEY, user.getUsername());
+            editor.apply();
+        } else {
+            SharedPreferences sharedPreferences = getSharedPreferences(context);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(ACTIVE_USER_KEY, null);
+            editor.apply();
+        }
     }
 
     public static User getActiveUser(Context context) {
