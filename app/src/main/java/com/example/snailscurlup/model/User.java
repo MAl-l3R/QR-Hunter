@@ -1,12 +1,10 @@
 package com.example.snailscurlup.model;
 
 
-import com.example.snailscurlup.ui.scan.QrCode;
-import com.example.snailscurlup.ui.scan.QrCodeInstance;
+import com.example.snailscurlup.ui.scan.QRCode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * User
@@ -26,7 +24,7 @@ public class User implements Serializable {
     private String device_id;
     private String totalScore;
 
-    private ArrayList<QrCode> scannedQrCodes;
+    private ArrayList<QRCode> scannedQRCodes;
 
     // Default Constructor
     public User() {
@@ -35,7 +33,7 @@ public class User implements Serializable {
         this.phoneNumber = null;
         this.profilePhotoPath = null;
         this.device_id = null;
-        this.scannedQrCodes = new ArrayList<>();
+        this.scannedQRCodes = new ArrayList<>();
     }
 
     public User(String username, String email, String phoneNumber,String totalScore) {
@@ -45,7 +43,7 @@ public class User implements Serializable {
         this.totalScore = totalScore;
         this.profilePhotoPath = null;
         this.device_id = null;
-        this.scannedQrCodes = new ArrayList<>();
+        this.scannedQRCodes = new ArrayList<>();
     }
 
 
@@ -56,7 +54,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
         this.profilePhotoPath = profilePhotoPath;
         this.device_id = device_id;
-        this.scannedQrCodes = new ArrayList<>();
+        this.scannedQRCodes = new ArrayList<>();
     }
 
     public String getTotalScore() {
@@ -117,16 +115,16 @@ public class User implements Serializable {
      * Returns a list of a user's scanned QR codes.
      * @return The list of the user's scanned QR codes.
      */
-    public ArrayList<QrCode> getScannedQrCodes() {
-        return scannedQrCodes;
+    public ArrayList<QRCode> getScannedQrCodes() {
+        return scannedQRCodes;
     }
 
     /**
      * Adds a QR code to the user's library of scanned QR codes.
-     * @param scannedQrCodes - A QrCode object to be added to library.
+     * @param scannedQRCodes - A QrCode object to be added to library.
      */
-   public void addScannedQrCodes(QrCode scannedQrCodes) {
-        this.scannedQrCodes.add(scannedQrCodes);
+   public void addScannedQrCodes(QRCode scannedQRCodes) {
+        this.scannedQRCodes.add(scannedQRCodes);
    }
 
 }

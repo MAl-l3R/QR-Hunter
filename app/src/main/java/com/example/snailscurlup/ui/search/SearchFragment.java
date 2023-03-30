@@ -15,8 +15,7 @@ import android.widget.ListView;
 
 
 import com.example.snailscurlup.R;
-import com.example.snailscurlup.ui.scan.QrCode;
-import com.google.firebase.firestore.AggregateQuery;
+import com.example.snailscurlup.ui.scan.QRCode;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldPath;
@@ -83,7 +82,7 @@ public class SearchFragment extends Fragment {
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                 for (QueryDocumentSnapshot dc: value){
                                     String qr = dc.getId();
-                                    QrCode code = new QrCode(qr);
+                                    QRCode code = new QRCode(qr);
                                     user1.addScannedQrCodes(code);
                                 }
                             }

@@ -1,0 +1,9 @@
+com.example.snailscurlup
+com.example.snailscurlup.controllers
+com.example.snailscurlup.model
+com.example.snailscurlup.ui.leaderboard
+com.example.snailscurlup.ui.map
+com.example.snailscurlup.ui.profile
+com.example.snailscurlup.ui.scan
+com.example.snailscurlup.ui.search
+com.example.snailscurlup.ui.Startup

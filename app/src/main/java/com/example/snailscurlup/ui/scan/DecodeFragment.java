@@ -62,7 +62,7 @@ public class DecodeFragment extends Fragment{
     private User activeUser;
 
     private AllUsersController allUsersController;
-    private QrCode newQRCode;
+    private QRCode newQRCode;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -103,7 +103,7 @@ public class DecodeFragment extends Fragment{
                 String data = result.getString("scanData");
 
                 // get object for new Qr code
-                newQRCode = new QrCode(data);
+                newQRCode = new QRCode(data);
 
 
                 // Get the seed value using the hash value
@@ -224,8 +224,8 @@ public class DecodeFragment extends Fragment{
 
 
 
-    public QrCode getQrCode(String data){
-        QrCode QrCode = new QrCode(data);
+    public QRCode getQrCode(String data){
+        QRCode QrCode = new QRCode(data);
         return QrCode;
     }
 

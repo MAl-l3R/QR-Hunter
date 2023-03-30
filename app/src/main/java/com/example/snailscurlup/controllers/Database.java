@@ -1,6 +1,6 @@
 
 
-package com.example.snailscurlup.model;
+package com.example.snailscurlup.controllers;
 
 import static android.content.ContentValues.TAG;
 
@@ -8,6 +8,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.snailscurlup.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 /* TOdO: implement listener so asynchonous operation  work */
 
