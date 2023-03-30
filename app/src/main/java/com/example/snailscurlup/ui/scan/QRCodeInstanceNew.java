@@ -32,7 +32,7 @@ public class QRCodeInstanceNew {
 
     private User scanQRInstanceUser;
 
-    QRCodeInstanceNew(AbstractQR scannedAbstractQRCodeType, User user, Bitmap scannedQRLogImage, Timestamp scanndQRLogTimeStamp, String ScanedQRLogLocation) {
+    public QRCodeInstanceNew(AbstractQR scannedAbstractQRCodeType, User user, Bitmap scannedQRLogImage, Timestamp scanndQRLogTimeStamp, String ScanedQRLogLocation) {
         this.QrCodeAbstractType = scannedAbstractQRCodeType;
         this.scanQRLogImage = scannedQRLogImage;
         this.scanQRInstanceUser = user;
@@ -114,7 +114,27 @@ public class QRCodeInstanceNew {
         this.scanQRInstanceUser = scanQRInstanceUser;
     }
 
-    // Class costructor uses data define other properties fo Qr code
+   /*****************New code to imp new abstract QR*****************/
+   public String AbstractQRHash(){
+       return QrCodeAbstractType.getHash();
+
+   }
+
+    public String getName(){
+         return QrCodeAbstractType.getName();
+    }
+
+    public Integer getPointsInt(){
+         return QrCodeAbstractType.getPointsInt();
+    }
+
+    public String getURL(){
+         return QrCodeAbstractType.getURL();
+    }
+
+    public AbstractQR getAbstractQR(){
+         return QrCodeAbstractType;
+    }
 
 
 }
