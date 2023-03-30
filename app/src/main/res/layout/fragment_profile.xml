@@ -10,6 +10,15 @@
     android:background="@color/primary_color">
 
 
+    <FrameLayout
+        android:id="@+id/QrInfoFragLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/profile_floating_menuicon"
         android:layout_width="wrap_content"
