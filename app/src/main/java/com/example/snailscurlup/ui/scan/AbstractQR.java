@@ -2,6 +2,7 @@ package com.example.snailscurlup.ui.scan;
 
 import androidx.annotation.NonNull;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -15,7 +16,7 @@ import java.util.Random;
  * Represent lke Single Qrcode object type, has unique hasg,name picture, and number of points based on its data
  * A single Qr code can hav emany instance of it
  */
-public class AbstractQR {
+public class AbstractQR implements Serializable {
 
     NamesOfQR names = new NamesOfQR();
     private String hash;
@@ -23,7 +24,7 @@ public class AbstractQR {
 
     private String URL;
     private String name;
-    private int pointsInt;
+    private Integer pointsInt;
 
 
     // Class costructor uses data define other properties fo Qr code
@@ -46,9 +47,8 @@ public class AbstractQR {
 
 
     // Setters and Getter
-    public String setHash(String data) {
+    public void  setHash(String data) {
         this.hash = getHash256(data);
-        return this.hash;
     }
 
     // Getter and Setter for hash
@@ -83,7 +83,7 @@ public class AbstractQR {
     }
 
     // Getter and Setter for pointsInt
-    public int getPointsInt() {
+    public Integer getPointsInt() {
         return this.pointsInt;
     }
 
@@ -104,13 +104,14 @@ public class AbstractQR {
             StringBuilder hashHex = new StringBuilder(2 * hashBytes.length);
             for (int i = 0; i < hashBytes.length; i++) {
                 String hex = Integer.toHexString(0xff & hashBytes[i]);
-                if (hex.length() == 1) {
+                if(hex.length() == 1) {
                     hashHex.append('0');
                 }
                 hashHex.append(hex);
             }
             hash256 = hashHex.toString();
-        } catch (NoSuchAlgorithmException e) {
+        }
+        catch (NoSuchAlgorithmException e) {
             System.err.println("Use SHA-256 message digest algorithm");
             hash256 = Integer.toHexString(data.hashCode());
         }
@@ -147,6 +148,29 @@ public class AbstractQR {
             }
         }
         return score;
+    }
+
+    public static String getHash256Ins(String data){
+        String hash256;
+        try {
+            // From https://www.baeldung.com/sha-256-hashing-java
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hashBytes = md.digest(data.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hashHex = new StringBuilder(2 * hashBytes.length);
+            for (int i = 0; i < hashBytes.length; i++) {
+                String hex = Integer.toHexString(0xff & hashBytes[i]);
+                if (hex.length() == 1) {
+                    hashHex.append('0');
+                }
+                hashHex.append(hex);
+            }
+            hash256 = hashHex.toString();
+        } catch (NoSuchAlgorithmException e) {
+            System.err.println("Use SHA-256 message digest algorithm");
+            hash256 = Integer.toHexString(data.hashCode());
+        }
+        return hash256;
+
     }
 
 
