@@ -1,64 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/primary_color"
-    tools:context=".ui.search.SearchFragment">
+    android:padding="10dp"
+    tools:context=".ui.search.SearchFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
-    <View
-        android:id="@+id/search_bar"
-        android:layout_width="350dp"
-        android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="20dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="99dp"
-        android:background="@drawable/search_bar_shape"
-        />
-    <EditText
-        android:id="@+id/search_bar_input_text"
-        android:layout_width="280dp"
-        android:layout_height="45dp"
-        android:hint="Search user"
-        android:textColor="@color/black"
-        android:fontFamily="casual"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="30dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="99dp"/>
-    <ImageButton
-        android:id="@+id/search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="300dp"
-        android:layout_marginTop="95dp"
-        android:src="@drawable/baseline_search_24"
-        style="?android:attr/borderlessButtonStyle" />
     <TextView
         android:id="@+id/search_for_"
-        android:layout_width="160dp"
-        android:layout_height="25dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="17dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="64dp"
+        android:layout_marginLeft="20dp"
         android:text="@string/search_for_"
         android:textAppearance="@style/search_for_"
-        android:gravity="center_horizontal|top"
         android:textColor="@color/white"
         android:fontFamily="casual"
         />
-    <ListView
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:id="@+id/user_list"
-        android:dividerHeight="10dp"
-        android:divider="@color/primary_color"
-        />
+        android:layout_marginHorizontal="20dp">
 
-</FrameLayout>
+        <View
+            android:id="@+id/search_bar"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/search_bar_shape"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/search_bar_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Search user"
+                android:textColorHint="@color/black"
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dp"
+                android:singleLine="true"
+                app:layout_constraintBottom_toBottomOf="@id/search_bar"
+                app:layout_constraintEnd_toStartOf="@id/search_button"
+                app:layout_constraintStart_toStartOf="@id/search_bar"
+                app:layout_constraintTop_toTopOf="@id/search_bar"/>
+
+            <ImageButton
+                android:id="@+id/search_button"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/baseline_search_24"
+                style="?android:attr/borderlessButtonStyle" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ListView
+        android:id="@+id/user_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="10dp"
+        android:dividerHeight="10dp"
+        android:divider="@color/primary_color">
+    </ListView>
+
+</LinearLayout>
