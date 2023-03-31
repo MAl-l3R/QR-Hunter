@@ -22,6 +22,8 @@
         android:layout_width="280dp"
         android:layout_height="45dp"
         android:hint="Search user"
+        android:textColor="@color/black"
+        android:fontFamily="casual"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="30dp"
         android:layout_alignParentTop="true"
@@ -45,14 +47,18 @@
         android:text="@string/search_for_"
         android:textAppearance="@style/search_for_"
         android:gravity="center_horizontal|top"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
+        android:fontFamily="casual"
         />
     <ListView
         android:layout_marginLeft="45dp"
-        android:layout_width="300dp"
+        android:layout_marginRight="45dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:id="@+id/user_list"
+        android:dividerHeight="10dp"
+        android:divider="@color/primary_color"
         />
 
 </FrameLayout>
