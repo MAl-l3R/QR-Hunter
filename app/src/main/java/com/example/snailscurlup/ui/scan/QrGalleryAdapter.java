@@ -19,43 +19,66 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 
+/**
+ * QrGalleryAdapter
+ * <p>
+ * This class is the adapter for the RecyclerView of  QR Gallery.
+ * It is used to display the QR codes in the gallery.
+ *
+ * @author AyanB123
+ */
+
+//
 public class QrGalleryAdapter extends RecyclerView.Adapter<QrGalleryAdapter.Viewholder> {
 
     private final Context context;
+
     /*** commented out for new Abstract
      * private final ArrayList<QrCode> QRCodeArrayList; **/
 
+
+    /***** new QRCodeInstanceNew are using  *****/
     private final ArrayList<QRCodeInstanceNew> QRCodeArrayList;
-    private final FragmentManager fragmentManager; // add FragmentManager variable
+
+    // add FragmentManager variable to pass to QRInfoDialogFragment
+    private final FragmentManager fragmentManager;
 
 
-    // Constructor
+    // Constructor for initializing the values of context and data sent from Fragment works with Array Adapter
     public QrGalleryAdapter(Context context, ArrayList<QRCodeInstanceNew> QRCodeArrayList, FragmentManager fragmentManager) {
         this.context = context;
         this.QRCodeArrayList = QRCodeArrayList;
+
+        // set FragmentManager variable to pass to QRInfoDialogFragment
         this.fragmentManager = fragmentManager;
     }
 
     @NonNull
     @Override
     public QrGalleryAdapter.Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // to inflate the layout for each item of recycler view.
+
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.qrcode_gallery_card, parent, false);
         return new Viewholder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull QrGalleryAdapter.Viewholder holder, int position) {
+
+
         // to set data to textview and imageview of each card layout
         QRCodeInstanceNew singleqrcode = QRCodeArrayList.get(holder.getAdapterPosition());
+
+        // set the Name and points  of the QR code
         holder.QRCodeName.setText(singleqrcode.getName());
         holder.QRCodeScore.setText(String.valueOf(singleqrcode.getPointsInt()));
 
-        // format timestamp with simple Date format
+        // format timestamp with simple Date format and set it to the textview
         String pattern = "E, dd MMM yyyy HH:mm:ss z";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String formattedTimestamp = simpleDateFormat.format(singleqrcode.getScanQRLogTimeStamp());
         holder.QRCodeTimeStamp.setText(formattedTimestamp);
+
+        // set the QR code image using Picasso
         Picasso.get().load(singleqrcode.getURL()).into(holder.QrCodeVisual);
 
 
@@ -68,14 +91,17 @@ public class QrGalleryAdapter extends RecyclerView.Adapter<QrGalleryAdapter.View
                 // get the QR code instance corresponding to the clicked item
                 QRCodeInstanceNew clickedQRCode = QRCodeArrayList.get(position);
 
-                QRInfoDialogFragment dialogFragment = QRInfoDialogFragment.newInstance("Dialog Title", "Dialog Message");
+
+                // create a new QRInfoDialogFragment and pass the QR code hash to it
+                QRInfoDialogFragment dialogFragment = QRInfoDialogFragment.newInstance();
                 Bundle bundle = new Bundle();
+
                 bundle.putString("clickedQRCodeHash", clickedQRCode.AbstractQRHash());
+
+                // set the arguments of the QRInfoDialogFragment
                 dialogFragment.setArguments(bundle);
-                dialogFragment.show(fragmentManager, "CustomDialogFragment");
+                dialogFragment.show(fragmentManager, "QRInfoDialogFragment");
 
-
-                // create an intent to start the QR code details activity
 
             }
         });
