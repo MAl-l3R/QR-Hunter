@@ -93,8 +93,8 @@ public class LeaderboardFragment extends Fragment {
 
         db = FirebaseFirestore.getInstance();
 
-        cumulativeButton.setBackgroundColor(Color.YELLOW);
-        TopQrButton.setBackgroundColor(Color.CYAN);
+        cumulativeButton.setBackgroundColor(getContext().getColor(R.color.button_selected));
+        TopQrButton.setBackgroundColor(getContext().getColor(R.color.secondary_color));
 
 
         Query User_leaderboard = db.collection("Users").orderBy("Total Score", Query.Direction.DESCENDING);
@@ -117,8 +117,8 @@ public class LeaderboardFragment extends Fragment {
         cumulativeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                cumulativeButton.setBackgroundColor(Color.YELLOW);
-                TopQrButton.setBackgroundColor(Color.CYAN);
+                cumulativeButton.setBackgroundColor(getContext().getColor(R.color.button_selected));
+                TopQrButton.setBackgroundColor(getContext().getColor(R.color.secondary_color));
                 User_leaderboard.addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -139,8 +139,8 @@ public class LeaderboardFragment extends Fragment {
         TopQrButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               TopQrButton.setBackgroundColor(Color.YELLOW);
-               cumulativeButton.setBackgroundColor(Color.CYAN);
+               TopQrButton.setBackgroundColor(getContext().getColor(R.color.button_selected));
+               cumulativeButton.setBackgroundColor(getContext().getColor(R.color.secondary_color));
                QR_leaderboard.addSnapshotListener(new EventListener<QuerySnapshot>() {
                    @Override
                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
