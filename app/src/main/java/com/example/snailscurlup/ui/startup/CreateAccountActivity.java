@@ -18,17 +18,33 @@ import com.example.snailscurlup.MainActivity;
 import com.example.snailscurlup.R;
 
 
+/**
+ * CreateAccountActivity
+ * <p>
+ * This activity allows the user to create a new account.
+ * It saves the user's username, email, phone number, and device ID.
+ *
+ * @author AyanB123 and MAl-l3R
+ */
+
 public class CreateAccountActivity extends AppCompatActivity {
+
+    // Keys for saving the input field data
     private static final String KEY_USERNAME = "username";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PHONE = "phone";
 
+
+    // Shared Preferences for saving user data
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+    // User data fields saved with Shared Preferences
     private String device_id, savedUsername, savedEmail, savedPhone;
     private EditText usernameField, emailField, phoneField;
 
+
+    // Save the input field data
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -43,6 +59,8 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_create_account);
 
+
+        // get saved data from Shared Preferences
         sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
@@ -51,6 +69,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         emailField = findViewById(R.id.Email_field);
         phoneField = findViewById(R.id.phone_number_field);
 
+
+        // if savedInstanceState is not null, was data saved while app was paused
         if (savedInstanceState != null) {
             savedUsername = savedInstanceState.getString(KEY_USERNAME);
             savedEmail = savedInstanceState.getString(KEY_EMAIL);
@@ -79,6 +99,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                 savedEmail = email;
                 savedPhone = phone;
 
+
+                // Check if any of the fields are empty and display an error message
                 if (username.isEmpty()) {
                     // Check if username has been entered
                     usernameField.setError("Username is invalid");
@@ -103,6 +125,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                     editor.putString("newDeviceID", device_id);
                     editor.commit();
 
+                    // Display a success message
                     Toast.makeText(CreateAccountActivity.this, "Account created successfully", Toast.LENGTH_SHORT).show();
 
                     // Go to the main app screen
