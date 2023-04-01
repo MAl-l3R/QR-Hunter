@@ -1,6 +1,5 @@
 package com.example.snailscurlup.ui.startup;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,28 +15,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.snailscurlup.MainActivity;
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.model.AllUsers;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * LoginActivity
+ * <p>
+ * This activity allows the user to create a new account.
+ * It saves the user's username, email, phone number, and device ID.
+ *
+ * @author MAl-l3R (orignally was Fragment created by AyanB123)
+ */
 public class LoginActivity extends AppCompatActivity {
+    // Keys for saving the input field data
+    private static final String KEY_USERNAME = "username";
     Button loginButton;
     EditText usernameField;
-
-    private static final String KEY_USERNAME = "username";
-
     private String savedUsername;
 
+
+    // Shared Preferences for saving user data -> username
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
+    // User data fields saved with Shared Preferences
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -50,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_login);
 
+        // Initialize allUsers list so that it can be used as it is global access to all users
         AllUsers allUsers = (AllUsers) getApplicationContext();
         allUsers.init();
         // Wait for thread to finish
@@ -60,16 +63,20 @@ public class LoginActivity extends AppCompatActivity {
             Thread.currentThread().interrupt();
         }
 
+
+        // Shared Preferences for saving user data
         sharedPreferences = this.getSharedPreferences("MyPrefs", MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
         loginButton = findViewById(R.id.login_button);
         usernameField = findViewById(R.id.username_field);
 
+        // get saved data from Shared Preferences if it exists
         if (savedInstanceState != null) {
             savedUsername = savedInstanceState.getString(KEY_USERNAME);
         }
 
+        // set the input field data if it exists
         if (savedUsername != null) {
             usernameField.setText(savedUsername);
         }

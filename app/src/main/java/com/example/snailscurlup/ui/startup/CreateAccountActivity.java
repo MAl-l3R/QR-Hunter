@@ -24,7 +24,7 @@ import com.example.snailscurlup.R;
  * This activity allows the user to create a new account.
  * It saves the user's username, email, phone number, and device ID.
  *
- * @author AyanB123 and MAl-l3R
+ * @author MAl-l3R (orignally was Fragment created by AyanB123)
  */
 
 public class CreateAccountActivity extends AppCompatActivity {
