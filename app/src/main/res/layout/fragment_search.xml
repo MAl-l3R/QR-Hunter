@@ -35,7 +35,6 @@
         android:src="@drawable/baseline_search_24"
         style="?android:attr/borderlessButtonStyle" />
     <TextView
-        android:id="@+id/search_for_"
         android:layout_width="160dp"
         android:layout_height="25dp"
         android:layout_alignParentLeft="true"
