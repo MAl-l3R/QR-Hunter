@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,6 +28,16 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
+
+/**
+ * QRInfoDialogFragment
+ * <p>
+ * This fragment displays the information about the QR code, when selected from Adapter
+ * It also allows the user to add a comment to the QR code.
+ * It also displays the comments that have been added to the QR code.
+ *
+ * @author AyanB123
+ */
 public class QRInfoDialogFragment extends DialogFragment {
 
 
@@ -42,17 +51,11 @@ public class QRInfoDialogFragment extends DialogFragment {
     private TextView QRCodeName;
     private TextView QRCodePoints;
     private AbstractQR clickedQRCodeAbstract;
-    private String title;
-    private String message;
+
     private ArrayList<AbstractQRComment> clickedQRCodeComments;
 
     // This method sets the title and message for the dialog
-    public static QRInfoDialogFragment newInstance(String title, String message) {
-        QRInfoDialogFragment fragment = new QRInfoDialogFragment();
-        fragment.title = title;
-        fragment.message = message;
-        return fragment;
-    }
+
 
     /*** Reference for how hide keybaord:
      * https://www.nexmobility.com/articles/hide-soft-keyboard-android.html
@@ -60,6 +63,7 @@ public class QRInfoDialogFragment extends DialogFragment {
      * Company: Nexmobility
      */
     public static void hideKeyboardFrom(Context context, View view) {
+        // Hide the keyboard from the view
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
@@ -67,7 +71,9 @@ public class QRInfoDialogFragment extends DialogFragment {
 
     @Override
     public void onResume() {
+
         super.onResume();
+        /******** PLEASE FIX THIS -> coment wont show one adapter closed and open again ********/
         clickedQRCodeComments = clickedQRCodeAbstract.getQRcomments();
         setAdapter(clickedQRCodeComments);
     }
@@ -76,9 +82,8 @@ public class QRInfoDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        // the content
 
-
+        // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 
@@ -89,8 +94,8 @@ public class QRInfoDialogFragment extends DialogFragment {
         View view = inflater.inflate(R.layout.qrinfo_dialog_fragment, null);
 
 
+        // Set the layout and buton and text  dialog
         QRCommentGallery = view.findViewById(R.id.comment_recycler_view);
-
         dialogOkButton = view.findViewById(R.id.dialog_ok_button);
         dialogAddCommentButton = view.findViewById(R.id.add_comment_button);
         addCommentEditText = view.findViewById(R.id.comment_box);
@@ -98,10 +103,10 @@ public class QRInfoDialogFragment extends DialogFragment {
         QRCodeName = view.findViewById(R.id.QR_name);
         QRCodePoints = view.findViewById(R.id.QR_points);
 
+
         // get active user and userlist:
         allUsers = (AllUsers) getActivity().getApplicationContext();
         allUsers.init();
-
         // Only wait if active user is null at the moment
         if (allUsers.getActiveUser() == null) {
             // Wait for thread to finish
@@ -112,7 +117,6 @@ public class QRInfoDialogFragment extends DialogFragment {
                 Thread.currentThread().interrupt();
             }
         }
-
         // retrieve active user
         if (allUsers.getActiveUser() != null) {
             activeUser = allUsers.getActiveUser();
@@ -129,8 +133,7 @@ public class QRInfoDialogFragment extends DialogFragment {
         //get AbstractQR object from hash:
         clickedQRCodeAbstract = activeUser.getAbstractQrCode(clickedQRCodeHash);
 
-        //set QRCodeImage
-
+        //set QRCodeImage if Wifi access is available
         try {
             Picasso.get().load(clickedQRCodeAbstract.getURL()).into(QRCodeImage);
 
@@ -138,6 +141,7 @@ public class QRInfoDialogFragment extends DialogFragment {
             Toast.makeText(getContext(), "QR Image cant be shown, check WIFI", Toast.LENGTH_LONG).show();
         }
 
+        //set QRCodeName
         QRCodeName.setText(clickedQRCodeAbstract.getName());
 
         //set QRCodePoints
@@ -152,20 +156,28 @@ public class QRInfoDialogFragment extends DialogFragment {
         setAdapter(clickedQRCodeComments);
 
 
-        // Set the click listener for the OK button
+        // Set the click listener for the add comment button
         dialogAddCommentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Get the text from the EditText of comment
                 String Newcomment = addCommentEditText.getText().toString();
 
+
+                // Get the current timestamp of the comment
                 long currentTimestamp = System.currentTimeMillis();
                 Timestamp commentTimeStamp = new Timestamp(currentTimestamp);
 
+                // Add the comment to the AbstractQR code list
                 clickedQRCodeAbstract.addComment(activeUser.getUsername(), Newcomment, commentTimeStamp);
 
+                // Update the comment list
                 clickedQRCodeComments = clickedQRCodeAbstract.getQRcomments();
 
+                // Update the adapter
                 setAdapter(clickedQRCodeComments);
+
+                // Clear the EditText and hide the keyboard
                 addCommentEditText.setText("");
                 addCommentEditText.setCursorVisible(false);
                 hideKeyboardFrom(getContext(), view);
@@ -178,29 +190,30 @@ public class QRInfoDialogFragment extends DialogFragment {
         dialogOkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Close the dialog
                 dismiss();
             }
         });
 
 
         builder.setView(view);
-
         return builder.create();
 
 
     }
 
-    public void showDialog(FragmentManager fragmentManager) {
-        show(fragmentManager, "CustomDialogFragment");
-    }
-
+    // This method sets the adapter for the RecyclerView of COmments of AbstractQR
     public void setAdapter(ArrayList<AbstractQRComment> qrCodeComments) {
+
+        // Set the adapter for the RecyclerView
         AbstractQRCommentsGalleryAdapter commmentGalleryAdapter = new AbstractQRCommentsGalleryAdapter(this.getContext(), qrCodeComments);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
 
+        // Set the layout manager for the RecyclerView
         QRCommentGallery.setLayoutManager(linearLayoutManager);
 
+        // Set the adapter for the RecyclerView
         QRCommentGallery.setAdapter(commmentGalleryAdapter);
     }
 }
