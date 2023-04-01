@@ -23,6 +23,8 @@ import java.util.Map;
 import java.util.Random;
 
 
+/** PLEASE REMOVE ALL LINKS TO THIS CODE ASS WE ARE NOT USING IT ANYMORE  */
+/** We are using QRInstanceNew and ABstracQR **/
 public class QrCode {
 
     NamesOfQR names = new NamesOfQR();
