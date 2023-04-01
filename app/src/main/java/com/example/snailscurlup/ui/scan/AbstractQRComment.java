@@ -5,12 +5,22 @@ import java.sql.Timestamp;
 
 
 
+/**
+ * AbstractQRComment
+ * <p>
+ * This class is used to store the information about the comments that are added to the QR code.
+ * It is used to store the username, message, and timestamp of the comment.
+ *
+ * @author AyanB123
+ */
 
 public class AbstractQRComment {
+
 
     private String message, username, userprofileimg;
 
 
+    // Timestamp of comment added
     private Timestamp commentTimeStamp;
 
 
@@ -20,14 +30,16 @@ public class AbstractQRComment {
     public AbstractQRComment(String content, String username,Timestamp commentTime) {
         this.message = content;
         this.username = username;
-        //this.uimg = uimg;
+
+        //implement user profile image once User has profile image implemented
+        //this. userprofileimg = userprofileimg;
 
         this.commentTimeStamp = commentTime;
 
     }
 
 
-
+    // Getters and setters
     public String getMessage() {
         return message;
     }
@@ -51,7 +63,6 @@ public class AbstractQRComment {
     public void setUserprofileimg(String userprofileimg) {
         this.userprofileimg = userprofileimg;
     }
-
 
 
     public Timestamp getTimestamp() {
