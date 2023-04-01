@@ -1,27 +1,16 @@
 package com.example.snailscurlup.model;
 
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
+import com.example.snailscurlup.ui.scan.AbstractQR;
 import com.example.snailscurlup.ui.scan.QRCodeInstanceNew;
 import com.example.snailscurlup.ui.scan.QrCode;
-import com.example.snailscurlup.ui.scan.QrCodeInstance;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * User
- *
+ * <p>
  * Represents an account to be used with the application.
  * Stores QR codes and user information.
  *
@@ -38,8 +27,7 @@ public class User implements Serializable {
     private String totalScore;
 
 
-
-    private ArrayList<QrCode> scannedQrCodes;
+    private final ArrayList<QrCode> scannedQrCodes;
 
     // impmeent for new abstract Qrcode
     private ArrayList<QRCodeInstanceNew> scannedInstanceQrCodes;
@@ -173,6 +161,15 @@ public class User implements Serializable {
         return false;
     }
 
+    public AbstractQR getAbstractQrCode(String NewQrCodeHash) {
+        for (QRCodeInstanceNew qrCodeInstance : scannedInstanceQrCodes) {
+            if (qrCodeInstance.AbstractQRHash().equals(NewQrCodeHash)) {
+                return qrCodeInstance.getAbstractQR();
+            }
+        }
+        return null;
+    }
+
     public Integer numberScannedQRCodeInstances() {
         int count = 0;
         for (QRCodeInstanceNew qrCodeInstance : scannedInstanceQrCodes) {
@@ -191,7 +188,6 @@ public class User implements Serializable {
         }
         return totalPoints;
     }
-
 
 
 }
