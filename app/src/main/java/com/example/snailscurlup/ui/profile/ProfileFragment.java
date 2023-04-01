@@ -3,26 +3,21 @@ package com.example.snailscurlup.ui.profile;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.snailscurlup.MainActivity;
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
 import com.example.snailscurlup.controllers.AllUsersController;
@@ -161,7 +156,7 @@ public class ProfileFragment extends Fragment   {
         /****** new AbstractQr implementation ****/
 
 
-            setAdapter(activeUser.getScannedInstanceQrCodes());
+            setAdapter(activeUser.getScannedInstanceQrCodes(),getParentFragmentManager());
 
 
 
@@ -315,8 +310,10 @@ public class ProfileFragment extends Fragment   {
     }
 
     // Adapter for Qr Gallery, set adapter based on injected arraylist of QRCodeInstanceNew
-    public void setAdapter(ArrayList<QRCodeInstanceNew> qrCodeInstanceNews) {
-        QrGalleryAdapter qrGalleryAdapter = new QrGalleryAdapter(this.getContext(), qrCodeInstanceNews);
+
+
+    public void setAdapter(ArrayList<QRCodeInstanceNew> qrCodeInstanceNews, FragmentManager fragmentManager) {
+        QrGalleryAdapter qrGalleryAdapter = new QrGalleryAdapter(this.getContext(), qrCodeInstanceNews,fragmentManager);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
 
         QRGallery.setLayoutManager(linearLayoutManager);
@@ -391,7 +388,7 @@ public class ProfileFragment extends Fragment   {
         /******* End of Reference *******/
 
 
-        setAdapter(sortedUserQRList);
+        setAdapter(sortedUserQRList,getParentFragmentManager());
 
     }
 
