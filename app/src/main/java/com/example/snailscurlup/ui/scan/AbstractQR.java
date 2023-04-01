@@ -1,178 +1,206 @@
-package com.example.snailscurlup.ui.scan;
+    package com.example.snailscurlup.ui.scan;
 
-import androidx.annotation.NonNull;
+    import androidx.annotation.NonNull;
 
-import java.io.Serializable;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+    import java.io.Serializable;
+    import java.math.BigInteger;
+    import java.nio.charset.StandardCharsets;
+    import java.security.MessageDigest;
+    import java.security.NoSuchAlgorithmException;
+    import java.sql.Timestamp;
+    import java.util.ArrayList;
+    import java.util.HashMap;
+    import java.util.Map;
+    import java.util.Random;
 
+    /**
+     * Represent lke Single Qrcode object type, has unique hasg,name picture, and number of points based on its data
+     * A single Qr code can hav emany instance of it
+     */
+    public class AbstractQR implements Serializable {
 
-/**
- * Represent lke Single Qrcode object type, has unique hasg,name picture, and number of points based on its data
- * A single Qr code can hav emany instance of it
- */
-public class AbstractQR implements Serializable {
-
-    NamesOfQR names = new NamesOfQR();
-    private String hash;
-
-
-    private String URL;
-    private String name;
-    private Integer pointsInt;
+        NamesOfQR names = new NamesOfQR();
+        private String hash;
 
 
-    // Class costructor uses data define other properties fo Qr code
+        private String URL;
+        private String name;
+        private Integer pointsInt;
 
 
-    public AbstractQR(String data) {
-        setHash(data);
-        setURL();
-        setName();
-        setPointsInt();
 
 
-    }
-
-    public AbstractQR(String hash, String name, Integer Points, String URL) {
-        this.hash = hash;
-        this.name = name;
-        this.pointsInt = Points;
-    }
+        private ArrayList<AbstractQRComment> QRcomments;
 
 
-    // Setters and Getter
-    public void  setHash(String data) {
-        this.hash = getHash256(data);
-    }
 
-    // Getter and Setter for hash
-    public String getHash() {
-        return hash;
-    }
-
-    public void setURL() {
-        BigInteger seed = new BigInteger(this.hash, 16);
-        String NewURL = "https://picsum.photos/seed/" + seed + "/270";
-        this.URL = NewURL;
-    }
+        // Class costructor uses data define other properties fo Qr code
 
 
-    // Getter and Setter for URL
-    public String getURL() {
-        return URL;
-    }
+        public AbstractQR(String data) {
+            setHash(data);
+            setURL();
+            setName();
+            setPointsInt();
+            this.QRcomments= new ArrayList<>();
 
 
-    // Getter and Setter for name
-    public String getName() {
-        return name;
-    }
+        }
 
-    public void setName() {
-        long seed2 = Long.parseLong(this.hash.substring(0, 15), 16);
-        Random rand = new Random(seed2);
-        int adjIndex = rand.nextInt(names.adjectives.length);
-        String newname = names.adjectives[adjIndex];
-        this.name = newname;
-    }
-
-    // Getter and Setter for pointsInt
-    public Integer getPointsInt() {
-        return this.pointsInt;
-    }
-
-    public void setPointsInt() {
-        // Get and set points
-        int newpointsInt = calculateScore(this.hash);
-        this.pointsInt = newpointsInt;
-    }
+        public AbstractQR(String hash, String name, Integer Points, String URL) {
+            this.hash = hash;
+            this.name = name;
+            this.pointsInt = Points;
+            this.QRcomments= new ArrayList<>();
+        }
 
 
-    // our hasing function to convert data into a hash
-    public String getHash256(@NonNull String data) {
-        String hash256;
-        try {
-            // From https://www.baeldung.com/sha-256-hashing-java
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = md.digest(data.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hashHex = new StringBuilder(2 * hashBytes.length);
-            for (int i = 0; i < hashBytes.length; i++) {
-                String hex = Integer.toHexString(0xff & hashBytes[i]);
-                if(hex.length() == 1) {
-                    hashHex.append('0');
+        // Setters and Getter
+        public void  setHash(String data) {
+            this.hash = getHash256(data);
+        }
+
+        // Getter and Setter for hash
+        public String getHash() {
+            return hash;
+        }
+
+        public void setURL() {
+            BigInteger seed = new BigInteger(this.hash, 16);
+            String NewURL = "https://picsum.photos/seed/" + seed + "/270";
+            this.URL = NewURL;
+        }
+
+
+        // Getter and Setter for URL
+        public String getURL() {
+            return URL;
+        }
+
+
+        // Getter and Setter for name
+        public String getName() {
+            return name;
+        }
+
+        public void setName() {
+            long seed2 = Long.parseLong(this.hash.substring(0, 15), 16);
+            Random rand = new Random(seed2);
+            int adjIndex = rand.nextInt(names.adjectives.length);
+            String newname = names.adjectives[adjIndex];
+            this.name = newname;
+        }
+
+        // Getter and Setter for pointsInt
+        public Integer getPointsInt() {
+            return this.pointsInt;
+        }
+
+        public void setPointsInt() {
+            // Get and set points
+            int newpointsInt = calculateScore(this.hash);
+            this.pointsInt = newpointsInt;
+        }
+
+
+        // our hasing function to convert data into a hash
+        public String getHash256(@NonNull String data) {
+            String hash256;
+            try {
+                // From https://www.baeldung.com/sha-256-hashing-java
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                byte[] hashBytes = md.digest(data.getBytes(StandardCharsets.UTF_8));
+                StringBuilder hashHex = new StringBuilder(2 * hashBytes.length);
+                for (int i = 0; i < hashBytes.length; i++) {
+                    String hex = Integer.toHexString(0xff & hashBytes[i]);
+                    if(hex.length() == 1) {
+                        hashHex.append('0');
+                    }
+                    hashHex.append(hex);
                 }
-                hashHex.append(hex);
+                hash256 = hashHex.toString();
             }
-            hash256 = hashHex.toString();
-        }
-        catch (NoSuchAlgorithmException e) {
-            System.err.println("Use SHA-256 message digest algorithm");
-            hash256 = Integer.toHexString(data.hashCode());
-        }
-        return hash256;
-    }
-
-
-    // method used set points of a Qr code based on its hash
-    public int calculateScore(@NonNull String hex) {
-        int score = 0;
-        Map<Integer, Integer> digitCount = new HashMap<>();
-
-        for (int i = 0; i < hex.length(); i++) {
-            String hexValue = String.valueOf(hex.charAt(i));
-            int digit = Integer.parseInt(hexValue, 16);
-            // If this is a new digit, add it to the map with a count of 1
-            if (!digitCount.containsKey(digit)) {
-                digitCount.put(digit, 1);
+            catch (NoSuchAlgorithmException e) {
+                System.err.println("Use SHA-256 message digest algorithm");
+                hash256 = Integer.toHexString(data.hashCode());
             }
-            // Otherwise, increment the count for this digit
-            else {
-                digitCount.put(digit, digitCount.get(digit) + 1);
-            }
+            return hash256;
         }
 
 
-        for (int i = 0; i < digitCount.size(); i++) {
-            int digit = (int) digitCount.keySet().toArray()[i];
-            int count = digitCount.get(digit);
+        // method used set points of a Qr code based on its hash
+        public int calculateScore(@NonNull String hex) {
+            int score = 0;
+            Map<Integer, Integer> digitCount = new HashMap<>();
 
-            if (count >= 2) {
-                int repeatScore = (int) Math.pow(2, count - 1);
-                score += repeatScore;
-            }
-        }
-        return score;
-    }
-
-    public static String getHash256Ins(String data){
-        String hash256;
-        try {
-            // From https://www.baeldung.com/sha-256-hashing-java
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hashBytes = md.digest(data.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hashHex = new StringBuilder(2 * hashBytes.length);
-            for (int i = 0; i < hashBytes.length; i++) {
-                String hex = Integer.toHexString(0xff & hashBytes[i]);
-                if (hex.length() == 1) {
-                    hashHex.append('0');
+            for (int i = 0; i < hex.length(); i++) {
+                String hexValue = String.valueOf(hex.charAt(i));
+                int digit = Integer.parseInt(hexValue, 16);
+                // If this is a new digit, add it to the map with a count of 1
+                if (!digitCount.containsKey(digit)) {
+                    digitCount.put(digit, 1);
                 }
-                hashHex.append(hex);
+                // Otherwise, increment the count for this digit
+                else {
+                    digitCount.put(digit, digitCount.get(digit) + 1);
+                }
             }
-            hash256 = hashHex.toString();
-        } catch (NoSuchAlgorithmException e) {
-            System.err.println("Use SHA-256 message digest algorithm");
-            hash256 = Integer.toHexString(data.hashCode());
+
+
+            for (int i = 0; i < digitCount.size(); i++) {
+                int digit = (int) digitCount.keySet().toArray()[i];
+                int count = digitCount.get(digit);
+
+                if (count >= 2) {
+                    int repeatScore = (int) Math.pow(2, count - 1);
+                    score += repeatScore;
+                }
+            }
+            return score;
         }
-        return hash256;
+
+        // getter and setter for comments
+        public void addComment(String username, String message, Timestamp commentTimeStamp) {
+
+            if (QRcomments == null) {
+                QRcomments = new ArrayList<>();
+            }
+
+            AbstractQRComment newSingleComment = new AbstractQRComment(username,message,commentTimeStamp);
+
+            QRcomments.add(newSingleComment);
+
+
+        }
+
+        public ArrayList<AbstractQRComment> getQRcomments() {
+            return QRcomments;
+        }
+
+
+        public static String getHash256Ins(String data){
+            String hash256;
+            try {
+                // From https://www.baeldung.com/sha-256-hashing-java
+                MessageDigest md = MessageDigest.getInstance("SHA-256");
+                byte[] hashBytes = md.digest(data.getBytes(StandardCharsets.UTF_8));
+                StringBuilder hashHex = new StringBuilder(2 * hashBytes.length);
+                for (int i = 0; i < hashBytes.length; i++) {
+                    String hex = Integer.toHexString(0xff & hashBytes[i]);
+                    if (hex.length() == 1) {
+                        hashHex.append('0');
+                    }
+                    hashHex.append(hex);
+                }
+                hash256 = hashHex.toString();
+            } catch (NoSuchAlgorithmException e) {
+                System.err.println("Use SHA-256 message digest algorithm");
+                hash256 = Integer.toHexString(data.hashCode());
+            }
+            return hash256;
+
+        }
+
 
     }
-
-
-}
 
