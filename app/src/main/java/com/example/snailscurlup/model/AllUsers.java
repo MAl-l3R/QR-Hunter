@@ -102,14 +102,9 @@ public class AllUsers extends Application {
     /********** NEW Code for abstract QR **********/
     public void addUserScanQRCode(String data, User activeUser, Bitmap scannedQRLogImage, Timestamp scanndQRLogTimeStamp, String adress) throws IOException {
 
-       //Boolean UserHasAbstractQR =  activeUser.checkIfInstanceQrCodeExists(getHash256Ins(data));
-
-        //if (!UserHasAbstractQR) {
-
         AbstractQR newabstractQRType = new AbstractQR(data);
         QRCodeInstanceNew newaQRInstance = new QRCodeInstanceNew(newabstractQRType,activeUser, scannedQRLogImage, scanndQRLogTimeStamp, adress);
         activeUser.addScannedInstanceQrCodes(newaQRInstance);
-
 
 
         }
