@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * LoginActivity
  * <p>
- * This activity allows the user to create a new account.
- * It saves the user's username, email, phone number, and device ID.
+ * This activity allows the user to login to the app.
+ *
  *
  * @author MAl-l3R (orignally was Fragment created by AyanB123)
  */
