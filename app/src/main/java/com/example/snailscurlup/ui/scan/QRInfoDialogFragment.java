@@ -69,6 +69,15 @@ public class QRInfoDialogFragment extends DialogFragment {
 
     }
 
+    public static QRInfoDialogFragment newInstance() {
+        QRInfoDialogFragment frag = new QRInfoDialogFragment();
+        Bundle args = new Bundle();
+        frag.setArguments(args);
+        return frag;
+    }
+
+
+
     @Override
     public void onResume() {
 
