@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.google.firebase.firestore.GeoPoint;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -17,7 +18,7 @@ import java.util.Map;
 import java.util.Random;
 
 
-public class QRCode {
+public class QRCode implements Serializable {
 
     NamesOfQR names = new NamesOfQR();
     private String hash;
@@ -27,10 +28,10 @@ public class QRCode {
     private String name;
     private int pointsInt;
 
-    private List<Address> scannedadresslist;
+    private transient List<Address> scannedadresslist;
 
 
-    private GeoPoint geoPoint;
+    private transient GeoPoint geoPoint;
 
     public QRCode(String data) {
         this.data = data;

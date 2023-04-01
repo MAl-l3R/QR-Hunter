@@ -1,6 +1,8 @@
 package com.example.snailscurlup.ui.search;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.snailscurlup.R;
+import com.example.snailscurlup.Searched_User_Profile;
 import com.example.snailscurlup.model.User;
 
 import java.util.ArrayList;
@@ -19,6 +22,9 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     private ArrayList<User> userList;
     private Context context;
+
+    private final String userKey = "User Object";
+    private final String localID = "local Host's id";
     public UserAdapter(Context context, ArrayList<User> users){
         super(context,0, users);
         this.context = context;
@@ -36,6 +42,7 @@ public class UserAdapter extends ArrayAdapter<User> {
         }
 
        User user = userList.get(position);
+        view.setClickable(true);
 
         TextView userName = view.findViewById((R.id.username));
         TextView totalScore = view.findViewById(R.id.totalScore);
@@ -44,6 +51,20 @@ public class UserAdapter extends ArrayAdapter<User> {
         userName.setText("Name: "+user.getUsername());
         totalScore.setText("Total Score:"+user.getTotalScore());
         totalQR.setText("Number of QR: "+Integer.toString(user.getScannedQrCodes().size()));
+
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Searched_User_Profile.class);
+                int key = -1;
+                intent.putExtra(userKey,user);
+                intent.putExtra(localID,"empty");
+                ((Activity)context).startActivityForResult(intent,key);
+            }
+        });
+
+
 
 
 
