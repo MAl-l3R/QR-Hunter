@@ -17,19 +17,19 @@ import java.util.ArrayList;
  * @author AyanB123
  */
 
+
 public class User implements Serializable {
+
+    // need delete code of once done using it in the app
+    private final ArrayList<QrCode> scannedQrCodes;
+    // Class properties key to user
     private String username;
     private String email;
     private String phoneNumber;
     private String profilePhotoPath;
-
     private String device_id;
     private String totalScore;
-
-
-    private final ArrayList<QrCode> scannedQrCodes;
-
-    // impmeent for new abstract Qrcode
+    /**** impmeent for new abstract Qrcode ***/
     private ArrayList<QRCodeInstanceNew> scannedInstanceQrCodes;
 
     // Default Constructor
@@ -111,18 +111,7 @@ public class User implements Serializable {
         this.device_id = device_id;
     }
 
-    // toString method to display user information
-
-    /**
-     * Displays a serialized version of a user's information.
-     *
-     * @return A string that contains all of the user's information.
-     */
-    @Override
-    public String toString() {
-        return "Username: " + username + ", Email: " + email + ", Phone Number: " + phoneNumber + ", Profile Photo Path: " + profilePhotoPath;
-    }
-
+    /***************** OLD CODE  for old Qr -> need to delet remove all dependecies of will not be needed*******************/
     /**
      * Returns a list of a user's scanned QR codes.
      *
@@ -141,8 +130,10 @@ public class User implements Serializable {
         this.scannedQrCodes.add(scannedQrCodes);
     }
 
+    /***************** End OLD QR code*******************/
 
-    /***************** NEW CODE  for new Instance Qr*******************/
+
+    /***************** NEW CODE  for new Instance Qr -> want and need to use*******************/
 
     public void addScannedInstanceQrCodes(QRCodeInstanceNew scannedInstanceQrCodes) {
         this.scannedInstanceQrCodes.add(scannedInstanceQrCodes);
@@ -189,6 +180,7 @@ public class User implements Serializable {
         return totalPoints;
     }
 
+    /***************** End of NEW QR code Instance code *******************/
 
 }
 
