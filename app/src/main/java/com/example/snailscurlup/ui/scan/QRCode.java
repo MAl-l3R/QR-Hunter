@@ -1,16 +1,11 @@
 package com.example.snailscurlup.ui.scan;
 
 import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.firebase.firestore.GeoPoint;
-import com.google.zxing.qrcode.encoder.QRCode;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -18,14 +13,13 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Random;
 
 
 /** PLEASE REMOVE ALL LINKS TO THIS CODE ASS WE ARE NOT USING IT ANYMORE  */
 /** We are using QRInstanceNew and ABstracQR **/
-public class QrCode {
+public class QRCode {
 
     NamesOfQR names = new NamesOfQR();
     private String hash;
@@ -40,7 +34,7 @@ public class QrCode {
 
     private GeoPoint geoPoint;
 
-    public QrCode(String data) {
+    public QRCode(String data) {
         this.data = data;
         setHash(data);
         setURL();

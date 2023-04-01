@@ -2,7 +2,7 @@ package com.example.snailscurlup;
 
 import static org.junit.Assert.assertTrue;
 
-import com.example.snailscurlup.ui.scan.QrCode;
+import com.example.snailscurlup.ui.scan.QRCode;
 
 import org.junit.Test;
 
@@ -12,10 +12,10 @@ public class QRCodeUnitTest {
      * Verifies if it produces the correct results when it comes to
      * synthesizing the name/picture URL/points.
      */
-    private QrCode mockQRCode() {
+    private QRCode mockQRCode() {
         // Create a fake QR code using some dummy data
         final String dummyData = "123456";
-        QrCode newQR = new QrCode(dummyData, 0.0, 0.0);
+        QRCode newQR = new QRCode(dummyData, 0.0, 0.0);
         return newQR;
     }
 
@@ -24,7 +24,7 @@ public class QRCodeUnitTest {
         /**
          * A test to make sure the QR code yields the expected name (Soggy).
          */
-        QrCode qr = mockQRCode();
+        QRCode qr = mockQRCode();
         String name = qr.getName();
         assertTrue(name == "Soggy");
     }
@@ -35,7 +35,7 @@ public class QRCodeUnitTest {
          * A test to make sure that the QR code produces the expected number
          * of points (418).
          */
-        QrCode qr = mockQRCode();
+        QRCode qr = mockQRCode();
         int points = qr.getPointsInt();
         assertTrue(points == 418);
     }
@@ -47,7 +47,7 @@ public class QRCodeUnitTest {
          * URL is random, it cannot be predicted ahead of time.
          * So, we test for whether or not it generated correctly.
          */
-        QrCode qr = mockQRCode();
+        QRCode qr = mockQRCode();
         String url = qr.getURL();
         assertTrue(url != null);
     }
@@ -58,7 +58,7 @@ public class QRCodeUnitTest {
          * Tests whether the QR code gets a hash when its generated
          * each time creating a QrCode object it will gets a hash from method getHash256()
          * */
-        QrCode qr = mockQRCode();
+        QRCode qr = mockQRCode();
         String hash = qr.getHash256("123456");
         assertTrue(hash != null);
 

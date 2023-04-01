@@ -65,7 +65,7 @@ public class DecodeFragment extends Fragment{
     private User activeUser;
 
     private AllUsersController allUsersController;
-    private QrCode newQRCode;
+    private QRCode newQRCode;
 
 
 
@@ -144,7 +144,7 @@ public class DecodeFragment extends Fragment{
                 QRData = data;
 
                 // get object for new Qr code
-                newQRCode = new QrCode(data);
+                newQRCode = new QRCode(data);
 
 
                 /***** For NEW abstract QR code *****/

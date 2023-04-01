@@ -19,7 +19,7 @@ import java.sql.Timestamp;
  */
 public class QRCodeInstanceNew {
 
-    private final AbstractQR QrCodeAbstractType;
+    private final  AbstractQR QRCodeAbstractType;
 
     private final Timestamp scanQRLogTimeStamp;
 
@@ -33,7 +33,7 @@ public class QRCodeInstanceNew {
     private User scanQRInstanceUser;
 
     public QRCodeInstanceNew(AbstractQR scannedAbstractQRCodeType, User user, Bitmap scannedQRLogImage, Timestamp scanndQRLogTimeStamp, String ScanedQRLogLocation) {
-        this.QrCodeAbstractType = scannedAbstractQRCodeType;
+        this.QRCodeAbstractType = scannedAbstractQRCodeType;
         this.scanQRLogImage = scannedQRLogImage;
         this.scanQRInstanceUser = user;
         this.scanQRLogTimeStamp = scanndQRLogTimeStamp;
@@ -102,7 +102,7 @@ public class QRCodeInstanceNew {
 
     // get basic iformation about QR code
     public AbstractQR getQRTypeDetail() {
-        return QrCodeAbstractType;
+        return QRCodeAbstractType;
     }
 
 
@@ -116,24 +116,24 @@ public class QRCodeInstanceNew {
 
    /*****************New code to imp new abstract QR*****************/
    public String AbstractQRHash(){
-       return QrCodeAbstractType.getHash();
+       return QRCodeAbstractType.getHash();
 
    }
 
     public String getName(){
-         return QrCodeAbstractType.getName();
+         return QRCodeAbstractType.getName();
     }
 
     public Integer getPointsInt(){
-         return QrCodeAbstractType.getPointsInt();
+         return QRCodeAbstractType.getPointsInt();
     }
 
     public String getURL(){
-         return QrCodeAbstractType.getURL();
+         return QRCodeAbstractType.getURL();
     }
 
     public AbstractQR getAbstractQR(){
-         return QrCodeAbstractType;
+         return QRCodeAbstractType;
     }
 
 
