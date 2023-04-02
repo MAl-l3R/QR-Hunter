@@ -15,16 +15,39 @@ import com.example.snailscurlup.model.User;
 
 import java.util.ArrayList;
 
+/**
+ * LeaderList is an ArrayAdapter of Leader objects, used to display a list of leaders
+ * with their respective information in a ListView.
+ *
+ * @author Richard He
+ * @version 1.0
+ * @since 2023-04-01
+ */
 public class LeaderList extends ArrayAdapter<Leader> {
 
     private ArrayList<Leader> userList;
     private Context context;
+    /**
+     * Constructs a new LeaderList with the specified context and list of users.
+     *
+     * @param context The current context.
+     * @param users The list of Leader objects to display.
+     */
     public LeaderList(Context context, ArrayList<Leader> users){
         super(context,0, users);
         this.context = context;
         this.userList = users;
     }
 
+    /**
+     * Get a View that displays the data at the specified position in the data set.
+     * If convertView is null, inflate a new view using LayoutInflater.
+     *
+     * @param position The position of the item within the adapter's data set.
+     * @param convertView The old view to reuse, if possible.
+     * @param parent The parent that this view will eventually be attached to.
+     * @return A View corresponding to the data at the specified position.
+     */
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

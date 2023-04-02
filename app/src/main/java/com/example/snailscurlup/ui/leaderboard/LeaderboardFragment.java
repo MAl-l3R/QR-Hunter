@@ -25,9 +25,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link Fragment} subclass for displaying the leaderboard. The leaderboard
+ * can be displayed based on user scores or top scores from QR codes. The data is
+ * fetched from the Firebase Firestore.
+ *
  * Use the {@link LeaderboardFragment#newInstance} factory method to
  * create an instance of this fragment.
+ *
+ * @author Richard He
+ * @version 1.0
+ * @since 2023-04-01
  */
 public class LeaderboardFragment extends Fragment {
 
@@ -69,6 +76,12 @@ public class LeaderboardFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Called to do initial creation of the fragment. This is called after {@link #onAttach(Activity)} and before
+     * {@link #onCreateView(LayoutInflater, ViewGroup, Bundle)}.
+     *
+     * @param savedInstanceState If the fragment is being re-created from a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +92,15 @@ public class LeaderboardFragment extends Fragment {
 
     }
 
+    /**
+     * Called to have the fragment instantiate its user interface view.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container If non-null, this is the parent view that the fragment's UI should be attached to. The fragment should
+     *                  not add the view itself, but this can be used to generate the LayoutParams of the view.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Return the View for the fragment's UI, or null.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
