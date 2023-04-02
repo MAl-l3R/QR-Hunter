@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@drawable/round_menu_profile"
+    android:orientation="vertical"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <Button
+        android:id="@+id/logout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondary_color"
+        android:drawableLeft="@drawable/logout_menu_icon"
+        android:text="Log Out"
+        android:gravity="left|center_vertical"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textAppearance="@style/button_text_style"
+        android:fontFamily="casual"
+        android:paddingTop="10dp" />
+
+    <Button
+        android:id="@+id/edit_profile_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondary_color"
+        android:drawableLeft="@drawable/edit_profile_menuicon"
+        android:text="Edit Profile"
+        android:gravity="left|center_vertical"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textAppearance="@style/button_text_style"
+        android:fontFamily="casual"
+        android:paddingTop="10dp" />
+
+    <Button
+        android:id="@+id/manage_account_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondary_color"
+        android:drawableLeft="@drawable/man_acc_menuicon"
+        android:text="Manage Account"
+        android:gravity="left|center_vertical"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textAppearance="@style/button_text_style"
+        android:fontFamily="casual"
+        android:paddingTop="10dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="vertical" />
+
+</LinearLayout>
+
+
+    <!-- https://www.section.io/engineering-education/bottom-sheet-dialogs-using-android-studio/ -->
