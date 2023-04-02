@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">QR Hunter</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_for_">Search for Users</string>
     <!-- strings.xml -->
     <string name="welcome_to"> Welcome to </string>
@@ -10,32 +9,23 @@
     <string name="app_title">QR Hunter</string>
     <string name="create_account_button_text">Create Account</string>
     <string name="login_button_text">Login</string>
-    <string name="changeprofile_photo_text">Change Picture</string>
     <string name="username_hint">* Required</string>
     <string name="username_field_text">Username:</string>
     <string name="email_field_text">Email</string>
     <string name="phone_number_field_text">Phone Number:</string>
-    <string name="user_profile_fieldtext">*********</string>
-    <string name="username_totalscore_fieldtext">Total Score:</string>
 
     <string name="totalscore_fieldtext">Total Score:</string>
     <string name="totalscore_fieldprof">*******</string>
     <string name="codesscanned_fieldtext">Codes Scanned:</string>
     <string name="codesscanned_fieldprof">********</string>
-    <string name="logo_visual_for_startup">Logo Visual for startup</string>
-
-    <string name="login_title">QR Hunter Login</string>
-    <string name="login_username">Username</string>
-    <string name="login_password">Password</string>
-    <string name="login_button">LOGIN</string>
 
 
-    <string name="password_hint">Password</string>
-
-    <string name="reset_password_link_text">Forgot password?</string>
     <string name="qrcode_name">Name of QR:</string>
     <string name="qrcode_score">Score:</string>
     <string name="qrcode_namefield">[name]</string>
     <string name="qrcode_scorefield">[score]</string>
+    <string name="qrcode_timestamp">Time Stamp:</string>
+    <string name="qrcode_timestampfield">[timestamp]</string>
+
 
 </resources>

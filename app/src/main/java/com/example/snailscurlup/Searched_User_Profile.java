@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.model.User;
 
+import java.sql.Timestamp;
+
 public class Searched_User_Profile extends AppCompatActivity {
 
     private Intent intent;
@@ -24,6 +26,7 @@ public class Searched_User_Profile extends AppCompatActivity {
     private final int key = -1;
     private final String userKey = "User Object";
     private final String localID = "local Host's id";
+    private final String timeStamp = "timeStamp";
     private String activeUserID;
     private User selectedUser;
     private TextView username_fieldprof;
@@ -31,6 +34,7 @@ public class Searched_User_Profile extends AppCompatActivity {
     private TextView codesscanned_fieldprof;
     private RecyclerView QrRecylerView;
     private QRGalleryAdapter qrGalleryAdapter;
+    private String[] timeStampArray;
 
 
     @Override
@@ -46,17 +50,23 @@ public class Searched_User_Profile extends AppCompatActivity {
 
 
         intent = getIntent();
+        timeStampArray = intent.getStringArrayExtra(timeStamp);
         activeUserID = intent.getStringExtra(localID);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             selectedUser = intent.getSerializableExtra(userKey,User.class);
         }
         //int size = intent.getIntExtra("size",0);
+
         username_fieldprof.setText(selectedUser.getUsername());
         totalscore_fieldprof.setText(selectedUser.getTotalScore());
-        String size = String.valueOf(selectedUser.getScannedQrCodes().size());
+        String size = String.valueOf(selectedUser.getScannedInstanceQrCodes().size());
         codesscanned_fieldprof.setText(size);
 
         int a = selectedUser.getScannedQrCodes().size();
+
+        for (int i=0;i<selectedUser.getScannedInstanceQrCodes().size();i++){
+            selectedUser.getScannedInstanceQrCodes().get(i).setScanQRLogTimeStamp(Timestamp.valueOf(timeStampArray[i]));
+        }
 
         QrRecylerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
         qrGalleryAdapter = new QRGalleryAdapter(this, selectedUser.getScannedQrCodes());

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.Searched_User_Profile;
 import com.example.snailscurlup.model.User;
+import com.example.snailscurlup.ui.scan.QRCodeInstanceNew;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     private final String userKey = "User Object";
     private final String localID = "local Host's id";
+    private final String timeStamp = "timeStamp";
     public UserAdapter(Context context, ArrayList<User> users){
         super(context,0, users);
         this.context = context;
@@ -50,7 +52,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         userName.setText("Name: "+user.getUsername());
         totalScore.setText("Total Score:"+user.getTotalScore());
-        totalQR.setText("Number of QR: "+Integer.toString(user.getScannedQrCodes().size()));
+        totalQR.setText("Number of QR: "+Integer.toString(user.getScannedInstanceQrCodes().size()));
 
 
         view.setOnClickListener(new View.OnClickListener() {
@@ -60,6 +62,11 @@ public class UserAdapter extends ArrayAdapter<User> {
                 int key = -1;
                 intent.putExtra(userKey,user);
                 intent.putExtra(localID,"empty");
+                String[] strArr = new String[user.getScannedInstanceQrCodes().size()];
+                for (int i=0;i<user.getScannedInstanceQrCodes().size();i++){
+                    strArr[i] = user.getScannedInstanceQrCodes().get(i).getScanQRLogTimeStamp().toString();
+                }
+                intent.putExtra(timeStamp,strArr);
                 ((Activity)context).startActivityForResult(intent,key);
             }
         });

@@ -27,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.CancellationTokenSource;
@@ -156,7 +157,44 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     }
                 });
         // Move camera to North America roughly (fix this later maybe?)
-        map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(43.1, -87.9)));
+        // map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(43.1, -87.9)));
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getActivity());
+        if (ContextCompat.checkSelfPermission(getActivity(), ACCESS_FINE_LOCATION) == PERMISSION_GRANTED) {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            fusedLocationProviderClient.getCurrentLocation(PRIORITY_HIGH_ACCURACY, cancellationTokenSource.getToken())
+                    .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+
+                                try {
+                                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                                    List<Address> addressList = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                                    double latitude = addressList.get(0).getLatitude();
+                                    double longitude = addressList.get(0).getLongitude();
+                                    String address = addressList.get(0).getAddressLine(0);
+
+                                    // map.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
+
+                                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 13));
+
+                                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                                            .target(new LatLng(location.getLatitude(), location.getLongitude()))      // Sets the center of the map to location user
+                                            .zoom(17)                   // Sets the zoom
+                                            // .bearing(90)                // Sets the orientation of the camera to east
+                                            // .tilt(40)                   // Sets the tilt of the camera to 30 degrees
+                                            .build();                   // Creates a CameraPosition from the builder
+                                    map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                                    // TODO: UPLOAD LOCATION TO FIREBASE
+
+                                } catch (IOException e) {
+                                    System.out.println("Exception with finding user location");
+                                }
+                            }
+                        }
+                    });
+        }
     }
 
     // The following overrides are necessary or else the map can stop working sometimes.

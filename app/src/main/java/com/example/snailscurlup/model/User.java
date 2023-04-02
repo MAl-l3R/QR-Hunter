@@ -2,29 +2,35 @@ package com.example.snailscurlup.model;
 
 
 import com.example.snailscurlup.ui.scan.QRCode;
+import com.example.snailscurlup.ui.scan.AbstractQR;
+import com.example.snailscurlup.ui.scan.QRCodeInstanceNew;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * User
- *
+ * <p>
  * Represents an account to be used with the application.
  * Stores QR codes and user information.
  *
  * @author AyanB123
  */
 
+
 public class User implements Serializable {
+
+    // need delete code of once done using it in the app
+    private final ArrayList<QRCodeInstanceNew> scannedQRCodes;
+    // Class properties key to user
     private String username;
     private String email;
     private String phoneNumber;
     private String profilePhotoPath;
-
     private String device_id;
     private String totalScore;
-
-    private ArrayList<QRCode> scannedQRCodes;
+    /**** impmeent for new abstract Qrcode ***/
+    private ArrayList<QRCodeInstanceNew> scannedInstanceQrCodes;
 
     // Default Constructor
     public User() {
@@ -34,9 +40,10 @@ public class User implements Serializable {
         this.profilePhotoPath = null;
         this.device_id = null;
         this.scannedQRCodes = new ArrayList<>();
+        this.scannedInstanceQrCodes = new ArrayList<>();
     }
 
-    public User(String username, String email, String phoneNumber,String totalScore) {
+    public User(String username, String email, String phoneNumber, String totalScore) {
         this.username = username;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -44,6 +51,8 @@ public class User implements Serializable {
         this.profilePhotoPath = null;
         this.device_id = null;
         this.scannedQRCodes = new ArrayList<>();
+        this.scannedInstanceQrCodes = new ArrayList<>();
+
     }
 
 
@@ -93,39 +102,87 @@ public class User implements Serializable {
     public void setProfilePhotoPath(String profilePhotoPath) {
         this.profilePhotoPath = profilePhotoPath;
     }
+
     public String getDevice_id() {
         return device_id;
     }
+
     public void setDevice_id(String device_id) {
         this.device_id = device_id;
     }
 
-    // toString method to display user information
-
-    /**
-     * Displays a serialized version of a user's information.
-     * @return A string that contains all of the user's information.
-     */
-    @Override
-    public String toString() {
-        return "Username: " + username + ", Email: " + email + ", Phone Number: " + phoneNumber + ", Profile Photo Path: " + profilePhotoPath;
-    }
-
+    /***************** OLD CODE  for old Qr -> need to delet remove all dependecies of will not be needed*******************/
     /**
      * Returns a list of a user's scanned QR codes.
+     *
      * @return The list of the user's scanned QR codes.
      */
-    public ArrayList<QRCode> getScannedQrCodes() {
+    public ArrayList<QRCodeInstanceNew> getScannedQrCodes() {
         return scannedQRCodes;
     }
 
     /**
      * Adds a QR code to the user's library of scanned QR codes.
-     * @param scannedQRCodes - A QrCode object to be added to library.
+     *
+     * @param scannedQrCodes - A QrCode object to be added to library.
      */
-   public void addScannedQrCodes(QRCode scannedQRCodes) {
-        this.scannedQRCodes.add(scannedQRCodes);
-   }
+    public void addScannedQrCodes(QRCodeInstanceNew scannedQrCodes) {
+        this.scannedQRCodes.add(scannedQrCodes);
+    }
+
+    /***************** End OLD QR code*******************/
+
+
+    /***************** NEW CODE  for new Instance Qr -> want and need to use*******************/
+
+    public void addScannedInstanceQrCodes(QRCodeInstanceNew scannedInstanceQrCodes) {
+        this.scannedInstanceQrCodes.add(scannedInstanceQrCodes);
+        int score = scannedInstanceQrCodes.getPointsInt();
+        this.totalScore = Integer.toString(Integer.parseInt(this.totalScore) + score);
+    }
+
+    public ArrayList<QRCodeInstanceNew> getScannedInstanceQrCodes() {
+        return scannedInstanceQrCodes;
+    }
+
+    public Boolean checkIfInstanceQrCodeExists(String NewQrCodeHash) {
+        for (QRCodeInstanceNew qrCodeInstance : scannedInstanceQrCodes) {
+            if (qrCodeInstance.AbstractQRHash().equals(NewQrCodeHash)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public AbstractQR getAbstractQrCode(String NewQrCodeHash) {
+        for (QRCodeInstanceNew qrCodeInstance : scannedInstanceQrCodes) {
+            if (qrCodeInstance.AbstractQRHash().equals(NewQrCodeHash)) {
+                return qrCodeInstance.getAbstractQR();
+            }
+        }
+        return null;
+    }
+
+    public Integer numberScannedQRCodeInstances() {
+        int count = 0;
+        for (QRCodeInstanceNew qrCodeInstance : scannedInstanceQrCodes) {
+            count++;
+        }
+
+        return count;
+    }
+
+    public Integer totalPointsEarned() {
+        int totalPoints = 0;
+        for (QRCodeInstanceNew qrCodeInstance : scannedInstanceQrCodes) {
+
+            totalPoints += qrCodeInstance.getPointsInt();
+
+        }
+        return totalPoints;
+    }
+
+    /***************** End of NEW QR code Instance code *******************/
 
 }
 
