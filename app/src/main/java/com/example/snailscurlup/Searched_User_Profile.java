@@ -69,7 +69,7 @@ public class Searched_User_Profile extends AppCompatActivity {
         }
 
         QrRecylerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false));
-        qrGalleryAdapter = new QRGalleryAdapter(this, selectedUser.getScannedQrCodes());
+        qrGalleryAdapter = new QRGalleryAdapter(this, selectedUser.getScannedInstanceQrCodes(),getSupportFragmentManager());
         QrRecylerView.setAdapter(qrGalleryAdapter);
 
 

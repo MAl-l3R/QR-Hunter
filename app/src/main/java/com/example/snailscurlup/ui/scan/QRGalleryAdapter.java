@@ -104,10 +104,11 @@ public class QRGalleryAdapter extends RecyclerView.Adapter<QRGalleryAdapter.View
                 Bundle bundle = new Bundle();
 
                 bundle.putString("clickedQRCodeHash", clickedQRCode.AbstractQRHash());
-
                 // set the arguments of the QRInfoDialogFragment
                 dialogFragment.setArguments(bundle);
+
                 dialogFragment.show(fragmentManager, "QRInfoDialogFragment");
+
 
 
             }

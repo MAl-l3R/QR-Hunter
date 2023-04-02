@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
             switch (item.getItemId()) {
                 case R.id.profile:
                     binding.fragmentName.setText("My Profile");
-                    replaceFragment(new ProfileFragment());
+                    replaceFragment(new ProfileFragment(activeUser));
                     break;
                 case R.id.search:
                     binding.fragmentName.setText("Search");

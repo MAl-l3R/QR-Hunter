@@ -43,6 +43,7 @@ public class QRInfoDialogFragment extends DialogFragment {
 
     AllUsers allUsers;
     User activeUser;
+    User selectedUser;
     private Button dialogOkButton;
     private Button dialogAddCommentButton;
     private EditText addCommentEditText;
@@ -151,7 +152,11 @@ public class QRInfoDialogFragment extends DialogFragment {
         }
 
         //set QRCodeName
-        QRCodeName.setText(clickedQRCodeAbstract.getName());
+        try {
+            QRCodeName.setText(clickedQRCodeAbstract.getName());
+        }catch (Exception e){
+            QRCodeName.setText(clickedQRCodeAbstract.getName());
+        }
 
         //set QRCodePoints
         String points = clickedQRCodeAbstract.getPointsInt() + " points";
