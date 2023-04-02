@@ -47,6 +47,7 @@ public class CreateAccountTest {
      * Synthesizes random user credentials for testing purposes.
      * @throws AssertionError - For when test fails
      */
+    // TODO: Not working anymore since sharedPreferences saves login so dummy login and create account button isn't there upon acitivint the app
     @Test
     public void checkCreateAccount(){
         // Assertion for current activity being the main one
@@ -71,7 +72,7 @@ public class CreateAccountTest {
         // Enter in fake information for account registration
         solo.enterText((EditText) solo.getView(R.id.username_field), dummyUsername);
         solo.enterText((EditText) solo.getView(R.id.Email_field), dummyEmail);
-        solo.enterText((EditText) solo.getView(R.id.phonenumber_field), dummyPhone);
+        solo.enterText((EditText) solo.getView(R.id.phone_number_field), dummyPhone);
 
         // Proceed with account creation
         solo.clickOnView(solo.getView(R.id.create_account_button));
