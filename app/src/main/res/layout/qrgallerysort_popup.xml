@@ -10,54 +10,75 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:fontFamily="casual"
+        android:paddingTop="10dp"
+        android:text="Sort By..."
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:paddingStart="5dp"
+        android:textStyle="bold" />
+
     <Button
-        android:id="@+id/logout_button"
+        android:id="@+id/sort_scoredesc_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/secondary_color"
-        android:drawableLeft="@drawable/logout_menu_icon"
-        android:text="Log Out"
+        android:text="Score, Descending"
         android:gravity="left|center_vertical"
         android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
         android:textAppearance="@style/button_text_style"
         android:fontFamily="casual"
         android:paddingTop="10dp" />
 
     <Button
-        android:id="@+id/edit_profile_button"
+        android:id="@+id/sort_scoreasc_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/secondary_color"
-        android:drawableLeft="@drawable/edit_profile_menuicon"
-        android:text="Edit Profile"
+        android:text="Score, Ascending"
         android:gravity="left|center_vertical"
         android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
         android:textAppearance="@style/button_text_style"
         android:fontFamily="casual"
         android:paddingTop="10dp" />
 
     <Button
-        android:id="@+id/manage_account_button"
+        android:id="@+id/sort_datenewestfirst_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/secondary_color"
-        android:drawableLeft="@drawable/man_acc_menuicon"
-        android:text="Manage Account"
+        android:text="Date, Newest First"
         android:gravity="left|center_vertical"
         android:textColor="@color/white"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textSize="18sp"
         android:textAppearance="@style/button_text_style"
         android:fontFamily="casual"
         android:paddingTop="10dp" />
+
+    <Button
+        android:id="@+id/sort_dateoldestfirst_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondary_color"
+        android:text="Date, Oldest First"
+        android:gravity="left|center_vertical"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textAppearance="@style/button_text_style"
+        android:fontFamily="casual"
+        android:paddingTop="10dp" />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="10dp"
         android:orientation="vertical" />
 
 </LinearLayout>

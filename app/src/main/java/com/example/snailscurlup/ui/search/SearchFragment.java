@@ -15,7 +15,9 @@ import android.widget.ListView;
 
 
 import com.example.snailscurlup.R;
+import com.example.snailscurlup.ui.scan.AbstractQR;
 import com.example.snailscurlup.ui.scan.QRCode;
+import com.example.snailscurlup.ui.scan.QRCodeInstanceNew;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldPath;
@@ -62,6 +64,11 @@ public class SearchFragment extends Fragment {
             searchQuery = reference.orderBy(FieldPath.documentId()).startAt(input).endAt(input+"\uf8ff");
         }
 
+        /**
+         * TODO: The code below NEEDS to be reworked once new database stuff is up and running.
+         * Query below will most likely not work. BEWARE!
+         */
+
         searchQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent( QuerySnapshot queryDocumentSnapshots,
@@ -81,9 +88,15 @@ public class SearchFragment extends Fragment {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                 for (QueryDocumentSnapshot dc: value){
-                                    String qr = dc.getId();
-                                    QRCode code = new QRCode(qr);
-                                    user1.addScannedQrCodes(code);
+                                    String QR = dc.getId();
+                                    String QRHash = (String) dc.get("data");
+                                    if (QRHash != null) {
+                                        AbstractQR type = new AbstractQR(QRHash);
+                                        // QRCode code = new QRCode(QR);
+                                        // QRCodeInstanceNew code = new QRCodeInstanceNew(type, user, null, null, null);
+                                        QRCodeInstanceNew code = new QRCodeInstanceNew(QRHash, user1);
+                                        user1.addScannedQrCodes(code);
+                                    }
                                 }
                             }
                         });

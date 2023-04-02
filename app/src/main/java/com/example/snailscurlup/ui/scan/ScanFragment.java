@@ -4,17 +4,16 @@ import static android.Manifest.permission.CAMERA;
 import static android.content.pm.PackageManager.PERMISSION_GRANTED;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
@@ -23,6 +22,14 @@ import com.example.snailscurlup.R;
 import com.google.zxing.Result;
 
 
+/**
+ * ScanFragment
+ * <p>
+ * This fragment is responsible for scanning QR codes.
+ * It uses the CodeScanner library to scan QR codes.
+ *
+ * @author MAl-l3R
+ */
 public class ScanFragment extends Fragment {
 
     private CodeScanner scanner;
@@ -36,11 +43,17 @@ public class ScanFragment extends Fragment {
         CodeScannerView scannerView = view.findViewById(R.id.scanner_view);
         scanner = new CodeScanner(this.getActivity(), scannerView);
 
+        // Check if camera permission is granted
         if (ContextCompat.checkSelfPermission(getActivity(), CAMERA) == PERMISSION_GRANTED) {
+            // Start scanning QR codes
             scanner.startPreview();
+
+            // Set callback for when a QR code is scanned
             scanner.setDecodeCallback(new DecodeCallback() {
                 @Override
                 public void onDecoded(@NonNull Result result) {
+
+                    // Run on UI thread to avoid errors
                     getActivity().runOnUiThread(new Runnable() {
                         public void run() {
                             //Send data to decode fragment
