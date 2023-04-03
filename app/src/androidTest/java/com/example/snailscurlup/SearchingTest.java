@@ -45,7 +45,7 @@ public class SearchingTest {
 
 
     /**
-     * Using existing testing account: testusert41
+     * Using existing testing account: testusert41 and testuser
      * Checking the search-by-username function from search page
      * @throws AssertionError - For when test fails
      */

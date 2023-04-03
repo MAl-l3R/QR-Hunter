@@ -43,7 +43,7 @@ public class GameQRCodesTest {
     }
 
     /**
-     * Using existing testing account: testusert41
+     * Using existing testing account: testusert41 and testuser
      * check the add comment function and the consistence of comments in database
      * @throws Exception
      */

@@ -44,7 +44,7 @@ public class PlayerTest {
 
 
     /**
-     *  using existing testing account: testusert41
+     *  Using existing testing account: testusert41 and testuser
      *  checks if the player can check other player's profile from Search page
      *  @throws AssertionError - For when test fails
      */
