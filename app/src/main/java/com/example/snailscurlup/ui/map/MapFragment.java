@@ -132,7 +132,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
         // Get QR Code markers from database
         // TODO: In the future, do this based on proximity (not ALL of them)
-        db.collection("QR")
+        db.collection("QRMapMarkers")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
