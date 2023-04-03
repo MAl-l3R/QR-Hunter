@@ -15,7 +15,9 @@ import android.widget.ListView;
 
 
 import com.example.snailscurlup.R;
+import com.example.snailscurlup.ui.scan.AbstractQR;
 import com.example.snailscurlup.ui.scan.QRCode;
+import com.example.snailscurlup.ui.scan.QRCodeInstanceNew;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldPath;
@@ -26,6 +28,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.example.snailscurlup.model.User;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class SearchFragment extends Fragment {
@@ -34,6 +37,7 @@ public class SearchFragment extends Fragment {
     private ArrayAdapter<User> userAdapter;
 
     private ListView listView;
+    private User activeUser;
 
     private ImageButton searchButton;
 
@@ -42,12 +46,16 @@ public class SearchFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public SearchFragment(User u) {
+        this.activeUser = u;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         userList = new ArrayList<User>();
-        userAdapter = new UserAdapter(getActivity(),userList);
+        userAdapter = new UserAdapter(getActivity(),userList, activeUser);
 
         // load the User file and put it in UserList here
     }
@@ -62,6 +70,11 @@ public class SearchFragment extends Fragment {
             searchQuery = reference.orderBy(FieldPath.documentId()).startAt(input).endAt(input+"\uf8ff");
         }
 
+        /**
+         * TODO: The code below NEEDS to be reworked once new database stuff is up and running.
+         * Query below will most likely not work. BEWARE!
+         */
+
         searchQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent( QuerySnapshot queryDocumentSnapshots,
@@ -75,19 +88,28 @@ public class SearchFragment extends Fragment {
                         String email = (String) doc.getData().get("Email");
                         String phone = (String)doc.getData().get("PhoneNumber");
                         String totalScore = doc.getData().get("Total Score").toString();
-                        CollectionReference collection = db.collection("Users").document(doc.getId()).collection("QRList");
+                        CollectionReference collection = db.collection("Users").document(doc.getId()).collection("QRInstancesList");
                         User user1 = new User(name,email,phone,totalScore);
                         collection.addSnapshotListener(new EventListener<QuerySnapshot>() {
                             @Override
                             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                                 for (QueryDocumentSnapshot dc: value){
-                                    String qr = dc.getId();
-                                    QRCode code = new QRCode(qr);
-                                    user1.addScannedQrCodes(code);
+                                    String name = dc.getId();
+                                    String QRHash = (String) dc.getData().get("data");
+                                    if (QRHash != null) {
+                                        AbstractQR type = new AbstractQR(QRHash);
+                                        String location = (String) dc.getData().get("location");
+                                        String owner = (String) dc.getData().get("owner");
+                                        String points = (String) dc.getData().get("points");
+                                        String timeStamp = (String) dc.getData().get("timestamp");
+
+                                        QRCodeInstanceNew code = new QRCodeInstanceNew(type, user1, Timestamp.valueOf(timeStamp));
+                                        user1.addScannedInstanceQrCodes(code);
+                                    }
                                 }
+                                userList.add(user1);
                             }
                         });
-                        userList.add(user1);
 
                     }
                     userAdapter.notifyDataSetChanged();

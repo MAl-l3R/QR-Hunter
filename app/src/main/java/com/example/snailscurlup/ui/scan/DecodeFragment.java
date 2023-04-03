@@ -35,6 +35,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.snailscurlup.R;
 import com.example.snailscurlup.UserListListener;
 import com.example.snailscurlup.controllers.AllUsersController;
+import com.example.snailscurlup.model.AllUsers;
 import com.example.snailscurlup.model.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -43,10 +44,12 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
-public class DecodeFragment extends Fragment{
+public class DecodeFragment extends Fragment {
 
     View view;
     final int CameraRequestCode = 2;
@@ -63,6 +66,19 @@ public class DecodeFragment extends Fragment{
 
     private AllUsersController allUsersController;
     private QRCode newQRCode;
+
+
+
+
+    /******for new abstract Qr code *******/
+    private AbstractQR newAbstractQR;
+    private Bitmap testLogPhotoBitmap;
+    private Timestamp testLogTimeStamp;
+    AllUsers allUsers;
+
+    private String QRData;
+
+    String testaddress ;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -90,6 +106,29 @@ public class DecodeFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        /********************* added to see if active user retieval wworks*/
+        allUsers = (AllUsers) getActivity().getApplicationContext();
+        allUsers.init();
+
+        // Only wait if active user is null at the moment
+        if (allUsers.getActiveUser() == null) {
+            // Wait for thread to finish
+            // allUsers list is initializing...
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+
+        // retrieve active user
+        if (allUsers.getActiveUser() != null) {
+            activeUser = allUsers.getActiveUser();
+        } else {
+            activeUser = new User();
+        }
+        /**********************/
+
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_scan_decode, container, false);
         photoStatus = view.findViewById(R.id.photo_status);
@@ -102,14 +141,22 @@ public class DecodeFragment extends Fragment{
                 // Retrieve data from QR code
                 String data = result.getString("scanData");
 
+                QRData = data;
+
                 // get object for new Qr code
                 newQRCode = new QRCode(data);
+
+
+                /***** For NEW abstract QR code *****/
+                newAbstractQR = new AbstractQR(data);
+                /****** End of NEW abstract QR code *******/
 
 
                 // Get the seed value using the hash value
                 // Using BigInteger because hash value is very big
                 // BigInteger seed = new BigInteger(hash, 16);
 
+                /****** Commented out so test code for new ABstract QR
                 // Get and set image using seed value
                 ImageView imageView = view.findViewById(R.id.QR_image);
                 // String URL = "https://picsum.photos/seed/" + String.valueOf(seed) + "/270";
@@ -129,6 +176,31 @@ public class DecodeFragment extends Fragment{
 
                 TextView pointsView = view.findViewById(R.id.QR_points);
                 String points = String.valueOf(newQRCode.getPointsInt()) + " points";
+                pointsView.setText(points);
+
+                    ****** End of comment out for new abstract QR code *****/
+
+
+                /*** code test for NEW ABSTRACT QR CODE ****/
+                // Get and set image using seed value
+                ImageView imageView = view.findViewById(R.id.qrcode_image);
+                // String URL = "https://picsum.photos/seed/" + String.valueOf(seed) + "/270";
+                Picasso.get()
+                        .load(newAbstractQR .getURL())
+                        .into(imageView);
+
+
+                // Get and set name using seed value
+                // Random random = new Random(seed.longValue());
+                // int adjIndex = random.nextInt(names.adjectives.length);
+                // String name = names.adjectives[adjIndex];
+                TextView nameView = view.findViewById(R.id.QR_name);
+                nameView.setText(newQRCode.getName());
+
+                // Get and set points
+
+                TextView pointsView = view.findViewById(R.id.QR_points);
+                String points = String.valueOf(newAbstractQR.getPointsInt()) + " points";
                 pointsView.setText(points);
             }
         });
@@ -167,6 +239,10 @@ public class DecodeFragment extends Fragment{
                                             double longitude = addressList.get(0).getLongitude();
                                             String address = addressList.get(0).getAddressLine(0);
 
+
+                                            /***** NEW ABSTRACT QR CODE store location****/
+                                            testaddress = address ;
+
                                             // TODO: UPLOAD LOCATION TO FIREBASE
 
 
@@ -193,8 +269,28 @@ public class DecodeFragment extends Fragment{
 
                 // retrieve active user
                 // retrieve active user
-                activeUser =  userListListener.getAllUsers().getActiveUser();
-                userListListener.getAllUsers().getActiveUser().addScannedQrCodes(newQRCode);
+                //activeUser =  userListListener.getAllUsers().getActiveUser();
+                //userListListener.getAllUsers().getActiveUser().addScannedQrCodes(newQRCode);
+
+
+
+                /***** NEW ABSTRACT QR CODE *****/
+                addUserQRCode();
+
+               /* if(!allUsers.checkIfUserHasInstanceQrCode(QRData,activeUser)){
+                    long currentTimestamp = System.currentTimeMillis();
+                    testLogTimeStamp = new Timestamp(currentTimestamp);
+                    try {
+                        allUsers.addUserScanQRCode(QRData, activeUser,testLogPhotoBitmap, testLogTimeStamp,testaddress );
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }else{
+                    Toast.makeText(getActivity(), "Qr Code not added, already have scanned this Qr code", Toast.LENGTH_SHORT).show();
+                }*/
+
+
 
                 // Go back to scan fragment
                 Fragment fragment = new ScanFragment();
@@ -217,6 +313,10 @@ public class DecodeFragment extends Fragment{
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             photoStatus.setText("Added Successfully!");
 
+
+            /*** NEW ABSTRACT QR CODE store photo ***/
+            testLogPhotoBitmap =  (Bitmap) data.getExtras().get("data");
+
             // TODO: UPLOAD PHOTO TO FIREBASE
 
         }
@@ -224,9 +324,24 @@ public class DecodeFragment extends Fragment{
 
 
 
-    public QRCode getQrCode(String data){
+    public QRCode getQrCode(String data) {
         QRCode QrCode = new QRCode(data);
         return QrCode;
+    }
+
+    public void addUserQRCode(){
+        if(!allUsers.checkIfUserHasInstanceQrCode(QRData,activeUser)){
+            long currentTimestamp = System.currentTimeMillis();
+            testLogTimeStamp = new Timestamp(currentTimestamp);
+            try {
+                allUsers.addUserScanQRCode(QRData, activeUser,testLogPhotoBitmap, testLogTimeStamp,testaddress );
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }else{
+            Toast.makeText(getActivity(), "Qr Code not added, already have scanned this Qr code", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void setGeoLocation(Location currlocation){
@@ -253,7 +368,6 @@ public class DecodeFragment extends Fragment{
         }
     }
 
-
-
+    /**temporary code locally saved and loaad scanned qr code*/
 }
 
