@@ -150,7 +150,7 @@ public class LeaderboardFragment extends Fragment {
                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                        leaderDataList.clear();
                        for (QueryDocumentSnapshot doc : value) {
-                           String UserName = doc.getId();
+                           String UserName = (String) doc.getData().get("name");
                            String Score = (String) doc.getData().get("score");
                            leaderDataList.add(new Leader(UserName, Score));
                        }
