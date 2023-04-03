@@ -14,7 +14,7 @@ public class Leader {
      * @param username The user's username.
      * @param score The user's score.
      */
-    Leader(String username, String score){
+    public Leader(String username, String score){
         this.username=username;
         this.score = score;
     }
@@ -22,12 +22,12 @@ public class Leader {
     /**
      * @return The user's username.
      */
-    String getUsername(){return this.username;}
+    public String getUsername(){return this.username;}
 
     /**
      * @return The user's phone number.
      */
-    String getScore(){
+    public String getScore(){
         return this.score;
     }
 
