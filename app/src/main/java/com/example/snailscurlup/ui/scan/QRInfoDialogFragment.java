@@ -141,7 +141,11 @@ public class QRInfoDialogFragment extends DialogFragment {
         String clickedQRCodeHash = args.getString("clickedQRCodeHash");
 
         //get AbstractQR object from hash:
-        clickedQRCodeAbstract = activeUser.getAbstractQrCode(clickedQRCodeHash);
+        if(selectedUser != null){
+            clickedQRCodeAbstract = selectedUser.getAbstractQrCode(clickedQRCodeHash);
+        }else{
+            clickedQRCodeAbstract = activeUser.getAbstractQrCode(clickedQRCodeHash);
+        }
 
         //set QRCodeImage if Wifi access is available
         try {
@@ -214,6 +218,10 @@ public class QRInfoDialogFragment extends DialogFragment {
         return builder.create();
 
 
+    }
+
+    public void setSelectUser(User u){
+        this.selectedUser = u;
     }
 
     // This method sets the adapter for the RecyclerView of COmments of AbstractQR

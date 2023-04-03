@@ -37,6 +37,7 @@ public class SearchFragment extends Fragment {
     private ArrayAdapter<User> userAdapter;
 
     private ListView listView;
+    private User activeUser;
 
     private ImageButton searchButton;
 
@@ -45,12 +46,16 @@ public class SearchFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public SearchFragment(User u) {
+        this.activeUser = u;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         userList = new ArrayList<User>();
-        userAdapter = new UserAdapter(getActivity(),userList);
+        userAdapter = new UserAdapter(getActivity(),userList, activeUser);
 
         // load the User file and put it in UserList here
     }

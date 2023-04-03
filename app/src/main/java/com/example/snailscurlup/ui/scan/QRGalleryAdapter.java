@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.snailscurlup.R;
+import com.example.snailscurlup.model.User;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -42,6 +43,7 @@ public class QRGalleryAdapter extends RecyclerView.Adapter<QRGalleryAdapter.View
 
     // add FragmentManager variable to pass to QRInfoDialogFragment
     private final FragmentManager fragmentManager;
+    private User selectedUser;
 
 
     // Constructor for initializing the values of context and data sent from Fragment works with Array Adapter
@@ -52,12 +54,13 @@ public class QRGalleryAdapter extends RecyclerView.Adapter<QRGalleryAdapter.View
         // set FragmentManager variable to pass to QRInfoDialogFragment
         this.fragmentManager = fragmentManager;
     }
-    public QRGalleryAdapter(Context context, ArrayList<QRCodeInstanceNew> QRCodeArrayList) {
+    public QRGalleryAdapter(Context context, ArrayList<QRCodeInstanceNew> QRCodeArrayList, FragmentManager fragmentManager,User u) {
         this.context = context;
         this.QRCodeArrayList = QRCodeArrayList;
 
         // set FragmentManager variable to pass to QRInfoDialogFragment
-        this.fragmentManager = null;
+        this.fragmentManager = fragmentManager;
+        this.selectedUser = u;
     }
 
     @NonNull
@@ -102,7 +105,7 @@ public class QRGalleryAdapter extends RecyclerView.Adapter<QRGalleryAdapter.View
                 // create a new QRInfoDialogFragment and pass the QR code hash to it
                 QRInfoDialogFragment dialogFragment = QRInfoDialogFragment.newInstance();
                 Bundle bundle = new Bundle();
-
+                dialogFragment.setSelectUser(selectedUser);
                 bundle.putString("clickedQRCodeHash", clickedQRCode.AbstractQRHash());
                 // set the arguments of the QRInfoDialogFragment
                 dialogFragment.setArguments(bundle);

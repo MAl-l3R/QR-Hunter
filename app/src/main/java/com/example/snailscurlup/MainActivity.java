@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements UserListListener{
                     break;
                 case R.id.search:
                     binding.fragmentName.setText("Search");
-                    replaceFragment(new SearchFragment());
+                    replaceFragment(new SearchFragment(activeUser));
                     break;
                 case R.id.scan:
                     binding.fragmentName.setText("Scan");
