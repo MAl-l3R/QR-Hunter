@@ -24,6 +24,7 @@ public class UserAdapter extends ArrayAdapter<User> {
     private ArrayList<User> userList;
     private Context context;
     private User activeUser;
+    private final String selectedUser = "selectedUser";
 
     private final String userKey = "User Object";
     private final String localID = "local Host's id";
@@ -63,6 +64,7 @@ public class UserAdapter extends ArrayAdapter<User> {
                 Intent intent = new Intent(context, Searched_User_Profile.class);
                 int key = -1;
                 intent.putExtra(userKey,user);
+                intent.putExtra(selectedUser,user.getUsername());
                 intent.putExtra(localID,activeUser);
                 String[] strArr = new String[user.getScannedInstanceQrCodes().size()];
                 for (int i=0;i<user.getScannedInstanceQrCodes().size();i++){
