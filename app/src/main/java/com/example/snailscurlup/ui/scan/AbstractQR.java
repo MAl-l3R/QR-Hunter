@@ -259,7 +259,7 @@ public class AbstractQR implements Serializable {
             QRcomments = new ArrayList<>();
         }
 
-        AbstractQRComment newSingleComment = new AbstractQRComment(username, message, commentTimeStamp);
+        AbstractQRComment newSingleComment = new AbstractQRComment(message, username, commentTimeStamp);
 
         QRcomments.add(newSingleComment);
 

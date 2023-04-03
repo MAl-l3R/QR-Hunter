@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -93,7 +94,7 @@ public class QRGalleryAdapter extends RecyclerView.Adapter<QRGalleryAdapter.View
 
 
         // set click listener on the item view
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.commentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // get the position of the clicked item
@@ -134,6 +135,7 @@ public class QRGalleryAdapter extends RecyclerView.Adapter<QRGalleryAdapter.View
         private final ImageView QrCodeVisual;
         private final TextView QRCodeName;
         private final TextView QRCodeScore;
+        private final Button commentBtn;
 
         private final TextView QRCodeTimeStamp;
 
@@ -143,6 +145,7 @@ public class QRGalleryAdapter extends RecyclerView.Adapter<QRGalleryAdapter.View
             QRCodeName = itemView.findViewById(R.id.qrcode_namefield);
             QRCodeScore = itemView.findViewById(R.id.qrcode_scorefield);
             QRCodeTimeStamp = itemView.findViewById(R.id.qrcode_timestampfield);
+            commentBtn = itemView.findViewById(R.id.view_comments);
         }
     }
 }
