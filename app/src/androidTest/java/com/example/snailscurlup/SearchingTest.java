@@ -43,10 +43,10 @@ public class SearchingTest {
         Activity activity = rule.getActivity();
     }
 
-    //TODO: wait for the actual implementation
+
     /**
+     * Using existing testing account: testusert41
      * Checking the search-by-username function from search page
-     * Synthesizes random user credentials for testing purposes.
      * @throws AssertionError - For when test fails
      */
     @Test

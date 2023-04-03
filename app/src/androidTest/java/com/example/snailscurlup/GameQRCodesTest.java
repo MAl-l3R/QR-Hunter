@@ -34,14 +34,21 @@ public class GameQRCodesTest {
     }
 
     /**
-     * Fetches the current activity.
-     * @throws Exception
+     * Checks if the application can create an account from the initial screen.
+     * @throws AssertionError - For when test fails
      */
     @Test
     public void start() throws Exception{
         Activity activity = rule.getActivity();
     }
 
+    /**
+     * Using existing testing account: testusert41
+     * check the add comment function and the consistence of comments in database
+     * @throws Exception
+     */
+    //TODO: wait for full implementation
+    @Test
     public void checkCommentOnQRCode(){
 
     }
