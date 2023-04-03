@@ -6,6 +6,8 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.example.snailscurlup.ui.startup.StartUpActivity;
 import com.robotium.solo.Solo;
 import org.junit.After;
 import org.junit.Before;
@@ -47,7 +49,7 @@ public class CreateAccountTest {
      * Synthesizes random user credentials for testing purposes.
      * @throws AssertionError - For when test fails
      */
-    // TODO: Not working anymore since sharedPreferences saves login so dummy login and create account button isn't there upon acitivint the app
+
     @Test
     public void checkCreateAccount(){
         // Assertion for current activity being the main one

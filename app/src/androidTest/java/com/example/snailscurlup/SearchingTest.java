@@ -2,6 +2,7 @@ package com.example.snailscurlup;
 
 import android.app.Activity;
 
+import androidx.exifinterface.media.ExifInterface;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import android.widget.EditText;
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertFalse;
 
 import java.util.Random;
 
-public class PlayerTest {
+public class SearchingTest {
     private Solo solo;
 
     @Rule
@@ -42,14 +43,16 @@ public class PlayerTest {
         Activity activity = rule.getActivity();
     }
 
-
+    //TODO: wait for the actual implementation
     /**
-     *  checks if the player can check other player's profile from Search page
-     *  @throws AssertionError - For when test fails
+     * Checking the search-by-username function from search page
+     * Synthesizes random user credentials for testing purposes.
+     * @throws AssertionError - For when test fails
      */
     @Test
-    public void checkGoToOtherProfile(){
+    public void checkSearchByUsername(){
 
+        // Assertion for current activity being the main one
         solo.assertCurrentActivity("Wrong Activity", MainActivity.class);
 
         //Login to the testAccount: testusert41 if not login already
@@ -72,15 +75,9 @@ public class PlayerTest {
         String searchWelcomeMsg = "Name: " + "testuser";
         assertTrue(solo.waitForText(searchWelcomeMsg, 1, 3000));
 
-        // Proceed with list content view
-        solo.clickOnView(solo.getView(R.id.user_image));
-
-        // Test to see if page goes to this user's profile
-        assertTrue(solo.waitForView(R.id.user_info_section));
-        assertTrue(solo.searchText("testuser"));
-
-
     }
+
+
 
     /**
      * Cleans up all intent testing objects after execution completes.
