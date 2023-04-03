@@ -23,14 +23,17 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     private ArrayList<User> userList;
     private Context context;
+    private User activeUser;
+    private final String selectedUser = "selectedUser";
 
     private final String userKey = "User Object";
     private final String localID = "local Host's id";
     private final String timeStamp = "timeStamp";
-    public UserAdapter(Context context, ArrayList<User> users){
+    public UserAdapter(Context context, ArrayList<User> users, User activeUser){
         super(context,0, users);
         this.context = context;
         this.userList = users;
+        this.activeUser = activeUser;
     }
 
     @NonNull
@@ -61,7 +64,8 @@ public class UserAdapter extends ArrayAdapter<User> {
                 Intent intent = new Intent(context, Searched_User_Profile.class);
                 int key = -1;
                 intent.putExtra(userKey,user);
-                intent.putExtra(localID,"empty");
+                intent.putExtra(selectedUser,user.getUsername());
+                intent.putExtra(localID,activeUser);
                 String[] strArr = new String[user.getScannedInstanceQrCodes().size()];
                 for (int i=0;i<user.getScannedInstanceQrCodes().size();i++){
                     strArr[i] = user.getScannedInstanceQrCodes().get(i).getScanQRLogTimeStamp().toString();

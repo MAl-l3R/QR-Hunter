@@ -106,6 +106,7 @@ public class User implements Serializable {
     public String getDevice_id() {
         return device_id;
     }
+    public void setTotalScore(String totalScore){this.totalScore = totalScore;}
 
     public void setDevice_id(String device_id) {
         this.device_id = device_id;
