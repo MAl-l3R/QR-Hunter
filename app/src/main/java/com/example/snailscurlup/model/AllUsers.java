@@ -78,11 +78,10 @@ public class AllUsers extends Application {
                                     }
                                 }
                             }
-                            usersList.add(user);
                         }
                     });
 
-
+                    usersList.add(user);
                     usernamesList.add(doc.getId());
                 }
             }
