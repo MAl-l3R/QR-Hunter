@@ -84,7 +84,7 @@ public class QRGalleryAdapter extends RecyclerView.Adapter<QRGalleryAdapter.View
         holder.QRCodeScore.setText(String.valueOf(singleqrcode.getPointsInt()));
 
         // format timestamp with simple Date format and set it to the textview
-        String pattern = "E, dd MMM yyyy HH:mm:ss z";
+        String pattern = "dd MMM yyyy HH:mm";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
         String formattedTimestamp = simpleDateFormat.format(singleqrcode.getScanQRLogTimeStamp());
         holder.QRCodeTimeStamp.setText(formattedTimestamp);
