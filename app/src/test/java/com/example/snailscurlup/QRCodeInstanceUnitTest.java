@@ -6,5 +6,5 @@ public class QRCodeInstanceUnitTest {
      * Verifies if it can fill in the data correctly using the hash.
      */
 
-    
+
 }
